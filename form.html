@@ -1,39 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Document</title>
+    <title>HTML Form</title>
+    <style>
+    body {
+        background-color: black;
+        color: #e0e0e0; /* Soft elegant grey/white instead of harsh pure white */
+        font-family: Arial, sans-serif;
+    }
+    h1 {
+        text-align: center;
+        font-weight: normal; /* Thinner, more elegant letters */
+        color: white;
+        margin-bottom: 40px;
+    }
+    form {
+        width: 450px;
+        margin: 0 auto; /* Centers the form on the screen */
+        display: flex;
+        flex-direction: column; /* Stacks the rows top to bottom */
+        gap: 20px; /* Puts perfect, even space between every row */
+    }
+    .form-row {
+        display: flex;
+        align-items: center; /* Makes the label and box perfectly centered vertically */
+    }
+    .form-row label {
+        width: 130px; /* Every label gets the exact same width */
+        text-align: right; /* This pushes the text to the right so the colons line up perfectly! */
+        margin-right: 15px;
+        color: #a0a0a0; /* Slightly dimmer text for elegance */
+    }
+    .form-row input, .form-row select, .form-row textarea {
+        flex: 1; /* Makes the input box stretch to fill the rest of the space */
+        padding: 8px;
+        background-color: #1a1a1a; /* Dark grey input boxes */
+        color: white;
+        border: 1px solid #444; /* Subtle border */
+        border-radius: 4px; /* Slightly rounded corners */
+    }
+    .radio-group {
+        display: flex;
+        gap: 20px; /* Space between Male and Female */
+        flex: 1;
+    }
+    .radio-group label {
+        width: auto;
+        text-align: left;
+        margin-right: 0;
+        color: #e0e0e0;
+    }
+    button {
+        margin-top: 10px;
+        padding: 12px;
+        background-color: #333;
+        color: white;
+        border: 1px solid #555;
+        border-radius: 4px;
+        cursor: pointer; /* Makes the mouse turn into a pointing hand */
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #444; /* Makes the button light up when you hover over it */
+    }
+    </style>
 </head>
 <body style="background-color: black; color: white;">
-
-    Yo YO Yoooo
-    <br><br>
+    <body>
+    <h1>STUDENT FORM</h1>
+    
     <form>
-        <label for="studentname">Name:</label>
-        <input type="text" id="studentname" placeholder="Enter your name" required>
-        <br><br>
-        <label for="Roll">Roll Number: </label>
-        <input type="number" id="Roll" placeholder="Enter your roll number">
-        <br><br>
-        <p>Gender:</p>
-        <input type="radio" id="male" name="Gender" value="Male">
-        <label for="male">Male  </label>
-        <br>
-        <input type="radio" id="female" name="Gender" value="Female">
-        <label for="female">Female </label>
-        <br> <br>
-        <label for="dob">Date of birth :</label><br>
-        <input type="date" id="dob"><br><br>
-        <label for="Dept">Department:</label>
-        <select id="Dept">
-            <option value="">--- Select ---</option>
-            <option value="CSE">Computer Science Engineering</option>
-            <option value="ECE">Electronics and Communication Engineering</option>
-            <option value="ME">Mechanical Engineering</option>
-        </select>
-        <br><br>
-        <label for="address">Address:</label><br>
-        <textarea id="address" rows="4" cols="50" placeholder="Enter your address"></textarea>
-        <br><br>
+        <div class="form-row">
+            <label for="studentname">Name:</label>
+            <input type="text" id="studentname" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-row">
+            <label for="Roll">Roll Number:</label>
+            <input type="number" id="Roll" placeholder="Enter your roll number">
+        </div>
+
+        <div class="form-row">
+            <label>Gender:</label>
+            <div class="radio-group">
+                <input type="radio" id="male" name="Gender" value="Male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="Gender" value="Female">
+                <label for="female">Female</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <label for="dob">Date of birth:</label>
+            <input type="date" id="dob">
+        </div>
+
+        <div class="form-row">
+            <label for="Dept">Department:</label>
+            <select id="Dept">
+                <option value="">--- Select ---</option>
+                <option value="CSE">Computer Science Engineering</option>
+                <option value="ECE">Electronics and Communication Engineering</option>
+                <option value="ME">Mechanical Engineering</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label for="address">Address:</label>
+            <textarea id="address" rows="4" placeholder="Enter your address"></textarea>
+        </div>
+
         <button type="submit">Submit form</button>
     </form>
 </body>
