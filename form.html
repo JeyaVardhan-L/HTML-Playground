@@ -21,9 +21,20 @@
         <input type="radio" id="female" name="Gender" value="Female">
         <label for="female">Female </label>
         <br> <br>
-        <label>Date of birth :</label><br>
-        <input type="date">
+        <label for="dob">Date of birth :</label><br>
+        <input type="date" id="dob"><br><br>
+        <label for="Dept">Department:</label>
+        <select id="Dept">
+            <option value="">--- Select ---</option>
+            <option value="CSE">Computer Science Engineering</option>
+            <option value="ECE">Electronics and Communication Engineering</option>
+            <option value="ME">Mechanical Engineering</option>
+        </select>
+        <br><br>
+        <label for="address">Address:</label><br>
+        <textarea id="address" rows="4" cols="50" placeholder="Enter your address"></textarea>
+        <br><br>
+        <button type="submit">Submit form</button>
     </form>
-
 </body>
 </html>
