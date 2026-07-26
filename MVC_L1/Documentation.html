@@ -64,10 +64,14 @@
         }
         .link-box {
             background: #f9f9f9;
-            padding: 10px;
+            padding: 15px;
             border: 1px dashed #ccc;
             margin-bottom: 20px;
-            word-wrap: break-word;
+            word-break: break-all; /* Forces long links to wrap inside the box */
+        }
+        .link-box a {
+            color: #0000EE; /* Standard blue link color */
+            text-decoration: underline;
         }
         @media print {
             .print-btn {
@@ -89,7 +93,7 @@
 
     <div class="link-box">
         <strong>GitHub Repository Link:</strong><br>
-        https://github.com/JeyaVardhan-L/HTML-Playground/tree/main/MVC-Lab-1
+        <a href="https://github.com/JeyaVardhan-L/HTML-Playground/tree/main/MVC_L1" target="_blank">https://github.com/JeyaVardhan-L/HTML-Playground/tree/main/MVC_L1</a>
     </div>
 
     <h2>Tech Stack Used</h2>
