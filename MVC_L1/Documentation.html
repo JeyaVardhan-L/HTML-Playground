@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Assignment 1: MVC Architecture</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #111;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+        }
+        h1, h2, h3 {
+            font-weight: 600;
+            color: #000;
+        }
+        h1 {
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 30px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .code-block {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-left: 3px solid #000;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #333;
+        }
+        .print-btn {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .print-btn:hover {
+            background-color: #333;
+        }
+        .link-box {
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+        }
+        @media print {
+            .print-btn {
+                display: none; /* Hides the button when printing */
+            }
+            body {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+    <h1>Lab Assignment 1: MVC Architecture Implementation</h1>
+
+    <p><strong>Objective:</strong> To build a basic web application from scratch using Node.js, Express, and EJS that successfully implements the Model-View-Controller (MVC) architectural pattern.</p>
+
+    <div class="link-box">
+        <strong>GitHub Repository Link:</strong><br>
+        https://github.com/JeyaVardhan-L/HTML-Playground/tree/main/MVC-Lab-1
+    </div>
+
+    <h2>Tech Stack Used</h2>
+    <ul>
+        <li><strong>Runtime:</strong> Node.js</li>
+        <li><strong>Framework:</strong> Express.js</li>
+        <li><strong>View Engine:</strong> EJS (Embedded JavaScript)</li>
+    </ul>
+
+    <h2>1. Project Setup</h2>
+    <p>I initialized a new Node.js project using <code>npm init -y</code> and installed the required dependencies: <code>npm install express ejs</code>. I created three dedicated folders to enforce the MVC separation of concerns: <code>models</code>, <code>views</code>, and <code>controllers</code>.</p>
+
+    <h2>2. The Model (Data & Logic)</h2>
+    <p><strong>File:</strong> <code>models/messageModel.js</code><br>
+    <strong>Role:</strong> Manages the application's data. I created a function <code>getMessage()</code> that returns the string <code>"Hello from the Model!"</code>. This function is exported so the Controller can access it.</p>
+    <div class="code-block">function getMessage() {
+    return "Hello from the Model!";
+}
+
+module.exports = { getMessage };</div>
+
+    <h2>3. The View (UI Layer)</h2>
+    <p><strong>File:</strong> <code>views/view.ejs</code><br>
+    <strong>Role:</strong> Renders the user interface. I wrote standard HTML for the page structure. To display the dynamic data passed from the Controller, I used EJS syntax: <code>&lt;%= message %&gt;</code>.</p>
+    <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;MVC Lab&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-family: Arial; text-align: center; margin-top: 50px;"&gt;
+    &lt;h1&gt;MVC Architecture Lab&lt;/h1&gt;
+    
+    &lt;!-- The &lt;%= %&gt; tags are EJS magic. They inject the variable --&gt;
+    &lt;h2&gt;&lt;%= message %&gt;&lt;/h2&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+
+    <h2>4. The Controller (Traffic Manager)</h2>
+    <p><strong>File:</strong> <code>controllers/messageController.js</code><br>
+    <strong>Role:</strong> Acts as the bridge between the Model and the View. It imports the <code>getMessage</code> function from the Model. I created a <code>showMessage(req, res)</code> function that calls the Model to get the data, and then uses <code>res.render()</code> to send that data to the View.</p>
+    <div class="code-block">const { getMessage } = require('../models/messageModel');
+
+function showMessage(req, res) {
+    // Ask the Model for the data
+    const data = getMessage();
+    
+    // Pass that data to the View ('view.ejs')
+    res.render('view', { message: data });
+}
+
+module.exports = { showMessage };</div>
+
+    <h2>5. The Server & Routing</h2>
+    <p><strong>File:</strong> <code>app.js</code><br>
+    <strong>Role:</strong> Sets up the server and defines the routes. I configured Express to use EJS as the view engine. I defined a single route: <code>app.get('/', showMessage)</code>. This tells the server that when a user visits the home page, it should trigger the Controller's function.</p>
+    <div class="code-block">const express = require('express');
+const app = express();
+
+// Tell Express to use EJS as our View Engine
+app.set('view engine', 'ejs');
+
+// Import the Controller
+const { showMessage } = require('./controllers/messageController');
+
+// When the user goes to the home page ('/'), run the showMessage function
+app.get('/', showMessage);
+
+// Start the server on port 3000
+app.listen(3000, () => {
+    console.log('Server is running on http://localhost:3000');
+});</div>
+
+    <h2>6. Execution & Output</h2>
+    <p>To run the application, I executed the command <code>node app.js</code> in the terminal. Upon opening a web browser and navigating to <code>http://localhost:3000</code>, the application successfully executed the MVC flow and displayed:</p>
+    <div class="code-block">Hello from the Model!</div>
+
+</body>
+</html>
