@@ -1,4 +1,5 @@
 const { getMessage } = require('../models/messageModel');
+
 function showMessage(req, res) {
 
     const data = getMessage();
