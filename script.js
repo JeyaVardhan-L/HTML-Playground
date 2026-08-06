@@ -5,3 +5,5 @@ button.addEventListener("click", function() {
     // 3. When clicked, do this:
     alert("Ouch! You clicked me!");
 });
+
+//Completly Learn this S*it tonight... no overdue
