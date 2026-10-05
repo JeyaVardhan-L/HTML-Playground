@@ -1,0 +1,13 @@
+{
+  "name": "assignment-backend",
+  "version": "1.0.0",
+  "description": "RESTful Book API — Web Application Framework Assignment",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
