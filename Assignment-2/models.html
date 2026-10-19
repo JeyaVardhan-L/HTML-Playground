@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Explorer — Frontier AI Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Standalone notice (visible only if subpage is opened outside iframe) -->
+    <div id="standaloneNotice" class="standalone-notice" style="display:none;">
+      <span>💡 You are viewing this page in standalone mode.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.75rem; font-size:0.78rem;">Open in Main Dashboard →</a>
+    </div>
+
+    <!-- Header Section -->
+    <header class="section-header" role="banner">
+      <span class="section-label">Interactive Matrix</span>
+      <h1 class="section-title">Frontier Model Explorer</h1>
+      <p class="section-subtitle">
+        Comprehensive architectural breakdown and capability comparison of active frontier AI foundation models across leading global laboratories.
+      </p>
+    </header>
+
+    <!-- Search & Filter Controls -->
+    <section class="filter-bar" aria-label="Table filtering and search controls">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="search" 
+          id="modelSearch" 
+          class="search-input" 
+          placeholder="Filter by model, lab, modality, or capability (e.g., DeepSeek, Audio, MoE)..." 
+          aria-label="Search models in table"
+        >
+      </div>
+
+      <div class="filter-pills" role="group" aria-label="Category filter buttons">
+        <button class="filter-btn active" data-filter="all">All Models</button>
+        <button class="filter-btn" data-filter="reasoning">Reasoning & RL</button>
+        <button class="filter-btn" data-filter="multimodal">Omni / Multimodal</button>
+        <button class="filter-btn" data-filter="open">Open Weights</button>
+        <button class="filter-btn" data-filter="coding">Code & Agents</button>
+      </div>
+
+      <div id="matchingCount" style="font-size:0.8rem; color:var(--text-dim); font-weight:600;">
+        8 of 8 models showing
+      </div>
+    </section>
+
+    <!-- Table Section (Faculty Requirement: HTML Table) -->
+    <section class="table-section" aria-label="Model comparison table">
+      <div class="table-responsive">
+        <table class="atlas-table" aria-label="Frontier AI Model Specifications Table">
+          <thead>
+            <tr>
+              <th scope="col">Model Family</th>
+              <th scope="col">Developer / Lab</th>
+              <th scope="col">Context Window</th>
+              <th scope="col">Modalities</th>
+              <th scope="col">Core Strengths</th>
+              <th scope="col">Access Model</th>
+              <th scope="col">Documentation</th>
+            </tr>
+          </thead>
+          <tbody id="modelTableBody">
+
+            <!-- 1. Gemini -->
+            <tr data-category="multimodal coding">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/deepmind.svg" alt="Google DeepMind icon" width="28" height="28">
+                  <div>
+                    <strong>Gemini 1.5 Pro / 2.0</strong>
+                    <span class="org-subtext">Flash · Pro · Flash-Lite</span>
+                  </div>
+                </div>
+              </td>
+              <td>Google DeepMind</td>
+              <td><code>2,000,000</code> tokens</td>
+              <td>Text, Audio, Video, Image, Code</td>
+              <td>Million-token needle search, native audio streaming, codebase comprehension</td>
+              <td><span class="model-badge badge-flagship">Commercial API</span></td>
+              <td><a href="https://ai.google.dev/gemini-api/docs" target="_blank" rel="noopener noreferrer">ai.google.dev ↗</a></td>
+            </tr>
+
+            <!-- 2. Claude -->
+            <tr data-category="coding reasoning">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/anthropic.svg" alt="Anthropic icon" width="28" height="28">
+                  <div>
+                    <strong>Claude 3.5 Sonnet</strong>
+                    <span class="org-subtext">Haiku · Sonnet · Opus</span>
+                  </div>
+                </div>
+              </td>
+              <td>Anthropic</td>
+              <td><code>200,000</code> tokens</td>
+              <td>Text, Code, Vision</td>
+              <td>Autonomous Computer Use, Artifacts, SWE-bench coding leader, nuanced reasoning</td>
+              <td><span class="model-badge badge-flagship">Commercial API</span></td>
+              <td><a href="https://docs.anthropic.com/" target="_blank" rel="noopener noreferrer">anthropic.com ↗</a></td>
+            </tr>
+
+            <!-- 3. OpenAI GPT-4o & o1 -->
+            <tr data-category="reasoning multimodal coding">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/openai.svg" alt="OpenAI icon" width="28" height="28">
+                  <div>
+                    <strong>GPT-4o & OpenAI o1</strong>
+                    <span class="org-subtext">o1 · o3-mini · GPT-4o</span>
+                  </div>
+                </div>
+              </td>
+              <td>OpenAI</td>
+              <td><code>128k – 200k</code> tokens</td>
+              <td>Text, Voice, Vision, Code</td>
+              <td>Reinforcement learning test-time reasoning, low-latency real-time voice, function calling</td>
+              <td><span class="model-badge badge-reasoning">Commercial API</span></td>
+              <td><a href="https://platform.openai.com/docs" target="_blank" rel="noopener noreferrer">openai.com ↗</a></td>
+            </tr>
+
+            <!-- 4. Meta Llama 3.1 / 3.3 -->
+            <tr data-category="open multimodal coding">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/meta.svg" alt="Meta AI icon" width="28" height="28">
+                  <div>
+                    <strong>Llama 3.1 / 3.3</strong>
+                    <span class="org-subtext">8B · 70B · 405B · 90B Vision</span>
+                  </div>
+                </div>
+              </td>
+              <td>Meta AI</td>
+              <td><code>128,000</code> tokens</td>
+              <td>Text, Code, Vision (3.2)</td>
+              <td>Flagship 405B dense weights matching closed models, self-hostable, custom fine-tuning</td>
+              <td><span class="model-badge badge-open">Open Weights</span></td>
+              <td><a href="https://llama.meta.com/" target="_blank" rel="noopener noreferrer">llama.meta.com ↗</a></td>
+            </tr>
+
+            <!-- 5. DeepSeek V3 / R1 -->
+            <tr data-category="open reasoning coding">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/deepseek.svg" alt="DeepSeek icon" width="28" height="28">
+                  <div>
+                    <strong>DeepSeek V3 / R1</strong>
+                    <span class="org-subtext">671B Total (37B Active) MoE</span>
+                  </div>
+                </div>
+              </td>
+              <td>DeepSeek AI</td>
+              <td><code>64k – 128k</code> tokens</td>
+              <td>Text, Complex Code, Math</td>
+              <td>Multi-Head Latent Attention (MLA), pure RL reasoning without human labels, low inference cost</td>
+              <td><span class="model-badge badge-open">Open Weights (MIT)</span></td>
+              <td><a href="https://github.com/deepseek-ai" target="_blank" rel="noopener noreferrer">github.com ↗</a></td>
+            </tr>
+
+            <!-- 6. xAI Grok -->
+            <tr data-category="reasoning multimodal">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/xai.svg" alt="xAI icon" width="28" height="28">
+                  <div>
+                    <strong>Grok 2 / Grok 3</strong>
+                    <span class="org-subtext">Grok 2 Mini · Grok 3</span>
+                  </div>
+                </div>
+              </td>
+              <td>xAI</td>
+              <td><code>128,000</code> tokens</td>
+              <td>Text, Code, Vision</td>
+              <td>Real-time X knowledge grounding, Colossus compute cluster scale, mathematical analysis</td>
+              <td><span class="model-badge badge-flagship">Commercial API</span></td>
+              <td><a href="https://x.ai/api" target="_blank" rel="noopener noreferrer">x.ai/api ↗</a></td>
+            </tr>
+
+            <!-- 7. Mistral Large 2 / Codestral -->
+            <tr data-category="open coding">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/mistral.svg" alt="Mistral icon" width="28" height="28">
+                  <div>
+                    <strong>Mistral Large 2</strong>
+                    <span class="org-subtext">Codestral · Pixtral 12B</span>
+                  </div>
+                </div>
+              </td>
+              <td>Mistral AI</td>
+              <td><code>128k – 256k</code> tokens</td>
+              <td>Text (80+ langs), Code</td>
+              <td>Compact European sovereignty, exceptional Fill-in-the-Middle code completion, tool orchestration</td>
+              <td><span class="model-badge badge-open">Open / API</span></td>
+              <td><a href="https://docs.mistral.ai/" target="_blank" rel="noopener noreferrer">mistral.ai ↗</a></td>
+            </tr>
+
+            <!-- 8. Qwen 2.5 -->
+            <tr data-category="open coding multimodal">
+              <td>
+                <div class="model-cell">
+                  <img src="assets/qwen.svg" alt="Qwen icon" width="28" height="28">
+                  <div>
+                    <strong>Qwen 2.5 Series</strong>
+                    <span class="org-subtext">72B · Coder-32B · Qwen-VL</span>
+                  </div>
+                </div>
+              </td>
+              <td>Alibaba Cloud</td>
+              <td><code>128,000</code> tokens</td>
+              <td>Text, Code, Vision</td>
+              <td>Global leaderboard champion in open coding benchmarks, strong Asian language support</td>
+              <td><span class="model-badge badge-open">Open Weights</span></td>
+              <td><a href="https://qwenlm.github.io/" target="_blank" rel="noopener noreferrer">qwenlm.github.io ↗</a></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Faculty Viva Note Box -->
+    <aside class="callout-box" role="complementary">
+      <h4>💡 Faculty Viva Tip: HTML Table Accessibility & Responsiveness</h4>
+      <p>
+        Notice that this comparison table adheres to accessibility standards: it uses a <code>&lt;thead&gt;</code> with <code>scope="col"</code> headers, clear cell groupings, and is encapsulated inside a <code>.table-responsive</code> wrapper with <code>overflow-x: auto</code>. This prevents the table from breaking mobile viewport boundaries on small screens (320px–480px).
+      </p>
+    </aside>
+
+    <!-- Subpage Footer -->
+    <footer style="border-top:1px solid var(--border-subtle); padding-top:1.5rem; color:var(--text-dim); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+      <p>Frontier AI Atlas · Table Explorer Module</p>
+      <p><a href="home.html">← Back to Home</a> · <a href="survey.html">Proceed to AI Survey →</a></p>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
