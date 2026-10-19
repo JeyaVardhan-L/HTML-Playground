@@ -3,162 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Articles — Frontier AI Atlas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <title>Articles — Frontier AI Atlas</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="page-wrapper">
+  <div class="page-container">
 
-    <!-- Standalone notice (visible only if subpage is opened outside iframe) -->
-    <div id="standaloneNotice" class="standalone-notice" style="display:none;">
-      <span>💡 You are viewing this page in standalone mode.</span>
-      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.75rem; font-size:0.78rem;">Open in Main Dashboard →</a>
+    <!-- Standalone notice (only shown if opened directly outside iframe) -->
+    <div id="standaloneNotice" class="standalone-banner" style="display:none;">
+      <span>Viewing page standalone.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.65rem; font-size:0.75rem;">Open in Main View →</a>
     </div>
 
-    <!-- Header Section -->
-    <header class="section-header" role="banner">
-      <span class="section-label">Technical Deep Dives</span>
-      <h1 class="section-title">Frontier Intelligence Foundations</h1>
-      <p class="section-subtitle">
-        Curated academic essays exploring the mathematical, algorithmic, and engineering principles behind current frontier foundation models.
+    <!-- Page Header -->
+    <header class="page-header" role="banner">
+      <h1 class="page-title">AI Articles &amp; Insights</h1>
+      <p class="page-description">
+        Educational articles explaining how modern frontier models are architected, trained, and applied in real-world systems.
       </p>
     </header>
 
     <!-- Faculty Requirement: Adding Header, Footer, Articles as sections -->
-    <div class="articles-stream">
+    <main role="main">
 
       <!-- Article 1: What is Frontier AI -->
-      <section id="article-frontier-ai" aria-label="Article: Defining Frontier AI">
-        <article class="article-card">
-          <header>
-            <span class="article-category">Foundations & Scale</span>
-            <h2 class="article-title">1. What Defines a "Frontier" Artificial Intelligence Model?</h2>
-            <div class="article-meta">Author: Jey · WAF Research Briefing · Published 2026</div>
+      <section aria-label="What is Frontier AI">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 1</span>
+            <h2 class="article-headline">What Defines a Frontier AI Model?</h2>
           </header>
-          
-          <p>
-            In contemporary computer science, the term <strong>Frontier AI</strong> refers to highly capable foundation models trained at the absolute limits of computational infrastructure (typically requiring tens of thousands of specialized accelerators such as NVIDIA H100s or Google TPUs). Unlike narrow domain classifiers, frontier models exhibit <em>emergent general-purpose cognitive capabilities</em> that span mathematics, multi-language coding, cross-lingual synthesis, and complex planning.
-          </p>
-          <p>
-            The lifecycle of a frontier model comprises three rigorous phases:
-          </p>
-          <ul style="padding-left:1.5rem; color:var(--text-muted); margin-bottom:1rem; font-size:0.92rem;">
-            <li><strong>Pre-training:</strong> Ingesting tens of trillions of diverse tokens across public codebases, literature, scientific journals, and web datasets using self-supervised causal language modeling.</li>
-            <li><strong>Post-training & Alignment:</strong> Supervised Fine-Tuning (SFT) and Reinforcement Learning from Human/AI Feedback (RLHF/RLAIF) to ensure instruction compliance, tone safety, and factual honesty.</li>
-            <li><strong>Inference Optimization:</strong> Quantization (FP8, INT4), speculative decoding, and Key-Value (KV) cache compression to ensure high-throughput execution.</li>
-          </ul>
-
-          <div class="callout-box">
-            <h4>Key Milestone Citation</h4>
+          <div class="article-body">
             <p>
-              Frontier models are officially categorized by compute thresholds (e.g., training runs exceeding 10<sup>26</sup> total floating-point operations), requiring formal safety disclosures under international governance frameworks.
+              Frontier artificial intelligence refers to foundation models at the cutting edge of machine learning capability. These systems are typically trained on tens of thousands of GPUs across trillions of tokens of text, code, images, and audio.
+            </p>
+            <p>
+              Unlike narrow classifiers, frontier models exhibit general cognitive capabilities: they can write software, synthesize complex research, and solve logical puzzles across diverse subjects. Training generally involves:
+            </p>
+            <ul>
+              <li><strong>Pre-training:</strong> Ingesting massive datasets using self-supervised learning to learn language, grammar, reasoning, and world knowledge.</li>
+              <li><strong>Post-training:</strong> Supervised Fine-Tuning (SFT) and Reinforcement Learning from Human/AI Feedback (RLHF/RLAIF) to align behavior and follow instructions safely.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- Article 2: Test-Time Reasoning -->
+      <section aria-label="Test-Time Reasoning">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 2</span>
+            <h2 class="article-headline">Test-Time Compute and Chain-of-Thought Reasoning</h2>
+          </header>
+          <div class="article-body">
+            <p>
+              Traditional language models generate answers token by token without deliberate planning. Newer architectures, such as OpenAI o1/o3-mini and DeepSeek-R1, use <em>test-time compute</em>.
+            </p>
+            <p>
+              These models produce internal reasoning tokens before generating the visible response. This allows the system to evaluate multiple solution paths, verify mathematical calculations, and correct intermediate errors. Research shows that giving a model time to think during inference significantly increases accuracy on complex tasks.
             </p>
           </div>
         </article>
       </section>
 
-      <!-- Article 2: Test-Time Compute & Reasoning -->
-      <section id="article-reasoning" aria-label="Article: Reasoning and Test-Time Compute">
-        <article class="article-card">
-          <header>
-            <span class="article-category">Algorithmic Innovation</span>
-            <h2 class="article-title">2. Test-Time Compute: Beyond Next-Token Prediction</h2>
-            <div class="article-meta">Technical Deep Dive · Chain-of-Thought & Monte Carlo Search</div>
+      <!-- Article 3: Multimodal Systems -->
+      <section aria-label="Multimodal AI">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 3</span>
+            <h2 class="article-headline">Native Multimodality: Audio, Vision, and Text</h2>
           </header>
-
-          <p>
-            For years, the standard inference process in Large Language Models was greedy autoregression: predicting token <em>t<sub>i</sub></em> given context <em>t<sub>&lt;i</sub></em> in a fixed number of matrix multiplications per token. While fast, this constrained the model's ability to plan several steps ahead, leading to hallucinations on intricate logic puzzles, chess, and multi-file code refactoring.
-          </p>
-          <p>
-            Breakthrough systems such as <strong>OpenAI o1 / o3-mini</strong> and <strong>DeepSeek-R1</strong> incorporate dynamic <em>test-time compute</em>. Instead of answering immediately, the model is trained with reinforcement learning to generate an internal "chain of thought"—exploring different solution paths, back-tracking when a logical contradiction is detected, and verifying intermediate invariants before issuing the final response.
-          </p>
-
-          <div class="callout-box">
-            <h4>Mathematical Intuition: The Inference Scaling Law</h4>
+          <div class="article-body">
             <p>
-              Recent research proves that model accuracy scales log-linearly not just with parameter count and training data, but with <em>inference tokens allocated per query</em>. Spending 10x more inference tokens allows a 30B parameter model to outperform a 400B model that answers with zero reflection time.
+              Early multimodal models used separate vision or audio adapters to convert images and speech into text representations. Modern models, such as Google Gemini and OpenAI GPT-4o, are natively multimodal.
+            </p>
+            <p>
+              In a natively multimodal architecture, visual patches, audio frames, and text tokens are processed in the same unified neural network. This enables real-time spoken conversations with natural inflection, sub-second latency, and accurate inspection of complex charts and diagrams.
             </p>
           </div>
         </article>
       </section>
 
-      <!-- Article 3: Multimodal Processing -->
-      <section id="article-multimodal" aria-label="Article: Native Multimodality">
-        <article class="article-card">
-          <header>
-            <span class="article-category">Sensory Architecture</span>
-            <h2 class="article-title">3. Native Multimodality: Unified Audio, Vision, and Video Tokens</h2>
-            <div class="article-meta">Sensory Perception Systems · Cross-Attention Mechanisms</div>
+      <!-- Article 4: Autonomous Agents & Tool Use -->
+      <section aria-label="Autonomous Agents">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 4</span>
+            <h2 class="article-headline">Autonomous Agents and Tool Use</h2>
           </header>
-
-          <p>
-            Early multimodal implementations were disjointed: a separate vision encoder (like CLIP or ViT) converted an image into feature vectors, which were then projected into an LLM's text space. Audio was transcribed using Whisper before the LLM could read it.
-          </p>
-          <p>
-            Modern frontier systems—led by <strong>Google DeepMind's Gemini</strong> and <strong>OpenAI's GPT-4o</strong>—are <em>natively multimodal</em> from day one. Raw visual patches, audio spectrogram frames, and textual tokens are mapped into a unified embedding space. This allows models to detect vocal inflections, understand comedic timing in audio, analyze 60-frame-per-second video streams in real time, and inspect high-density engineering blueprints with sub-millimeter precision.
-          </p>
-        </article>
-      </section>
-
-      <!-- Article 4: Agentic Workflows & Tool Use -->
-      <section id="article-agents" aria-label="Article: Autonomous Agents and Tool Use">
-        <article class="article-card">
-          <header>
-            <span class="article-category">Action & Execution</span>
-            <h2 class="article-title">4. Autonomous Agents: Tool Use, Computer Use, and MCP</h2>
-            <div class="article-meta">System Integration · API Protocol Evolution</div>
-          </header>
-
-          <p>
-            The highest-leverage application of frontier models is the transition from passive chatbot to <strong>autonomous agent</strong>. An agent operates inside an environment loop: it observes user intent, plans an action sequence, invokes external software tools (such as database queries, bash shells, or web scrapers), inspects the environment's response, and iterates until the goal is achieved.
-          </p>
-          <p>
-            Noteworthy paradigms include:
-          </p>
-          <ul style="padding-left:1.5rem; color:var(--text-muted); margin-bottom:1rem; font-size:0.92rem;">
-            <li><strong>Anthropic Computer Use:</strong> Enabling Claude 3.5 Sonnet to inspect screenshots, move mouse cursors, click buttons, and interact with arbitrary desktop software like a human operator.</li>
-            <li><strong>Model Context Protocol (MCP):</strong> An open standard created by Anthropic allowing AI models to securely connect to heterogeneous local data sources, file trees, and developer tools without bespoke glue code.</li>
-            <li><strong>Function Calling:</strong> Structured JSON schema validation ensuring that models emit deterministic, machine-parsable parameters for REST and RPC endpoints.</li>
-          </ul>
-        </article>
-      </section>
-
-      <!-- Article 5: Safety and Limitations -->
-      <section id="article-safety" aria-label="Article: Limitations, Hallucinations, and Safety">
-        <article class="article-card">
-          <header>
-            <span class="article-category">Ethics & Reliability</span>
-            <h2 class="article-title">5. Critical Limitations: Hallucination, Sycophancy, and Context Decay</h2>
-            <div class="article-meta">Engineering Boundaries · Responsible Evaluation</div>
-          </header>
-
-          <p>
-            Despite extraordinary benchmark scores, frontier artificial intelligence models suffer from fundamental technical limitations that every computer science graduate must understand:
-          </p>
-          <ul style="padding-left:1.5rem; color:var(--text-muted); margin-bottom:1rem; font-size:0.92rem;">
-            <li><strong>Hallucinations & Confabulation:</strong> Neural networks optimize for probability likelihood rather than objective ontological truth. When encountering sparse data, they can synthesize persuasive falsehoods with high calibrated confidence.</li>
-            <li><strong>Sycophancy:</strong> Reinforcement learning from human feedback frequently causes models to agree with the user's erroneous premises rather than correcting them, prioritizing user approval over correctness.</li>
-            <li><strong>Context Decay & "Lost in the Middle":</strong> While context windows have expanded to millions of tokens, model retrieval accuracy drops when crucial facts are situated deep in the middle of long prompts compared to the beginning or end.</li>
-          </ul>
-
-          <div class="callout-box">
-            <h4>Academic Takeaway</h4>
+          <div class="article-body">
             <p>
-              Frontier AI models are powerful statistical amplifiers, not infallible reasoning engines. Production systems require automated unit testing, human-in-the-loop verification, and strict sandboxing.
+              The most impactful evolution of frontier models is the shift from text generators to autonomous agents. An agent can interact with external environments by invoking tools such as command-line shells, database queries, and web browsers.
+            </p>
+            <p>
+              Anthropic introduced <em>Computer Use</em>, allowing Claude to inspect desktop screenshots and control mouse clicks and keystrokes. Similarly, the <em>Model Context Protocol (MCP)</em> provides an open standard for connecting AI systems to local files, development tools, and enterprise databases safely.
             </p>
           </div>
         </article>
       </section>
 
-    </div>
+      <!-- Article 5: Limitations and Safety -->
+      <section aria-label="Limitations and Safety">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 5</span>
+            <h2 class="article-headline">Known Limitations: Hallucinations and Context Limits</h2>
+          </header>
+          <div class="article-body">
+            <p>
+              While foundation models are powerful tools, they possess real technical limitations:
+            </p>
+            <ul>
+              <li><strong>Hallucinations:</strong> Models predict the most probable sequence of words, which can occasionally result in plausible-sounding but factually incorrect assertions.</li>
+              <li><strong>Context Degradation:</strong> Even in million-token models, information placed in the middle of extremely long prompts can occasionally be overlooked compared to information at the beginning or end.</li>
+              <li><strong>Verification Necessity:</strong> AI-generated code and technical summaries should always be verified using automated tests and human review before production deployment.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
 
-    <!-- Subpage Footer -->
-    <footer style="border-top:1px solid var(--border-subtle); padding-top:1.5rem; color:var(--text-dim); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-      <p>Frontier AI Atlas · Research Articles Module</p>
-      <p><a href="survey.html">← Back to Survey</a> · <a href="resources.html">Proceed to Resources & Viva →</a></p>
+    </main>
+
+    <!-- Page Footer -->
+    <footer style="font-size:0.8rem; color:var(--muted); border-top:1px solid var(--border-light); padding-top:1rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+      <span>Frontier AI Atlas · Educational Articles</span>
+      <span><a href="resources.html">Next: Resources &amp; Viva →</a></span>
     </footer>
 
   </div>

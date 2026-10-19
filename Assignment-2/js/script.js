@@ -1,76 +1,53 @@
 /**
- * FRONTIER AI ATLAS — CORE JAVASCRIPT
- * Web Application Frameworks Lab Assignment 2
- * Author: Jey (GITAM CSE)
+ * FRONTIER AI ATLAS — MINIMALIST JAVASCRIPT
+ * Simple, readable DOM interactions for WAF Lab Assignment 2
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-  initDashboardParent();
+  initParentNavigation();
   initSubpageFeatures();
 });
 
 /**
- * 1. Parent Dashboard (index.html) logic
- * Handles iframe auto-resizing, mobile navigation drawer, and active navigation highlighting.
+ * Parent Page (index.html) Navigation & Iframe Resizing
  */
-function initDashboardParent() {
+function initParentNavigation() {
   const iframe = document.getElementById("content-frame");
-  const mobileToggle = document.getElementById("mobileToggle");
-  const sidebar = document.getElementById("sidebar");
-  const sidebarLinks = document.querySelectorAll(".sidebar-link");
+  const navLinks = document.querySelectorAll(".nav-link");
 
-  // Mobile drawer toggle
-  if (mobileToggle && sidebar) {
-    mobileToggle.addEventListener("click", function () {
-      sidebar.classList.toggle("open");
-      const isOpen = sidebar.classList.contains("open");
-      mobileToggle.setAttribute("aria-expanded", isOpen);
-      mobileToggle.textContent = isOpen ? "✕" : "☰";
-    });
-  }
-
-  // Active state highlighting on sidebar links
-  sidebarLinks.forEach((link) => {
+  // Update active navigation link on click
+  navLinks.forEach((link) => {
     link.addEventListener("click", function () {
-      sidebarLinks.forEach((l) => l.classList.remove("active"));
+      navLinks.forEach((l) => l.classList.remove("active"));
       this.classList.add("active");
-
-      // Auto-close sidebar on mobile after clicking
-      if (sidebar && sidebar.classList.contains("open")) {
-        sidebar.classList.remove("open");
-        if (mobileToggle) mobileToggle.textContent = "☰";
-      }
-
-      // Scroll parent window to top smoothly when new page loads
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 
-  // Seamless iframe height adjustment (Same-Origin)
+  // Seamless Iframe Auto-Resize
   if (iframe) {
     function resizeIframe() {
       try {
         if (iframe.contentWindow && iframe.contentWindow.document.body) {
           const doc = iframe.contentWindow.document;
-          const bodyHeight = doc.body.scrollHeight;
-          const docHeight = doc.documentElement.scrollHeight;
-          const newHeight = Math.max(bodyHeight, docHeight, 600);
-          iframe.style.height = newHeight + 40 + "px";
+          const height = Math.max(
+            doc.body.scrollHeight,
+            doc.documentElement.scrollHeight,
+            500
+          );
+          iframe.style.height = height + 30 + "px";
 
-          // Sync active nav item with the iframe's current filename
-          const currentPath = iframe.contentWindow.location.pathname;
-          const currentFile = currentPath.substring(currentPath.lastIndexOf("/") + 1) || "home.html";
-
-          sidebarLinks.forEach((link) => {
-            const href = link.getAttribute("href");
-            if (href === currentFile) {
-              sidebarLinks.forEach((l) => l.classList.remove("active"));
+          // Sync active nav tab based on iframe file name
+          const path = iframe.contentWindow.location.pathname;
+          const currentFile = path.substring(path.lastIndexOf("/") + 1) || "home.html";
+          navLinks.forEach((link) => {
+            if (link.getAttribute("href") === currentFile) {
+              navLinks.forEach((l) => l.classList.remove("active"));
               link.classList.add("active");
             }
           });
         }
-      } catch (err) {
-        // Fallback for security contexts if any
+      } catch (_) {
         iframe.style.height = "100vh";
       }
     }
@@ -78,29 +55,19 @@ function initDashboardParent() {
     iframe.addEventListener("load", resizeIframe);
     window.addEventListener("resize", resizeIframe);
 
-    // Listen for resize messages from child iframe pages
     window.addEventListener("message", function (event) {
       if (event.data && event.data.type === "ATLAS_RESIZE") {
-        iframe.style.height = Math.max(event.data.height, 600) + 40 + "px";
+        iframe.style.height = Math.max(event.data.height, 500) + 30 + "px";
       }
     });
   }
 }
 
 /**
- * 2. Sub-page Features (Executed in both iframe and standalone contexts)
+ * Subpage Features (Executed in both iframe and standalone modes)
  */
 function initSubpageFeatures() {
-  notifyParentOfHeight();
-  handleStandaloneNotice();
-  initModelTableFilters();
-  initSurveyForm();
-}
-
-/**
- * Sends height message to parent if embedded inside an iframe
- */
-function notifyParentOfHeight() {
+  // 1. Notify parent frame of content height
   if (window.self !== window.top) {
     function sendHeight() {
       const height = Math.max(
@@ -109,197 +76,133 @@ function notifyParentOfHeight() {
       );
       window.parent.postMessage({ type: "ATLAS_RESIZE", height: height }, "*");
     }
-
     sendHeight();
     window.addEventListener("resize", sendHeight);
-
-    // Periodic check during image/font render
-    setTimeout(sendHeight, 250);
-    setTimeout(sendHeight, 800);
+    setTimeout(sendHeight, 200);
+  } else {
+    // Show banner if opened directly outside iframe
+    const banner = document.getElementById("standaloneNotice");
+    if (banner) banner.style.display = "flex";
   }
-}
 
-/**
- * Displays standalone indicator if child page is opened directly
- */
-function handleStandaloneNotice() {
-  const notice = document.getElementById("standaloneNotice");
-  if (notice) {
-    if (window.self === window.top) {
-      notice.style.display = "flex";
-    } else {
-      notice.style.display = "none";
-    }
-  }
-}
-
-/**
- * Model Explorer (models.html) search and category filter
- */
-function initModelTableFilters() {
+  // 2. Models Page Search Filter (models.html)
   const searchInput = document.getElementById("modelSearch");
-  const filterBtns = document.querySelectorAll(".filter-btn");
   const tableRows = document.querySelectorAll("#modelTableBody tr");
-  const countBadge = document.getElementById("matchingCount");
+  const countDisplay = document.getElementById("matchingCount");
 
-  if (!tableRows.length) return;
+  if (searchInput && tableRows.length > 0) {
+    searchInput.addEventListener("input", function (e) {
+      const query = e.target.value.toLowerCase().trim();
+      let matches = 0;
 
-  let activeCategory = "all";
-  let searchQuery = "";
+      tableRows.forEach((row) => {
+        const text = row.textContent.toLowerCase();
+        if (!query || text.includes(query)) {
+          row.style.display = "";
+          matches++;
+        } else {
+          row.style.display = "none";
+        }
+      });
 
-  function applyFilters() {
-    let visibleCount = 0;
+      if (countDisplay) {
+        countDisplay.textContent = `Showing ${matches} of ${tableRows.length} models`;
+      }
+    });
+  }
 
-    tableRows.forEach((row) => {
-      const rowCategory = row.getAttribute("data-category") || "";
-      const rowText = row.innerText.toLowerCase();
+  // 3. Survey Form Validation & Reset (survey.html)
+  const surveyForm = document.getElementById("aiSurveyForm");
+  const resultCard = document.getElementById("surveyResultCard");
+  const summaryList = document.getElementById("summaryList");
 
-      const matchesCat = activeCategory === "all" || rowCategory.includes(activeCategory);
-      const matchesSearch = !searchQuery || rowText.includes(searchQuery);
+  if (surveyForm) {
+    surveyForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-      if (matchesCat && matchesSearch) {
-        row.style.display = "";
-        visibleCount++;
-      } else {
-        row.style.display = "none";
+      const name = document.getElementById("studentName").value.trim();
+      const email = document.getElementById("studentEmail").value.trim();
+      const model = document.getElementById("favModel").value;
+      const useCase = document.getElementById("primaryUseCase").value;
+      const expRadio = surveyForm.querySelector('input[name="experience"]:checked');
+      const comments = document.getElementById("surveyComments").value.trim() || "None";
+
+      const selectedCheckboxes = surveyForm.querySelectorAll('input[name="capabilities"]:checked');
+      const capabilities = Array.from(selectedCheckboxes).map((cb) => cb.value);
+
+      // Simple validation checks
+      if (!name) {
+        alert("Please enter your name.");
+        document.getElementById("studentName").focus();
+        return;
+      }
+
+      if (!email || !email.includes("@")) {
+        alert("Please enter a valid email address.");
+        document.getElementById("studentEmail").focus();
+        return;
+      }
+
+      if (!model) {
+        alert("Please select your favorite AI model.");
+        document.getElementById("favModel").focus();
+        return;
+      }
+
+      if (!useCase) {
+        alert("Please select your primary use case.");
+        document.getElementById("primaryUseCase").focus();
+        return;
+      }
+
+      if (!expRadio) {
+        alert("Please select your experience level.");
+        return;
+      }
+
+      if (capabilities.length === 0) {
+        alert("Please select at least one capability of interest.");
+        return;
+      }
+
+      // Display clean summary
+      if (summaryList) {
+        summaryList.innerHTML = `
+          <li><strong>Student Name:</strong> ${escapeText(name)}</li>
+          <li><strong>Email:</strong> ${escapeText(email)}</li>
+          <li><strong>Favorite Model:</strong> ${escapeText(model)}</li>
+          <li><strong>Primary Use Case:</strong> ${escapeText(useCase)}</li>
+          <li><strong>Experience Level:</strong> ${escapeText(expRadio.value)}</li>
+          <li><strong>Capabilities:</strong> ${capabilities.map(c => escapeText(c)).join(", ")}</li>
+          <li><strong>Comments:</strong> ${escapeText(comments)}</li>
+        `;
+      }
+
+      if (resultCard) {
+        resultCard.style.display = "block";
+      }
+
+      // Re-trigger height update after card display
+      if (window.self !== window.top) {
+        setTimeout(function () {
+          const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+          window.parent.postMessage({ type: "ATLAS_RESIZE", height: height }, "*");
+        }, 100);
       }
     });
 
-    if (countBadge) {
-      countBadge.textContent = `${visibleCount} of ${tableRows.length} models showing`;
-    }
-
-    notifyParentOfHeight();
-  }
-
-  if (searchInput) {
-    searchInput.addEventListener("input", function (e) {
-      searchQuery = e.target.value.trim().toLowerCase();
-      applyFilters();
+    surveyForm.addEventListener("reset", function () {
+      if (resultCard) {
+        resultCard.style.display = "none";
+      }
     });
   }
-
-  filterBtns.forEach((btn) => {
-    btn.addEventListener("click", function () {
-      filterBtns.forEach((b) => b.classList.remove("active"));
-      this.classList.add("active");
-      activeCategory = this.getAttribute("data-filter") || "all";
-      applyFilters();
-    });
-  });
 }
 
-/**
- * AI Survey Form (survey.html) validation, reset, and submission summary
- */
-function initSurveyForm() {
-  const form = document.getElementById("aiSurveyForm");
-  const resultCard = document.getElementById("surveyResultCard");
-  const summaryBody = document.getElementById("summaryTableBody");
-
-  if (!form) return;
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // 1. Gather values
-    const name = document.getElementById("studentName").value.trim();
-    const email = document.getElementById("studentEmail").value.trim();
-    const model = document.getElementById("favModel").value;
-    const useCase = document.getElementById("primaryUseCase").value;
-    const comments = document.getElementById("surveyComments").value.trim() || "None provided";
-
-    const expRadio = form.querySelector('input[name="experience"]:checked');
-    const expVal = expRadio ? expRadio.value : "Not specified";
-
-    const capabilityCheckboxes = form.querySelectorAll('input[name="capabilities"]:checked');
-    const capabilities = Array.from(capabilityCheckboxes).map((cb) => cb.value);
-
-    // 2. Client-side validation checks
-    if (!name || name.length < 2) {
-      alert("Please enter a valid student name (at least 2 characters).");
-      document.getElementById("studentName").focus();
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-      alert("Please enter a valid university or personal email address.");
-      document.getElementById("studentEmail").focus();
-      return;
-    }
-
-    if (!model) {
-      alert("Please select your preferred Frontier AI Model.");
-      document.getElementById("favModel").focus();
-      return;
-    }
-
-    if (!useCase) {
-      alert("Please select your primary AI use case.");
-      document.getElementById("primaryUseCase").focus();
-      return;
-    }
-
-    if (!expRadio) {
-      alert("Please select your experience level.");
-      return;
-    }
-
-    if (capabilities.length === 0) {
-      alert("Please select at least one preferred capability (e.g., Code Generation).");
-      return;
-    }
-
-    // 3. Render submission summary
-    if (summaryBody) {
-      summaryBody.innerHTML = `
-        <tr><td>Student Name:</td><td><strong>${escapeHtml(name)}</strong></td></tr>
-        <tr><td>Email Address:</td><td>${escapeHtml(email)}</td></tr>
-        <tr><td>Favorite Model:</td><td><span class="tag">${escapeHtml(model)}</span></td></tr>
-        <tr><td>Primary Use Case:</td><td>${escapeHtml(useCase)}</td></tr>
-        <tr><td>Experience Level:</td><td>${escapeHtml(expVal)}</td></tr>
-        <tr><td>Desired Capabilities:</td><td>${capabilities.map(c => `<span class="tag">${escapeHtml(c)}</span>`).join(" ")}</td></tr>
-        <tr><td>Feedback / Notes:</td><td><em>"${escapeHtml(comments)}"</em></td></tr>
-        <tr><td>Submission Status:</td><td><span style="color:#10b981; font-weight:600;">✓ Verified Valid (Client-Side)</span></td></tr>
-      `;
-    }
-
-    if (resultCard) {
-      resultCard.style.display = "block";
-      resultCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-
-    // Optional local demonstration tally
-    try {
-      const tally = Number(localStorage.getItem("atlas_survey_tally") || "0") + 1;
-      localStorage.setItem("atlas_survey_tally", tally.toString());
-      console.log(`Local survey submission count: ${tally}`);
-    } catch (_) {
-      // LocalStorage optional fallback
-    }
-
-    notifyParentOfHeight();
-  });
-
-  // Reset button behavior
-  form.addEventListener("reset", function () {
-    if (resultCard) {
-      resultCard.style.display = "none";
-    }
-    notifyParentOfHeight();
-  });
-}
-
-/**
- * Utility: Safe HTML Escaping for rendered form feedback
- */
-function escapeHtml(str) {
+function escapeText(str) {
   if (!str) return "";
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/>/g, "&gt;");
 }
