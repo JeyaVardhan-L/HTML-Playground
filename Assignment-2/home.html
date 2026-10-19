@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Portal — Frontier AI Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Standalone notice (visible only if subpage is opened outside the iframe) -->
+    <div id="standaloneNotice" class="standalone-notice" style="display:none;">
+      <span>💡 You are viewing this page in standalone mode.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.75rem; font-size:0.78rem;">Open in Main Dashboard →</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero-section" role="banner">
+      <div class="hero-content">
+        <span class="hero-pill">⚡ Intelligence Frontier · Academic Lab 2026</span>
+        <h1 class="hero-title">
+          Mapping the <span class="gradient-text">Frontier of Artificial Intelligence</span>
+        </h1>
+        <p class="hero-description">
+          An interactive educational portal analyzing leading frontier AI foundation models, test-time reasoning paradigms, massive-scale context windows, and autonomous agent capabilities.
+        </p>
+        <div class="hero-cta-group">
+          <a href="models.html" class="btn btn-primary">
+            <span>Explore Comparison Table</span>
+            <span>→</span>
+          </a>
+          <a href="articles.html" class="btn btn-secondary">
+            <span>Read Research Articles</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-graphic-container">
+        <img src="assets/hero-illustration.svg" alt="Diagram of deep neural network architectures and frontier token streams">
+      </div>
+    </header>
+
+    <!-- Key Metrics & Architectural Indicators -->
+    <section class="metrics-section" aria-label="Key frontier AI metrics">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">8+</div>
+          <div class="stat-label">Leading Labs Cataloged</div>
+          <div class="stat-detail">Google DeepMind, Anthropic, OpenAI, Meta, DeepSeek, xAI, Mistral, Qwen</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">2,000,000+</div>
+          <div class="stat-label">Maximum Token Context</div>
+          <div class="stat-detail">Native in Gemini 1.5 Pro / 2.0 architectures for book-length codebases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">Test-Time</div>
+          <div class="stat-label">Reasoning Paradigms</div>
+          <div class="stat-detail">Reinforcement learning and deliberate inference compute (o1, o3, R1)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">Omni-Modal</div>
+          <div class="stat-label">Native Sensory Inputs</div>
+          <div class="stat-detail">Interleaved text, audio, images, video, and programmatic tools</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Frontier Model Families Grid -->
+    <section class="models-grid-section" aria-label="Frontier AI model directory">
+      <div class="section-header">
+        <span class="section-label">State-of-the-Art Systems</span>
+        <h2 class="section-title">Frontier Model Families</h2>
+        <p class="section-subtitle">
+          Explore the industry-defining architectures driving current breakthroughs in code generation, multi-step planning, and multi-modal understanding.
+        </p>
+      </div>
+
+      <div class="cards-grid">
+
+        <!-- 1. Google DeepMind Gemini -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/deepmind.svg" alt="Google DeepMind logo">
+                </div>
+                <div>
+                  <h3 class="model-name">Gemini Family</h3>
+                  <span class="model-org">Google DeepMind</span>
+                </div>
+              </div>
+              <span class="model-badge badge-flagship">Multimodal</span>
+            </div>
+            <p class="model-summary">
+              Native multimodal foundation model family spanning Flash, Pro, and Ultra. Pioneer of massive 1M–2M context windows with native audio and video comprehension.
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">Gemini 1.5 Pro, 2.0 Flash</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">Up to 2,000,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, Code, Audio, Video, Image</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Long-Context</span>
+              <span class="tag">Audio Input</span>
+              <span class="tag">Google AI Studio</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://ai.google.dev/" target="_blank" rel="noopener noreferrer">Official Docs ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+        <!-- 2. Anthropic Claude -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/anthropic.svg" alt="Anthropic logo">
+                </div>
+                <div>
+                  <h3 class="model-name">Claude Family</h3>
+                  <span class="model-org">Anthropic</span>
+                </div>
+              </div>
+              <span class="model-badge badge-flagship">Coding & Agents</span>
+            </div>
+            <p class="model-summary">
+              Renowned for coding accuracy, nuanced writing, Artifacts, and autonomous Computer Use. Developed using Constitutional AI safety principles.
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">Claude 3.5 Sonnet, 3.5 Haiku</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">200,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, Code, High-res Vision</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Computer Use</span>
+              <span class="tag">Artifacts</span>
+              <span class="tag">SWE-bench Leader</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://docs.anthropic.com/" target="_blank" rel="noopener noreferrer">Official Docs ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+        <!-- 3. OpenAI GPT & o-Series -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/openai.svg" alt="OpenAI logo">
+                </div>
+                <div>
+                  <h3 class="model-name">GPT & o-Series</h3>
+                  <span class="model-org">OpenAI</span>
+                </div>
+              </div>
+              <span class="model-badge badge-reasoning">Reasoning</span>
+            </div>
+            <p class="model-summary">
+              Pioneered real-time omnimodal capabilities (GPT-4o) and dedicated reinforcement learning test-time reasoning compute (OpenAI o1, o3-mini) for science and math.
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">GPT-4o, OpenAI o1, o3-mini</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">128,000 – 200,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, Audio, Vision, Code</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Chain-of-Thought</span>
+              <span class="tag">Omni Voice</span>
+              <span class="tag">Function Calling</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://platform.openai.com/docs/" target="_blank" rel="noopener noreferrer">Official Docs ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+        <!-- 4. Meta AI Llama -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/meta.svg" alt="Meta AI logo">
+                </div>
+                <div>
+                  <h3 class="model-name">Llama Family</h3>
+                  <span class="model-org">Meta AI</span>
+                </div>
+              </div>
+              <span class="model-badge badge-open">Open Weights</span>
+            </div>
+            <p class="model-summary">
+              The cornerstone of open-weights AI research. Flagship 405B dense parameter model matches closed frontier systems, complemented by multimodal 11B/90B and 70B models.
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">Llama 3.1 405B, Llama 3.3 70B</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">128,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, Code, Vision (3.2)</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Open License</span>
+              <span class="tag">Self-Hosted</span>
+              <span class="tag">405B Parameters</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://llama.meta.com/" target="_blank" rel="noopener noreferrer">Official Docs ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+        <!-- 5. DeepSeek AI -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/deepseek.svg" alt="DeepSeek AI logo">
+                </div>
+                <div>
+                  <h3 class="model-name">DeepSeek V3 / R1</h3>
+                  <span class="model-org">DeepSeek AI</span>
+                </div>
+              </div>
+              <span class="model-badge badge-reasoning">MoE & RL</span>
+            </div>
+            <p class="model-summary">
+              Architectural innovation utilizing Multi-Head Latent Attention (MLA), 671B Mixture-of-Experts with 37B active parameters, and pure reinforcement learning reasoning (R1).
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">DeepSeek-V3, DeepSeek-R1</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">64,000 – 128,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, Advanced Code, Math</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Open Weights</span>
+              <span class="tag">MoE Architecture</span>
+              <span class="tag">MIT License</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://github.com/deepseek-ai" target="_blank" rel="noopener noreferrer">Official GitHub ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+        <!-- 6. xAI Grok -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/xai.svg" alt="xAI logo">
+                </div>
+                <div>
+                  <h3 class="model-name">Grok Family</h3>
+                  <span class="model-org">xAI</span>
+                </div>
+              </div>
+              <span class="model-badge badge-flagship">Frontier</span>
+            </div>
+            <p class="model-summary">
+              Built on the massive Colossus 100k GPU cluster, Grok integrates real-time X data synthesis, high-throughput code execution, and rigorous competitive reasoning.
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">Grok 2, Grok 2 Mini, Grok 3</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">128,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, Code, Vision Analysis</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Real-Time Data</span>
+              <span class="tag">Vision Reasoning</span>
+              <span class="tag">xAI API</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://x.ai/api" target="_blank" rel="noopener noreferrer">Official Docs ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+        <!-- 7. Mistral AI -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/mistral.svg" alt="Mistral AI logo">
+                </div>
+                <div>
+                  <h3 class="model-name">Mistral Family</h3>
+                  <span class="model-org">Mistral AI</span>
+                </div>
+              </div>
+              <span class="model-badge badge-open">Open & Commercial</span>
+            </div>
+            <p class="model-summary">
+              European AI champion specializing in compact efficiency, state-of-the-art multilingual code synthesis (Codestral), and native multi-modal processing (Pixtral).
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">Mistral Large 2, Codestral</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">128,000 – 256,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, 80+ Languages, Code</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Codestral</span>
+              <span class="tag">Function Calling</span>
+              <span class="tag">La Plateforme</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://docs.mistral.ai/" target="_blank" rel="noopener noreferrer">Official Docs ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+        <!-- 8. Alibaba Qwen -->
+        <article class="model-card">
+          <div>
+            <div class="model-card-header">
+              <div class="model-org-info">
+                <div class="model-logo">
+                  <img src="assets/qwen.svg" alt="Alibaba Qwen logo">
+                </div>
+                <div>
+                  <h3 class="model-name">Qwen Family</h3>
+                  <span class="model-org">Alibaba Cloud</span>
+                </div>
+              </div>
+              <span class="model-badge badge-open">Open Weights</span>
+            </div>
+            <p class="model-summary">
+              Highly competitive open-weight series leading global coding and math evaluations (Qwen 2.5-Coder), with vision-language capability and strong multilingual support.
+            </p>
+            <div class="model-specs">
+              <div class="spec-item"><span class="spec-name">Key Models:</span><span class="spec-val">Qwen 2.5 72B, 2.5-Coder 32B</span></div>
+              <div class="spec-item"><span class="spec-name">Context Window:</span><span class="spec-val">128,000 tokens</span></div>
+              <div class="spec-item"><span class="spec-name">Primary Modality:</span><span class="spec-val">Text, Code, Vision (Qwen-VL)</span></div>
+            </div>
+            <div class="tag-list">
+              <span class="tag">Code Benchmark Leader</span>
+              <span class="tag">Apache 2.0</span>
+              <span class="tag">HuggingFace Top</span>
+            </div>
+          </div>
+          <div class="card-footer-links">
+            <a href="https://qwenlm.github.io/" target="_blank" rel="noopener noreferrer">Official Website ↗</a>
+            <a href="models.html">View in Explorer →</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Faculty Requirement: Adding Header, Footer, Articles as sections -->
+    <section class="research-spotlight-section" aria-label="Frontier AI architectural insights">
+      <div class="section-header">
+        <span class="section-label">Architectural Insights</span>
+        <h2 class="section-title">The Frontier Shift: From Scale to Reasoning</h2>
+        <p class="section-subtitle">
+          How modern AI architectures are moving past brute-force next-token prediction into dynamic test-time computation.
+        </p>
+      </div>
+
+      <article class="article-card">
+        <header>
+          <span class="article-category">Core Paradigm Shift</span>
+          <h3 class="article-title">The Two Dimensions of Compute: Pre-Training vs. Test-Time Reasoning</h3>
+          <div class="article-meta">Published for WAF Lab Assignment 2 · Technical Briefing</div>
+        </header>
+
+        <p>
+          Historically, artificial intelligence progress was governed by <em>pre-training scaling laws</em>: feeding ever-larger clusters of graphics processors with trillions of multimodal tokens. While pre-training continues to expand baseline knowledge, frontier laboratories like OpenAI (o1, o3) and DeepSeek (R1) have unlocked an entirely new scaling axis: <strong>Test-Time Compute</strong>.
+        </p>
+        <p>
+          By allowing a neural model to generate thousands of private intermediate reasoning tokens—forming explicit hypothesis trees, verifying proofs, and correcting intermediate miscalculations—frontier systems achieve PhD-level competitive performance in physics, competitive mathematics, and complex software engineering.
+        </p>
+
+        <div class="callout-box">
+          <h4>💡 Faculty Viva Tip (Semantic Elements)</h4>
+          <p>
+            Notice this section is wrapped in an HTML5 <code>&lt;section&gt;</code> element, and the briefing itself is encapsulated inside an <code>&lt;article&gt;</code> tag with its own independent <code>&lt;header&gt;</code>. This semantic structure allows screen readers and search engines to interpret the content hierarchy without ambiguity.
+          </p>
+        </div>
+
+        <div style="margin-top:1.25rem;">
+          <a href="articles.html" class="btn btn-secondary">Read All 5 In-Depth Articles →</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Subpage Footer -->
+    <footer style="border-top:1px solid var(--border-subtle); padding-top:1.5rem; color:var(--text-dim); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+      <p>Frontier AI Atlas · Designed for Academic Lab Demonstration</p>
+      <p>Links: <a href="models.html">Explorer</a> · <a href="survey.html">Survey</a> · <a href="articles.html">Articles</a> · <a href="resources.html">Viva Prep</a></p>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

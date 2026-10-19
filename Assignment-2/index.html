@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontier AI Atlas — Exploring the Intelligence Frontier</title>
+  <meta name="description" content="A comprehensive educational portal exploring leading frontier AI model families, reasoning architectures, multimodal foundations, and agentic workflows.">
+  <link rel="icon" type="image/svg+xml" href="assets/atlas-logo.svg">
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Header Navigation -->
+    <header class="top-nav" role="banner">
+      <div class="brand-wrapper">
+        <img src="assets/atlas-logo.svg" alt="Frontier AI Atlas Logo" class="brand-logo">
+        <div class="brand-text">
+          <h1>FRONTIER AI ATLAS</h1>
+          <span class="brand-tagline">Exploring the Intelligence Frontier</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="status-badge" title="Academic Lab System Active">
+          <span class="status-dot"></span>
+          <span>SYSTEM ONLINE · 2026</span>
+        </div>
+        <button id="mobileToggle" class="mobile-toggle-btn" aria-label="Toggle navigation drawer" aria-expanded="false">
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace with Sidebar & Named Frame Region -->
+    <div class="dashboard-workspace">
+      
+      <!-- Responsive Sidebar Navigation -->
+      <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main sidebar navigation">
+        <div>
+          <div class="sidebar-heading">Navigation Menu</div>
+          <ul class="sidebar-menu">
+            <li>
+              <a href="home.html" target="content" class="sidebar-link active" id="nav-home">
+                <span class="nav-icon">🪐</span>
+                <span>Home Portal</span>
+              </a>
+            </li>
+            <li>
+              <a href="models.html" target="content" class="sidebar-link" id="nav-models">
+                <span class="nav-icon">📊</span>
+                <span>Model Explorer</span>
+              </a>
+            </li>
+            <li>
+              <a href="survey.html" target="content" class="sidebar-link" id="nav-survey">
+                <span class="nav-icon">📝</span>
+                <span>AI Survey</span>
+              </a>
+            </li>
+            <li>
+              <a href="articles.html" target="content" class="sidebar-link" id="nav-articles">
+                <span class="nav-icon">📖</span>
+                <span>AI Articles</span>
+              </a>
+            </li>
+            <li>
+              <a href="resources.html" target="content" class="sidebar-link" id="nav-resources">
+                <span class="nav-icon">📚</span>
+                <span>Resources & Viva</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-meta-card">
+          <strong>WAF Lab Assignment 2</strong>
+          <p>Student: <strong>Jey (9057)</strong></p>
+          <p>Dept: CSE, GITAM</p>
+          <p style="margin-top:0.4rem; color:var(--accent-cyan); font-size:0.75rem;">Frame Target: <code>content</code></p>
+        </div>
+      </aside>
+
+      <!-- Main Region housing the named iframe -->
+      <main class="main-viewport" role="main">
+        <!-- Faculty Requirement: Create frames (Modern compliant iframe) -->
+        <iframe 
+          src="home.html" 
+          name="content" 
+          id="content-frame" 
+          title="Frontier AI Atlas content viewport" 
+          class="content-frame"
+          loading="eager"
+        >
+          <p>Your browser does not support iframes. Please browse <a href="home.html">Home</a> directly.</p>
+        </iframe>
+      </main>
+
+    </div>
+
+    <!-- Master Academic Footer -->
+    <footer class="master-footer" role="contentinfo">
+      <div class="footer-content">
+        <div>
+          <strong>Frontier AI Atlas</strong> — Web Application Frameworks (WAF) Lab Assignment 2
+          <br>
+          <span style="color:var(--text-dim);">Designed & Built with Semantic HTML5, Modular CSS3, and Vanilla JavaScript.</span>
+        </div>
+        <div class="footer-tags">
+          <span class="footer-tag">Frames</span>
+          <span class="footer-tag">Headers & Footers</span>
+          <span class="footer-tag">Semantic Articles</span>
+          <span class="footer-tag">Tabular Forms</span>
+          <span class="footer-tag">Hyperlinks</span>
+          <span class="footer-tag">Responsive CSS</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
