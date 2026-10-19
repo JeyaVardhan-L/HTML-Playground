@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources & Viva Prep — Frontier AI Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Standalone notice (visible only if subpage is opened outside iframe) -->
+    <div id="standaloneNotice" class="standalone-notice" style="display:none;">
+      <span>💡 You are viewing this page in standalone mode.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.75rem; font-size:0.78rem;">Open in Main Dashboard →</a>
+    </div>
+
+    <!-- Header Section -->
+    <header class="section-header" role="banner">
+      <span class="section-label">Documentation & Viva Voce</span>
+      <h1 class="section-title">Assignment Specifications & Viva Prep</h1>
+      <p class="section-subtitle">
+        Comprehensive academic rubric mapping, requirement audit, official foundation model documentation links, and essential viva examination questions.
+      </p>
+    </header>
+
+    <!-- Faculty Requirements Compliance Matrix -->
+    <section class="compliance-section" aria-label="Faculty requirements compliance table">
+      <div class="section-header">
+        <span class="section-label">Faculty Checklist</span>
+        <h2 class="section-title">Assignment 2 Requirement Matrix</h2>
+      </div>
+
+      <div class="table-responsive">
+        <table class="atlas-table" aria-label="Faculty Requirements Mapping Table">
+          <thead>
+            <tr>
+              <th scope="col">Requirement</th>
+              <th scope="col">Curriculum Objective</th>
+              <th scope="col">Implementation File(s)</th>
+              <th scope="col">Specific Markup / Feature Evidence</th>
+              <th scope="col">Verification Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Create Frames</strong></td>
+              <td>Modern frame embedding & internal window target routing</td>
+              <td><code>index.html</code>, <code>style.css</code>, <code>script.js</code></td>
+              <td><code>&lt;iframe name="content" id="content-frame"&gt;</code> with links using <code>target="content"</code></td>
+              <td><span class="model-badge badge-open">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>2. Header, Footer, Articles as Sections</strong></td>
+              <td>Semantic HTML5 hierarchy and accessibility structure</td>
+              <td><code>index.html</code>, <code>home.html</code>, <code>articles.html</code></td>
+              <td>Semantic elements: <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;article&gt;</code></td>
+              <td><span class="model-badge badge-open">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>3. Form Creation in Tabular Format</strong></td>
+              <td>HTML forms structured inside table layouts</td>
+              <td><code>survey.html</code>, <code>style.css</code></td>
+              <td><code>&lt;table class="form-table"&gt;</code> wrapping inputs, selects, radios, checkboxes, and buttons</td>
+              <td><span class="model-badge badge-open">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>4. Hyperlinks</strong></td>
+              <td>Internal frame targeting and secure external navigation</td>
+              <td>All HTML pages</td>
+              <td>Internal <code>target="content"</code>, anchor hashes, and secure external links with <code>rel="noopener"</code></td>
+              <td><span class="model-badge badge-open">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>5. Adding CSS Properties</strong></td>
+              <td>Advanced styling, variables, flexbox, grid, transitions</td>
+              <td><code>css/style.css</code></td>
+              <td>Custom CSS properties, Glassmorphism, CSS Grid, Flexbox, hover transforms, glowing borders</td>
+              <td><span class="model-badge badge-open">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>6. Responsive Web Design</strong></td>
+              <td>Fluid layout adaptation across device screen sizes</td>
+              <td><code>css/style.css</code>, <code>js/script.js</code></td>
+              <td>Media queries (1024px, 768px, 480px), collapsible mobile drawer, auto-resizing iframe</td>
+              <td><span class="model-badge badge-open">✓ Verified</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Viva Examination Preparation Guide -->
+    <section class="viva-section" aria-label="Viva Voce questions and answers">
+      <div class="section-header">
+        <span class="section-label">Academic Evaluation</span>
+        <h2 class="section-title">Viva Voce Preparation — Key Concepts</h2>
+        <p class="section-subtitle">
+          Essential questions faculty examiners frequently ask during lab demonstrations:
+        </p>
+      </div>
+
+      <div class="viva-grid">
+
+        <div class="viva-card">
+          <h3>Q1. Why use &lt;iframe&gt; instead of &lt;frameset&gt;?</h3>
+          <p>
+            The old HTML4 <code>&lt;frameset&gt;</code> and <code>&lt;frame&gt;</code> tags have been completely deprecated and removed in HTML5 because they broke browser bookmarking, history navigation, and mobile accessibility. HTML5 uses inline frames (<code>&lt;iframe&gt;</code>) which embed another HTML document seamlessly inside normal semantic page layouts.
+          </p>
+        </div>
+
+        <div class="viva-card">
+          <h3>Q2. How does hyperlink targeting work with iframes?</h3>
+          <p>
+            When an iframe is given an attribute such as <code>name="content"</code>, any hyperlink with the attribute <code>target="content"</code> will open its destination inside that iframe rather than replacing the parent window or opening a new tab.
+          </p>
+        </div>
+
+        <div class="viva-card">
+          <h3>Q3. Why are semantic tags preferred over &lt;div&gt;?</h3>
+          <p>
+            Tags like <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;aside&gt;</code> convey meaning to web browsers, search engines, and screen-reading assistive technologies, improving accessibility and SEO without altering default visual behavior.
+          </p>
+        </div>
+
+        <div class="viva-card">
+          <h3>Q4. What is the difference between &lt;section&gt; and &lt;article&gt;?</h3>
+          <p>
+            An <code>&lt;article&gt;</code> represents a complete, self-contained composition that could theoretically be distributed or syndicated independently (like a blog post, news story, or model card). A <code>&lt;section&gt;</code> is a thematic grouping of content, typically with a heading.
+          </p>
+        </div>
+
+        <div class="viva-card">
+          <h3>Q5. How do you make a tabular form responsive?</h3>
+          <p>
+            Standard tables tend to overflow on mobile screens. In <code>style.css</code>, we apply a media query (<code>@media (max-width: 768px)</code>) that changes <code>display: table-cell</code> to <code>display: block</code> or <code>flex</code>. This gracefully stacks labels above inputs on narrow mobile devices.
+          </p>
+        </div>
+
+        <div class="viva-card">
+          <h3>Q6. What is the purpose of rel="noopener noreferrer"?</h3>
+          <p>
+            When opening external hyperlinks with <code>target="_blank"</code>, malicious destination pages could access <code>window.opener</code> to hijack the referring page. Adding <code>rel="noopener noreferrer"</code> prevents this security vulnerability and prevents sending HTTP referer headers.
+          </p>
+        </div>
+
+        <div class="viva-card">
+          <h3>Q7. When should you use Flexbox vs. CSS Grid?</h3>
+          <p>
+            <strong>Flexbox</strong> is 1-dimensional (arranging items along either a row or a column), ideal for toolbars, navigation bars, and linear button groups. <strong>CSS Grid</strong> is 2-dimensional (controlling rows and columns simultaneously), ideal for overall dashboard layouts and card matrices.
+          </p>
+        </div>
+
+        <div class="viva-card">
+          <h3>Q8. How does client-side validation benefit forms?</h3>
+          <p>
+            HTML5 attributes like <code>required</code>, <code>type="email"</code>, and JavaScript validation intercept invalid submissions before any network transfer occurs, providing immediate instant feedback to the user while preventing unnecessary server load.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Verified External Documentation Sources -->
+    <section class="sources-section" aria-label="Verified external references">
+      <div class="section-header">
+        <span class="section-label">Official Sources</span>
+        <h2 class="section-title">AI Laboratory Documentation References</h2>
+      </div>
+
+      <div class="cards-grid">
+        <div class="stat-card">
+          <div class="stat-label">Google DeepMind (Gemini)</div>
+          <div class="stat-detail">Official API documentation, multimodal tutorials, and Google AI Studio:</div>
+          <p style="margin-top:0.5rem;"><a href="https://ai.google.dev/" target="_blank" rel="noopener noreferrer">https://ai.google.dev ↗</a></p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Anthropic (Claude)</div>
+          <div class="stat-detail">Claude 3.5 Sonnet technical report, Computer Use API, and Model Context Protocol:</div>
+          <p style="margin-top:0.5rem;"><a href="https://docs.anthropic.com/" target="_blank" rel="noopener noreferrer">https://docs.anthropic.com ↗</a></p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">OpenAI (GPT-4o & o1)</div>
+          <div class="stat-detail">OpenAI developer platform, o1/o3-mini reasoning system cards, and function calling:</div>
+          <p style="margin-top:0.5rem;"><a href="https://platform.openai.com/docs" target="_blank" rel="noopener noreferrer">https://platform.openai.com ↗</a></p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Meta AI (Llama)</div>
+          <div class="stat-detail">Llama 3.1 & 3.3 research papers, 405B parameter evaluation, and download portals:</div>
+          <p style="margin-top:0.5rem;"><a href="https://llama.meta.com/" target="_blank" rel="noopener noreferrer">https://llama.meta.com ↗</a></p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">DeepSeek AI</div>
+          <div class="stat-detail">DeepSeek-V3 and DeepSeek-R1 technical architecture papers and open repositories:</div>
+          <p style="margin-top:0.5rem;"><a href="https://github.com/deepseek-ai" target="_blank" rel="noopener noreferrer">https://github.com/deepseek-ai ↗</a></p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Mistral AI</div>
+          <div class="stat-detail">Mistral Large 2, Codestral, and Pixtral documentation and client libraries:</div>
+          <p style="margin-top:0.5rem;"><a href="https://docs.mistral.ai/" target="_blank" rel="noopener noreferrer">https://docs.mistral.ai ↗</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Asset & Licensing Attribution -->
+    <section class="attribution-section">
+      <div class="callout-box" style="border-left-color:var(--accent-purple);">
+        <h4>🛡️ Asset Attribution & Academic Integrity Declaration</h4>
+        <p>
+          All vector illustrations (including the <code>atlas-logo.svg</code>, <code>hero-illustration.svg</code>, and lab emblems) are authored locally in SVG markup specifically for this academic coursework. No external stock images or unverified third-party libraries were utilized. The project operates 100% offline without dependencies.
+        </p>
+      </div>
+    </section>
+
+    <!-- Subpage Footer -->
+    <footer style="border-top:1px solid var(--border-subtle); padding-top:1.5rem; color:var(--text-dim); font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+      <p>Frontier AI Atlas · Resources & Viva Prep Module</p>
+      <p><a href="home.html">Return to Home Portal →</a></p>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
