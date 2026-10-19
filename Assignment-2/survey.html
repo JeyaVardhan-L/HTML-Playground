@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey — Frontier AI Atlas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- Standalone notice (only shown if opened directly outside iframe) -->
+    <div id="standaloneNotice" class="standalone-banner" style="display:none;">
+      <span>Viewing page standalone.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.65rem; font-size:0.75rem;">Open in Main View →</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header" role="banner">
+      <h1 class="page-title">AI Developer Survey</h1>
+      <p class="page-description">
+        Please share your preferred models, workflows, and experience levels using modern AI tools. (Requirement: Form created in tabular format).
+      </p>
+    </header>
+
+    <!-- Faculty Requirement: Form Creation in Tabular Format -->
+    <section class="form-card" aria-label="Survey Form">
+      <form id="aiSurveyForm" novalidate>
+        
+        <table class="form-table" aria-label="Tabular Survey Entry">
+          <tbody>
+
+            <!-- 1. Student Name -->
+            <tr>
+              <td class="form-label-cell">
+                <label for="studentName">Student Name *</label>
+              </td>
+              <td class="form-input-cell">
+                <input 
+                  type="text" 
+                  id="studentName" 
+                  name="studentName" 
+                  class="text-input" 
+                  placeholder="e.g. Jey" 
+                  required
+                >
+                <span class="field-hint">Your full name or student handle.</span>
+              </td>
+            </tr>
+
+            <!-- 2. Email Address -->
+            <tr>
+              <td class="form-label-cell">
+                <label for="studentEmail">Email Address *</label>
+              </td>
+              <td class="form-input-cell">
+                <input 
+                  type="email" 
+                  id="studentEmail" 
+                  name="studentEmail" 
+                  class="text-input" 
+                  placeholder="e.g. student@gitam.in" 
+                  required
+                >
+                <span class="field-hint">Used for verification.</span>
+              </td>
+            </tr>
+
+            <!-- 3. Favorite AI Model -->
+            <tr>
+              <td class="form-label-cell">
+                <label for="favModel">Favorite AI Model *</label>
+              </td>
+              <td class="form-input-cell">
+                <select id="favModel" name="favModel" class="select-input" required>
+                  <option value="">-- Select a model --</option>
+                  <option value="Anthropic Claude 3.5 Sonnet">Anthropic Claude 3.5 Sonnet</option>
+                  <option value="Google Gemini 1.5/2.0">Google Gemini 1.5 / 2.0</option>
+                  <option value="OpenAI GPT-4o / o1">OpenAI GPT-4o / o1</option>
+                  <option value="Meta Llama 3.1 / 3.3">Meta Llama 3.1 / 3.3</option>
+                  <option value="DeepSeek V3 / R1">DeepSeek V3 / R1</option>
+                  <option value="Mistral Large 2 / Codestral">Mistral Large 2 / Codestral</option>
+                </select>
+              </td>
+            </tr>
+
+            <!-- 4. Primary Use Case -->
+            <tr>
+              <td class="form-label-cell">
+                <label for="primaryUseCase">Primary Use Case *</label>
+              </td>
+              <td class="form-input-cell">
+                <select id="primaryUseCase" name="primaryUseCase" class="select-input" required>
+                  <option value="">-- Select a use case --</option>
+                  <option value="Software Engineering & Coding">Software Engineering &amp; Coding</option>
+                  <option value="Academic Research & Synthesis">Academic Research &amp; Synthesis</option>
+                  <option value="Math & Logical Reasoning">Math &amp; Logical Reasoning</option>
+                  <option value="Autonomous Agents">Autonomous Agents</option>
+                </select>
+              </td>
+            </tr>
+
+            <!-- 5. Experience Level (Radio buttons) -->
+            <tr>
+              <td class="form-label-cell">
+                <span>Experience Level *</span>
+              </td>
+              <td class="form-input-cell">
+                <div class="options-group" role="radiogroup" aria-label="Experience Level">
+                  <label class="option-item">
+                    <input type="radio" name="experience" value="Beginner" required>
+                    <span>Beginner</span>
+                  </label>
+                  <label class="option-item">
+                    <input type="radio" name="experience" value="Intermediate">
+                    <span>Intermediate</span>
+                  </label>
+                  <label class="option-item">
+                    <input type="radio" name="experience" value="Advanced">
+                    <span>Advanced</span>
+                  </label>
+                </div>
+              </td>
+            </tr>
+
+            <!-- 6. Capability Checkboxes -->
+            <tr>
+              <td class="form-label-cell">
+                <span>Capabilities of Interest *</span>
+              </td>
+              <td class="form-input-cell">
+                <div class="options-group">
+                  <label class="option-item">
+                    <input type="checkbox" name="capabilities" value="Code Generation" checked>
+                    <span>Code Generation</span>
+                  </label>
+                  <label class="option-item">
+                    <input type="checkbox" name="capabilities" value="Long Context (1M+)" checked>
+                    <span>Long Context (1M+)</span>
+                  </label>
+                  <label class="option-item">
+                    <input type="checkbox" name="capabilities" value="Test-Time Reasoning">
+                    <span>Test-Time Reasoning</span>
+                  </label>
+                  <label class="option-item">
+                    <input type="checkbox" name="capabilities" value="Self-Hosting / Open Weights">
+                    <span>Open Weights</span>
+                  </label>
+                </div>
+                <span class="field-hint">Select one or more capabilities.</span>
+              </td>
+            </tr>
+
+            <!-- 7. Feedback -->
+            <tr>
+              <td class="form-label-cell">
+                <label for="surveyComments">Comments / Feedback</label>
+              </td>
+              <td class="form-input-cell">
+                <textarea 
+                  id="surveyComments" 
+                  name="surveyComments" 
+                  class="textarea-input" 
+                  placeholder="Share any thoughts on models or tools you use..."
+                ></textarea>
+              </td>
+            </tr>
+
+            <!-- 8. Submit & Reset Actions -->
+            <tr>
+              <td class="form-label-cell"></td>
+              <td class="form-input-cell">
+                <div class="form-buttons">
+                  <button type="submit" class="btn btn-primary">Submit Survey</button>
+                  <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </form>
+
+      <!-- Submission Feedback Card -->
+      <div id="surveyResultCard" class="result-notice" role="region" aria-live="polite">
+        <h3>Survey Submitted Successfully</h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.75rem;">
+          Here is a summary of your responses:
+        </p>
+        <ul id="summaryList" class="summary-list">
+          <!-- Dynamically populated by script.js -->
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- Page Footer -->
+    <footer style="font-size:0.8rem; color:var(--muted); border-top:1px solid var(--border-light); padding-top:1rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+      <span>Frontier AI Atlas · Survey Form</span>
+      <span><a href="articles.html">Next: Articles →</a></span>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

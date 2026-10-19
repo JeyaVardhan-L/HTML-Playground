@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Models — Frontier AI Atlas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- Standalone notice (only shown if opened directly outside iframe) -->
+    <div id="standaloneNotice" class="standalone-banner" style="display:none;">
+      <span>Viewing page standalone.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.65rem; font-size:0.75rem;">Open in Main View →</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header" role="banner">
+      <h1 class="page-title">Model Explorer</h1>
+      <p class="page-description">
+        A straightforward comparison table summarizing leading frontier model families, their developer organizations, primary capabilities, and official resources.
+      </p>
+    </header>
+
+    <!-- Search Controls -->
+    <section aria-label="Table Search">
+      <div class="search-container">
+        <input 
+          type="search" 
+          id="modelSearch" 
+          class="search-field" 
+          placeholder="Filter by organization, model, or capability..." 
+          aria-label="Filter models table"
+        >
+        <span id="matchingCount" class="search-count">Showing 6 models</span>
+      </div>
+
+      <!-- Straightforward Comparison Table -->
+      <div class="table-wrapper">
+        <table class="simple-table" aria-label="Frontier AI Model Comparison">
+          <thead>
+            <tr>
+              <th scope="col">Organization</th>
+              <th scope="col">Model Family</th>
+              <th scope="col">Primary Capabilities</th>
+              <th scope="col">Official Documentation</th>
+            </tr>
+          </thead>
+          <tbody id="modelTableBody">
+            <tr>
+              <td>OpenAI</td>
+              <td>GPT-4o &amp; o1 / o3-mini</td>
+              <td>Deliberate chain-of-thought reasoning, mathematics, real-time voice and vision, function calling.</td>
+              <td><a href="https://platform.openai.com/docs" target="_blank" rel="noopener noreferrer">platform.openai.com ↗</a></td>
+            </tr>
+            <tr>
+              <td>Anthropic</td>
+              <td>Claude 3.5 Sonnet &amp; Haiku</td>
+              <td>Software engineering, code synthesis, nuanced writing, Artifacts, and autonomous Computer Use.</td>
+              <td><a href="https://docs.anthropic.com/" target="_blank" rel="noopener noreferrer">docs.anthropic.com ↗</a></td>
+            </tr>
+            <tr>
+              <td>Google DeepMind</td>
+              <td>Gemini 1.5 Pro &amp; 2.0 Flash</td>
+              <td>Native multimodality (audio, video, text), million-token long context, low-latency agentic tool use.</td>
+              <td><a href="https://ai.google.dev/" target="_blank" rel="noopener noreferrer">ai.google.dev ↗</a></td>
+            </tr>
+            <tr>
+              <td>Meta AI</td>
+              <td>Llama 3.1 &amp; 3.3 (405B / 70B)</td>
+              <td>Dense open-weights models, local self-hosting, fine-tuning flexibility, and high-throughput text processing.</td>
+              <td><a href="https://llama.meta.com/" target="_blank" rel="noopener noreferrer">llama.meta.com ↗</a></td>
+            </tr>
+            <tr>
+              <td>DeepSeek AI</td>
+              <td>DeepSeek-V3 &amp; DeepSeek-R1</td>
+              <td>Mixture-of-Experts architecture (671B), reinforcement learning reasoning without human labels, advanced math.</td>
+              <td><a href="https://github.com/deepseek-ai" target="_blank" rel="noopener noreferrer">github.com/deepseek-ai ↗</a></td>
+            </tr>
+            <tr>
+              <td>Mistral AI</td>
+              <td>Mistral Large 2 &amp; Codestral</td>
+              <td>Compact efficiency, multilingual code generation (Fill-in-the-Middle), function calling, European hosting.</td>
+              <td><a href="https://docs.mistral.ai/" target="_blank" rel="noopener noreferrer">docs.mistral.ai ↗</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Page Footer -->
+    <footer style="font-size:0.8rem; color:var(--muted); border-top:1px solid var(--border-light); padding-top:1rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+      <span>Frontier AI Atlas · Model Comparison Matrix</span>
+      <span><a href="survey.html">Next: Developer Survey →</a></span>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

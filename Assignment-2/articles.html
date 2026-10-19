@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Articles — Frontier AI Atlas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- Standalone notice (only shown if opened directly outside iframe) -->
+    <div id="standaloneNotice" class="standalone-banner" style="display:none;">
+      <span>Viewing page standalone.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.65rem; font-size:0.75rem;">Open in Main View →</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header" role="banner">
+      <h1 class="page-title">AI Articles &amp; Insights</h1>
+      <p class="page-description">
+        Educational articles explaining how modern frontier models are architected, trained, and applied in real-world systems.
+      </p>
+    </header>
+
+    <!-- Faculty Requirement: Adding Header, Footer, Articles as sections -->
+    <main role="main">
+
+      <!-- Article 1: What is Frontier AI -->
+      <section aria-label="What is Frontier AI">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 1</span>
+            <h2 class="article-headline">What Defines a Frontier AI Model?</h2>
+          </header>
+          <div class="article-body">
+            <p>
+              Frontier artificial intelligence refers to foundation models at the cutting edge of machine learning capability. These systems are typically trained on tens of thousands of GPUs across trillions of tokens of text, code, images, and audio.
+            </p>
+            <p>
+              Unlike narrow classifiers, frontier models exhibit general cognitive capabilities: they can write software, synthesize complex research, and solve logical puzzles across diverse subjects. Training generally involves:
+            </p>
+            <ul>
+              <li><strong>Pre-training:</strong> Ingesting massive datasets using self-supervised learning to learn language, grammar, reasoning, and world knowledge.</li>
+              <li><strong>Post-training:</strong> Supervised Fine-Tuning (SFT) and Reinforcement Learning from Human/AI Feedback (RLHF/RLAIF) to align behavior and follow instructions safely.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <!-- Article 2: Test-Time Reasoning -->
+      <section aria-label="Test-Time Reasoning">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 2</span>
+            <h2 class="article-headline">Test-Time Compute and Chain-of-Thought Reasoning</h2>
+          </header>
+          <div class="article-body">
+            <p>
+              Traditional language models generate answers token by token without deliberate planning. Newer architectures, such as OpenAI o1/o3-mini and DeepSeek-R1, use <em>test-time compute</em>.
+            </p>
+            <p>
+              These models produce internal reasoning tokens before generating the visible response. This allows the system to evaluate multiple solution paths, verify mathematical calculations, and correct intermediate errors. Research shows that giving a model time to think during inference significantly increases accuracy on complex tasks.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Article 3: Multimodal Systems -->
+      <section aria-label="Multimodal AI">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 3</span>
+            <h2 class="article-headline">Native Multimodality: Audio, Vision, and Text</h2>
+          </header>
+          <div class="article-body">
+            <p>
+              Early multimodal models used separate vision or audio adapters to convert images and speech into text representations. Modern models, such as Google Gemini and OpenAI GPT-4o, are natively multimodal.
+            </p>
+            <p>
+              In a natively multimodal architecture, visual patches, audio frames, and text tokens are processed in the same unified neural network. This enables real-time spoken conversations with natural inflection, sub-second latency, and accurate inspection of complex charts and diagrams.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Article 4: Autonomous Agents & Tool Use -->
+      <section aria-label="Autonomous Agents">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 4</span>
+            <h2 class="article-headline">Autonomous Agents and Tool Use</h2>
+          </header>
+          <div class="article-body">
+            <p>
+              The most impactful evolution of frontier models is the shift from text generators to autonomous agents. An agent can interact with external environments by invoking tools such as command-line shells, database queries, and web browsers.
+            </p>
+            <p>
+              Anthropic introduced <em>Computer Use</em>, allowing Claude to inspect desktop screenshots and control mouse clicks and keystrokes. Similarly, the <em>Model Context Protocol (MCP)</em> provides an open standard for connecting AI systems to local files, development tools, and enterprise databases safely.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Article 5: Limitations and Safety -->
+      <section aria-label="Limitations and Safety">
+        <article class="article-section">
+          <header class="article-header">
+            <span class="article-number">Article 5</span>
+            <h2 class="article-headline">Known Limitations: Hallucinations and Context Limits</h2>
+          </header>
+          <div class="article-body">
+            <p>
+              While foundation models are powerful tools, they possess real technical limitations:
+            </p>
+            <ul>
+              <li><strong>Hallucinations:</strong> Models predict the most probable sequence of words, which can occasionally result in plausible-sounding but factually incorrect assertions.</li>
+              <li><strong>Context Degradation:</strong> Even in million-token models, information placed in the middle of extremely long prompts can occasionally be overlooked compared to information at the beginning or end.</li>
+              <li><strong>Verification Necessity:</strong> AI-generated code and technical summaries should always be verified using automated tests and human review before production deployment.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+    </main>
+
+    <!-- Page Footer -->
+    <footer style="font-size:0.8rem; color:var(--muted); border-top:1px solid var(--border-light); padding-top:1rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+      <span>Frontier AI Atlas · Educational Articles</span>
+      <span><a href="resources.html">Next: Resources &amp; Viva →</a></span>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

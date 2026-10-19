@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" fill="none">
+  <defs>
+    <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1ba0f2" />
+      <stop offset="50%" stop-color="#4285f4" />
+      <stop offset="100%" stop-color="#9b72cb" />
+    </linearGradient>
+  </defs>
+  <rect width="40" height="40" rx="10" fill="#4285f4" fill-opacity="0.15" />
+  <path d="M20 7C20 14.1797 14.1797 20 7 20C14.1797 20 20 25.8203 20 33C20 25.8203 25.8203 20 33 20C25.8203 20 20 14.1797 20 7Z" fill="url(#geminiGrad)" />
+</svg>

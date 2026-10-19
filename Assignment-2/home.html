@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — Frontier AI Atlas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- Standalone notification (only shown if opened directly outside iframe) -->
+    <div id="standaloneNotice" class="standalone-banner" style="display:none;">
+      <span>Viewing page standalone.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.65rem; font-size:0.75rem;">Open in Main View →</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header" role="banner">
+      <h1 class="page-title">Explore Frontier AI</h1>
+      <p class="page-description">
+        Frontier artificial intelligence refers to large-scale foundation models developed at the cutting edge of machine learning capability. These systems demonstrate advanced reasoning, coding proficiency, and multimodal understanding across text, audio, and visual inputs.
+      </p>
+    </header>
+
+    <!-- Clean Grid of 6 Model Cards -->
+    <section aria-label="Leading AI Model Families">
+      <div class="cards-grid">
+
+        <!-- 1. OpenAI -->
+        <article class="model-card">
+          <div class="card-top">
+            <span class="model-org">OpenAI</span>
+            <h2 class="model-title">GPT &amp; o-Series</h2>
+            <p class="model-desc">
+              Developer of GPT-4o for real-time multimodal interaction and the o1/o3-mini series specializing in deliberate chain-of-thought reasoning for mathematics, science, and coding.
+            </p>
+          </div>
+          <div class="card-bottom">
+            <a href="https://platform.openai.com/docs" target="_blank" rel="noopener noreferrer" class="subtle-link">Official documentation →</a>
+          </div>
+        </article>
+
+        <!-- 2. Anthropic -->
+        <article class="model-card">
+          <div class="card-top">
+            <span class="model-org">Anthropic</span>
+            <h2 class="model-title">Claude Family</h2>
+            <p class="model-desc">
+              Creators of Claude 3.5 Sonnet and Haiku, recognized for software engineering accuracy, safe conversational tone, Artifacts, and autonomous Computer Use capabilities.
+            </p>
+          </div>
+          <div class="card-bottom">
+            <a href="https://docs.anthropic.com/" target="_blank" rel="noopener noreferrer" class="subtle-link">Official documentation →</a>
+          </div>
+        </article>
+
+        <!-- 3. Google DeepMind -->
+        <article class="model-card">
+          <div class="card-top">
+            <span class="model-org">Google DeepMind</span>
+            <h2 class="model-title">Gemini Family</h2>
+            <p class="model-desc">
+              A natively multimodal family spanning Flash and Pro models, known for pioneering million-token context windows capable of processing entire books, video streams, and large codebases.
+            </p>
+          </div>
+          <div class="card-bottom">
+            <a href="https://ai.google.dev/" target="_blank" rel="noopener noreferrer" class="subtle-link">Official documentation →</a>
+          </div>
+        </article>
+
+        <!-- 4. Meta -->
+        <article class="model-card">
+          <div class="card-top">
+            <span class="model-org">Meta AI</span>
+            <h2 class="model-title">Llama Family</h2>
+            <p class="model-desc">
+              The flagship open-weights series, including Llama 3.1 405B and 3.3 70B, enabling developers, enterprises, and researchers to self-host and customize state-of-the-art models.
+            </p>
+          </div>
+          <div class="card-bottom">
+            <a href="https://llama.meta.com/" target="_blank" rel="noopener noreferrer" class="subtle-link">Official documentation →</a>
+          </div>
+        </article>
+
+        <!-- 5. DeepSeek -->
+        <article class="model-card">
+          <div class="card-top">
+            <span class="model-org">DeepSeek AI</span>
+            <h2 class="model-title">DeepSeek V3 &amp; R1</h2>
+            <p class="model-desc">
+              High-efficiency open-weights models built on Mixture-of-Experts architectures and reinforcement learning reasoning, providing competitive performance at accessible inference costs.
+            </p>
+          </div>
+          <div class="card-bottom">
+            <a href="https://github.com/deepseek-ai" target="_blank" rel="noopener noreferrer" class="subtle-link">Official repository →</a>
+          </div>
+        </article>
+
+        <!-- 6. Mistral AI -->
+        <article class="model-card">
+          <div class="card-top">
+            <span class="model-org">Mistral AI</span>
+            <h2 class="model-title">Mistral Family</h2>
+            <p class="model-desc">
+              European AI laboratory producing compact, efficient frontier models such as Mistral Large 2 and Codestral, designed for fast code generation and multilingual support.
+            </p>
+          </div>
+          <div class="card-bottom">
+            <a href="https://docs.mistral.ai/" target="_blank" rel="noopener noreferrer" class="subtle-link">Official documentation →</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Faculty Requirement: Article Section -->
+    <section aria-label="Educational Overview">
+      <article class="article-section">
+        <header class="article-header">
+          <span class="article-number">Overview</span>
+          <h2 class="article-headline">Understanding the Shift to Test-Time Reasoning</h2>
+        </header>
+        <div class="article-body">
+          <p>
+            Recent progress in artificial intelligence is shifting from raw parameter scale during pre-training to <em>test-time compute</em>. Instead of answering queries instantaneously, newer models are trained to pause and generate intermediate reasoning steps—verifying proofs, testing logic, and correcting missteps before producing a final response.
+          </p>
+          <div class="info-note">
+            For a more in-depth exploration of reasoning architectures and autonomous agents, visit the <a href="articles.html">Articles page</a> or inspect the <a href="models.html">Model Explorer table</a>.
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Clean Page Footer -->
+    <footer style="font-size:0.8rem; color:var(--muted); border-top:1px solid var(--border-light); padding-top:1rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+      <span>Frontier AI Atlas · Lab Assignment 2</span>
+      <span><a href="models.html">Next: Model Explorer →</a></span>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

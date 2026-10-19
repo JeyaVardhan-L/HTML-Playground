@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources — Frontier AI Atlas</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="page-container">
+
+    <!-- Standalone notice (only shown if opened directly outside iframe) -->
+    <div id="standaloneNotice" class="standalone-banner" style="display:none;">
+      <span>Viewing page standalone.</span>
+      <a href="index.html" target="_top" class="btn btn-secondary" style="padding:0.25rem 0.65rem; font-size:0.75rem;">Open in Main View →</a>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header" role="banner">
+      <h1 class="page-title">Resources &amp; Viva Guide</h1>
+      <p class="page-description">
+        Assignment specifications, compliance checklist, official documentation links, and essential lab viva questions.
+      </p>
+    </header>
+
+    <main role="main">
+
+      <!-- Section 1: Assignment Checklist -->
+      <section class="info-section" aria-label="Assignment Checklist">
+        <h3>Assignment 2 Requirements Checklist</h3>
+        <div class="table-wrapper">
+          <table class="simple-table" aria-label="Requirement Mapping Table">
+            <thead>
+              <tr>
+                <th scope="col">Requirement</th>
+                <th scope="col">Files</th>
+                <th scope="col">Implementation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Frames</strong></td>
+                <td><code>index.html</code></td>
+                <td>Embedded <code>&lt;iframe name="content"&gt;</code> with links using <code>target="content"</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>2. Header, Footer, Articles as sections</strong></td>
+                <td>All pages</td>
+                <td>Semantic HTML5 elements used throughout: <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>3. Form in tabular format</strong></td>
+                <td><code>survey.html</code></td>
+                <td>Form fields, inputs, selects, radios, checkboxes, and buttons structured inside an HTML <code>&lt;table&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>4. Hyperlinks</strong></td>
+                <td>All pages</td>
+                <td>Internal iframe routing, standalone jump links, and verified external documentation links.</td>
+              </tr>
+              <tr>
+                <td><strong>5. CSS Properties</strong></td>
+                <td><code>css/style.css</code></td>
+                <td>Clean grayscale variables, simple borders, typography, spacing, and subtle hover states.</td>
+              </tr>
+              <tr>
+                <td><strong>6. Responsive Web Design</strong></td>
+                <td><code>css/style.css</code></td>
+                <td>Fluid layouts, media queries, wrapping navigation, and auto-resizing iframe.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 2: Viva Q&A -->
+      <section class="info-section" aria-label="Viva Voce Questions">
+        <h3>Viva Voce Questions &amp; Answers</h3>
+        <div class="qa-list">
+
+          <div class="qa-item">
+            <h4 class="qa-question">1. Why use an &lt;iframe&gt; instead of older &lt;frameset&gt;?</h4>
+            <p class="qa-answer">
+              The HTML4 <code>&lt;frameset&gt;</code> element is obsolete and was removed in HTML5 because it broke URL bookmarking, search indexing, and mobile responsiveness. <code>&lt;iframe&gt;</code> is the modern standard for embedding external documents inside normal responsive layouts.
+            </p>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="qa-question">2. How does the target="content" attribute work?</h4>
+            <p class="qa-answer">
+              When an iframe has <code>name="content"</code>, any anchor tag with <code>target="content"</code> directs the browser to load that URL inside the iframe, preventing a full parent page refresh.
+            </p>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="qa-question">3. What is the benefit of semantic HTML?</h4>
+            <p class="qa-answer">
+              Semantic tags like <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, and <code>&lt;footer&gt;</code> convey structural meaning to assistive technologies (screen readers) and search engines, while improving code readability.
+            </p>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="qa-question">4. How is the tabular form made responsive?</h4>
+            <p class="qa-answer">
+              While standard HTML tables use table-cell rendering on desktops, CSS media queries on small screens (e.g. <code>@media (max-width: 768px)</code>) switch table cells to block elements, allowing labels and inputs to stack naturally on mobile devices.
+            </p>
+          </div>
+
+          <div class="qa-item">
+            <h4 class="qa-question">5. Why are CSS custom properties useful?</h4>
+            <p class="qa-answer">
+              CSS variables (like <code>--background</code> and <code>--border</code>) define design tokens centrally. Updating a token in <code>:root</code> instantly updates colors and borders across the entire stylesheet.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 3: Official References -->
+      <section class="info-section" aria-label="Official Documentation Links">
+        <h3>Official Model Documentation</h3>
+        <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:0.75rem;">
+          Verified documentation references from leading AI research organizations:
+        </p>
+        <ul style="padding-left:1.25rem; font-size:0.88rem; color:var(--text-secondary); line-height:1.7;">
+          <li>OpenAI Platform: <a href="https://platform.openai.com/docs" target="_blank" rel="noopener noreferrer">platform.openai.com/docs ↗</a></li>
+          <li>Anthropic Claude: <a href="https://docs.anthropic.com/" target="_blank" rel="noopener noreferrer">docs.anthropic.com ↗</a></li>
+          <li>Google DeepMind Gemini: <a href="https://ai.google.dev/" target="_blank" rel="noopener noreferrer">ai.google.dev ↗</a></li>
+          <li>Meta Llama: <a href="https://llama.meta.com/" target="_blank" rel="noopener noreferrer">llama.meta.com ↗</a></li>
+          <li>DeepSeek AI: <a href="https://github.com/deepseek-ai" target="_blank" rel="noopener noreferrer">github.com/deepseek-ai ↗</a></li>
+          <li>Mistral AI: <a href="https://docs.mistral.ai/" target="_blank" rel="noopener noreferrer">docs.mistral.ai ↗</a></li>
+        </ul>
+      </section>
+
+    </main>
+
+    <!-- Page Footer -->
+    <footer style="font-size:0.8rem; color:var(--muted); border-top:1px solid var(--border-light); padding-top:1rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+      <span>Frontier AI Atlas · Resources</span>
+      <span><a href="home.html">Return to Home →</a></span>
+    </footer>
+
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
