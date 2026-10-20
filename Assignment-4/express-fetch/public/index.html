@@ -3,246 +3,301 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Practical 1: Express Server & Browser Fetch</title>
+  <title>Practical 1: Express Server &amp; Browser Fetch</title>
   <style>
-    /* Clean, beginner-friendly college practical styling */
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background-color: #f7f9fa;
-      color: #333333;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      font-size: 15px;
       line-height: 1.6;
-      padding: 20px;
+      background: #f5f5f5;
+      color: #1a1a1a;
+      padding: 24px 16px 48px;
     }
 
-    .container {
-      max-width: 650px;
-      margin: 30px auto;
-      background-color: #ffffff;
-      padding: 30px;
-      border-radius: 8px;
-      border: 1px solid #e1e4e8;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.85em;
+      background: #eef0f3;
+      padding: 1px 5px;
+      border-radius: 3px;
     }
 
-    header {
-      margin-bottom: 25px;
-      border-bottom: 2px solid #eaecef;
-      padding-bottom: 15px;
+    .page-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid #d0d0d0;
     }
 
-    .badge {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 600;
-      background-color: #e0f2fe;
-      color: #0369a1;
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-bottom: 8px;
+    /* ── Header ─────────────────────────────────────────── */
+    .page-header {
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid #d0d0d0;
     }
 
-    h1 {
-      font-size: 22px;
-      color: #1f2937;
+    .page-label {
+      display: block;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #666;
       margin-bottom: 6px;
     }
 
-    p.subtitle {
-      font-size: 14px;
-      color: #6b7280;
+    .page-header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 4px;
     }
 
-    .info-callout {
-      background-color: #f8fafc;
-      border-left: 4px solid #4f46e5;
-      padding: 12px 16px;
+    .page-header p {
       font-size: 13px;
-      color: #475569;
-      border-radius: 0 6px 6px 0;
-      margin-bottom: 20px;
+      color: #555;
     }
 
-    .action-panel {
-      display: flex;
-      gap: 12px;
-      align-items: center;
+    /* ── Content ─────────────────────────────────────────── */
+    .content {
+      padding: 24px 28px;
+    }
+
+    /* How-it-works note */
+    .how-it-works {
+      font-size: 13px;
+      color: #444;
+      border-left: 3px solid #2c4ecf;
+      padding: 8px 12px;
+      background: #f8f9ff;
       margin-bottom: 20px;
+      line-height: 1.55;
+    }
+
+    /* ── Buttons ─────────────────────────────────────────── */
+    .btn-row {
+      display: flex;
+      gap: 8px;
       flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
     button {
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      background-color: #4f46e5;
-      color: #ffffff;
-      border: none;
-      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      border: 1px solid #b0b0b0;
+      background: #f5f5f5;
+      color: #222;
       cursor: pointer;
-      transition: background-color 0.2s;
+      border-radius: 3px;
+      transition: background 0.12s, border-color 0.12s;
+      line-height: 1.4;
     }
 
     button:hover:not(:disabled) {
-      background-color: #4338ca;
+      background: #e8e8e8;
+      border-color: #888;
+    }
+
+    button:focus-visible {
+      outline: 2px solid #2c4ecf;
+      outline-offset: 2px;
     }
 
     button:disabled {
-      background-color: #9ca3af;
+      opacity: 0.55;
       cursor: not-allowed;
     }
 
-    .btn-clear {
-      background-color: #f3f4f6;
-      color: #374151;
-      border: 1px solid #d1d5db;
+    #fetchBtn {
+      background: #2c4ecf;
+      color: #fff;
+      border-color: #2c4ecf;
     }
 
-    .btn-clear:hover:not(:disabled) {
-      background-color: #e5e7eb;
+    #fetchBtn:hover:not(:disabled) {
+      background: #2341b8;
+      border-color: #2341b8;
     }
 
-    /* Loading Message */
-    .loading-msg {
+    /* ── Status messages ─────────────────────────────────── */
+    #loadingIndicator {
       display: none;
-      font-size: 14px;
-      color: #4f46e5;
-      font-weight: 500;
-      margin-top: 10px;
-    }
-
-    /* Error Message */
-    .error-msg {
-      display: none;
-      padding: 12px 16px;
-      background-color: #fef2f2;
-      border: 1px solid #fecaca;
-      border-radius: 6px;
-      color: #b91c1c;
-      font-size: 14px;
-      margin-top: 15px;
-    }
-
-    /* Data Display Area */
-    .student-card {
-      display: none;
-      margin-top: 20px;
-      padding: 20px;
-      background-color: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      border-radius: 8px;
-    }
-
-    .student-card h2 {
-      font-size: 17px;
-      color: #166534;
+      font-size: 13px;
+      color: #555;
       margin-bottom: 12px;
-      border-bottom: 1px solid #dcfce7;
-      padding-bottom: 8px;
     }
 
-    .student-grid {
+    #errorBox {
+      display: none;
+      font-size: 13px;
+      color: #b91c1c;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      padding: 10px 14px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+
+    /* ── Result area ─────────────────────────────────────── */
+    #studentContainer {
+      display: none;
+    }
+
+    #studentContainer h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #555;
+    }
+
+    /* Definition-list style rows */
+    .info-list {
+      list-style: none;
+      border: 1px solid #d0d0d0;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .info-list li {
       display: grid;
       grid-template-columns: 140px 1fr;
-      gap: 8px 12px;
+      border-bottom: 1px solid #e8e8e8;
       font-size: 14px;
     }
 
-    .grid-label {
-      font-weight: 600;
-      color: #15803d;
+    .info-list li:last-child {
+      border-bottom: none;
     }
 
-    .grid-value {
-      color: #1f2937;
-    }
-
-    .endpoint-hint {
-      margin-top: 15px;
-      font-size: 12px;
-      color: #6b7280;
-      background-color: #f3f4f6;
+    .il-label {
       padding: 8px 12px;
-      border-radius: 4px;
-      font-family: monospace;
+      background: #fafafa;
+      color: #555;
+      font-weight: 500;
+      font-size: 13px;
+      border-right: 1px solid #e8e8e8;
     }
 
-    footer {
-      margin-top: 30px;
-      text-align: center;
+    .il-value {
+      padding: 8px 12px;
+      color: #111;
+    }
+
+    .source-note {
       font-size: 12px;
-      color: #9ca3af;
+      color: #888;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .page-footer {
+      padding: 12px 28px;
+      border-top: 1px solid #d0d0d0;
+      font-size: 12px;
+      color: #888;
+      background: #fafafa;
+    }
+
+    /* ── Responsive ──────────────────────────────────────── */
+    @media (max-width: 500px) {
+      .page-header,
+      .content,
+      .page-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .info-list li {
+        grid-template-columns: 100px 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <header>
-      <span class="badge">Assignment 4 — Practical 1</span>
+  <div class="page-wrap">
+    <header class="page-header">
+      <span class="page-label">Assignment 4 — Practical 1 (WAF Lab)</span>
       <h1>Student Information</h1>
-      <p class="subtitle">Demonstrating Express.js Server, HTTP GET Request, and Browser Fetch API with async/await.</p>
+      <p>Express.js server + browser Fetch API with <code>async</code>/<code>await</code>.</p>
     </header>
 
-    <div class="info-callout">
-      <strong>How this works:</strong> Initially, no student data is shown. When you click <strong>Fetch Data</strong>, browser JavaScript sends an asynchronous <code>GET</code> request to the Express server at <code>/api/student</code>. The server logs the request in its terminal and returns the student information as JSON.
-    </div>
+    <div class="content">
+      <!-- Explanation -->
+      <p class="how-it-works">
+        <strong>How it works:</strong> The page loads from Express, but no student data is included
+        in the initial HTML. Clicking <strong>Fetch Data</strong> makes a second
+        <code>GET /api/student</code> request in JavaScript. The Express server logs the request
+        in its terminal and returns JSON, which the browser parses and displays below.
+      </p>
 
-    <!-- Interactive Buttons -->
-    <div class="action-panel">
-      <button id="fetchBtn">Fetch Data</button>
-      <button id="clearBtn" class="btn-clear">Clear Display</button>
-    </div>
-
-    <!-- Loading Indicator -->
-    <div id="loadingIndicator" class="loading-msg">
-      ⏳ Requesting student data from Express server (GET /api/student)...
-    </div>
-
-    <!-- Error Display Box -->
-    <div id="errorBox" class="error-msg"></div>
-
-    <!-- Student Data Result Area -->
-    <div id="studentContainer" class="student-card">
-      <h2>✓ Student Record Received from Express API</h2>
-      <div class="student-grid">
-        <div class="grid-label">Student Name:</div>
-        <div class="grid-value" id="studentName">—</div>
-
-        <div class="grid-label">Roll Number:</div>
-        <div class="grid-value" id="studentRoll">—</div>
-
-        <div class="grid-label">Branch:</div>
-        <div class="grid-value" id="studentBranch">—</div>
-
-        <div class="grid-label">Year / Semester:</div>
-        <div class="grid-value" id="studentYear">—</div>
-
-        <div class="grid-label">University:</div>
-        <div class="grid-value" id="studentUniversity">—</div>
-
-        <div class="grid-label">Current Status:</div>
-        <div class="grid-value" id="studentStatus">—</div>
+      <!-- Buttons -->
+      <div class="btn-row">
+        <button id="fetchBtn">Fetch Data</button>
+        <button id="clearBtn">Clear Display</button>
       </div>
-      <div class="endpoint-hint">
-        Response source: HTTP GET http://localhost:3000/api/student
+
+      <!-- Loading -->
+      <div id="loadingIndicator">⏳ Requesting data from Express (GET /api/student)…</div>
+
+      <!-- Error -->
+      <div id="errorBox"></div>
+
+      <!-- Student data result -->
+      <div id="studentContainer">
+        <h2>Response from Express API</h2>
+        <ul class="info-list">
+          <li>
+            <span class="il-label">Name</span>
+            <span class="il-value" id="studentName">—</span>
+          </li>
+          <li>
+            <span class="il-label">Roll Number</span>
+            <span class="il-value" id="studentRoll">—</span>
+          </li>
+          <li>
+            <span class="il-label">Branch</span>
+            <span class="il-value" id="studentBranch">—</span>
+          </li>
+          <li>
+            <span class="il-label">Year / Semester</span>
+            <span class="il-value" id="studentYear">—</span>
+          </li>
+          <li>
+            <span class="il-label">University</span>
+            <span class="il-value" id="studentUniversity">—</span>
+          </li>
+          <li>
+            <span class="il-label">Status</span>
+            <span class="il-value" id="studentStatus">—</span>
+          </li>
+        </ul>
+        <p class="source-note">GET http://localhost:3000/api/student → 200 OK (JSON)</p>
       </div>
     </div>
 
-    <footer>
+    <footer class="page-footer">
       Web Application Frameworks Lab · Assignment 4 · Practical 1 (Express &amp; Fetch)
     </footer>
   </div>
 
   <script>
-    // =========================================================================
+    // =====================================================================
     // BROWSER JAVASCRIPT: ASYNCHRONOUS FETCH LOGIC
-    // =========================================================================
+    // =====================================================================
 
     const fetchBtn = document.getElementById("fetchBtn");
     const clearBtn = document.getElementById("clearBtn");

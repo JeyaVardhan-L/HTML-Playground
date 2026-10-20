@@ -10,18 +10,12 @@ import React from "react";
  */
 function StudentCard({ name, branch, rollNo, year }) {
   return (
-    <div className="student-badge-card">
-      <h3 style={{ color: "#1e40af" }}>{name}</h3>
-      <div className="student-prop-row">
-        <strong>Roll Number:</strong> <span>{rollNo}</span>
-      </div>
-      <div className="student-prop-row">
-        <strong>Branch:</strong> <span>{branch}</span>
-      </div>
-      <div className="student-prop-row">
-        <strong>Year:</strong> <span>{year}</span>
-      </div>
-    </div>
+    <tr>
+      <td>{name}</td>
+      <td>{rollNo}</td>
+      <td>{branch}</td>
+      <td>{year}</td>
+    </tr>
   );
 }
 
@@ -60,52 +54,57 @@ function StudentProps() {
   ];
 
   return (
-    <div className="practical-card">
-      <div className="practical-card-header">
-        <div className="card-title-group">
-          <h2>
-            <span className="practical-pill">Practical 4</span>
-            React Props: Parent to Child Data Passing
-          </h2>
-        </div>
+    <section className="practical-section">
+      <div className="practical-heading">
+        <span className="pnum">Practical 4</span>
+        <h2>React Props: Parent to Child Data Passing</h2>
       </div>
 
-      <div className="explanation-banner">
-        <strong>What are Props in React?</strong>
-        <p style={{ marginTop: "4px" }}>
-          <strong>Props</strong> (short for "properties") allow a <strong>Parent component</strong> to pass data down to a <strong>Child component</strong>, similar to passing arguments to a function. Props are <em>read-only</em> (immutable): a child component cannot modify the props it receives.
+      <p className="practical-desc">
+        <strong>Props</strong> (short for "properties") allow a parent component to pass data
+        down to a child component, similar to passing arguments to a function. Props are{" "}
+        <em>read-only</em>: the child cannot modify what it receives. Below, the parent maps
+        over <code>studentsList</code> and renders one <code>&lt;StudentCard /&gt;</code> per entry.
+      </p>
+
+      <div className="demo-area">
+        <div className="table-wrap">
+          <table className="students-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Roll No.</th>
+                <th>Branch</th>
+                <th>Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              {studentsList.map((student) => (
+                <StudentCard
+                  key={student.id}
+                  name={student.name}
+                  rollNo={student.rollNo}
+                  branch={student.branch}
+                  year={student.year}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="table-note">
+          Each row is a separate <code>&lt;StudentCard /&gt;</code> child component receiving
+          props from the parent.
         </p>
       </div>
 
-      <div className="demo-box">
-        <div style={{ fontSize: "14px", fontWeight: 600, color: "#374151", marginBottom: "8px" }}>
-          Parent Component rendering 3 Child <code>&lt;StudentCard /&gt;</code> components via <code>.map()</code>:
-        </div>
-
-        {/* Rendering child components with props */}
-        <div className="student-list-grid">
-          {studentsList.map((student) => (
-            <StudentCard
-              key={student.id}
-              name={student.name}
-              rollNo={student.rollNo}
-              branch={student.branch}
-              year={student.year}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="code-box">
-        {`// Parent passes props:
+      <pre className="code-box">{`// Parent passes props:
 <StudentCard name="Jey" branch="CSE" rollNo="9057" />
 
 // Child receives props:
 function StudentCard({ name, branch, rollNo }) {
-  return <div><h3>{name}</h3><p>{branch}</p></div>;
-}`}
-      </div>
-    </div>
+  return <tr><td>{name}</td><td>{branch}</td></tr>;
+}`}</pre>
+    </section>
   );
 }
 

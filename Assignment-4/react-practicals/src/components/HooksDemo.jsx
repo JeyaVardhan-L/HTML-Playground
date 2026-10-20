@@ -45,88 +45,69 @@ function HooksDemo() {
   };
 
   return (
-    <div className="practical-card">
-      <div className="practical-card-header">
-        <div className="card-title-group">
-          <h2>
-            <span className="practical-pill">Practical 5</span>
-            Three Hooks Demonstration (useState, useRef, useEffect)
-          </h2>
+    <section className="practical-section">
+      <div className="practical-heading">
+        <span className="pnum">Practical 5</span>
+        <h2>Three Hooks: useState, useRef, useEffect</h2>
+      </div>
+
+      <p className="practical-desc">
+        React Hooks let function components use state and lifecycle features. The three
+        hooks below are demonstrated together in a single component.
+      </p>
+
+      {/* Part A: useState + useEffect */}
+      <div className="hooks-row">
+        <h3>
+          Hook 1 &amp; 3 — <code>useState</code> + <code>useEffect</code> (document title)
+        </h3>
+        <p>
+          Clicking the button increments <code>clicks</code> state. The <code>useEffect</code>{" "}
+          watches <code>clicks</code> and updates the browser tab title as a side-effect.
+        </p>
+        <div className="click-line">
+          <span className="click-count">Clicks: <span id="hooksClickCount">{clicks}</span></span>
+          <button className="btn btn-accent" onClick={() => setClicks(clicks + 1)} id="increaseBtn">
+            + Increase
+          </button>
+          <button className="btn" onClick={() => setClicks(0)}>
+            Reset
+          </button>
+        </div>
+        <p style={{ fontSize: "12px", color: "#888", marginTop: "8px" }}>
+          Check the browser tab — it reads: "Clicked {clicks} times — Hooks Demo"
+        </p>
+      </div>
+
+      {/* Part B: useRef */}
+      <div className="hooks-row">
+        <h3>
+          Hook 2 — <code>useRef</code> (direct DOM focus) + <code>useState</code> (text input)
+        </h3>
+        <p>
+          <code>inputRef.current.focus()</code> directly focuses the input element without
+          triggering a re-render. The text value is kept in <code>useState</code>.
+        </p>
+        <div className="input-row">
+          <input
+            type="text"
+            ref={inputRef}
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            className="text-input"
+            id="hooksTextInput"
+            placeholder="Type something here..."
+          />
+          <button className="btn" onClick={handleFocusClick} id="focusInputBtn">
+            Focus Input
+          </button>
+        </div>
+        <div className="live-preview">
+          <strong>useState live value:</strong> {inputText || "(empty)"}
         </div>
       </div>
 
-      <div className="explanation-banner">
-        <strong>The Three Essential React Hooks:</strong>
-        <ul style={{ marginLeft: "18px", marginTop: "6px" }}>
-          <li>
-            <strong>1. <code>useState</code>:</strong> Stores and updates reactive values (like our click counter and text box value).
-          </li>
-          <li>
-            <strong>2. <code>useRef</code>:</strong> Gives direct access to a DOM node (used to focus the input box on demand without re-rendering).
-          </li>
-          <li>
-            <strong>3. <code>useEffect</code>:</strong> Performs side effects outside React (updating the browser tab title to reflect the click count).
-          </li>
-        </ul>
-      </div>
-
-      <div className="demo-box">
-        {/* Hook 1 & 3: Counter + Document Title Effect */}
-        <div style={{ marginBottom: "20px" }}>
-          <h3 style={{ fontSize: "15px", color: "#1f2937", marginBottom: "6px" }}>
-            Part A: <code>useState</code> &amp; <code>useEffect</code> (Document Title Sync)
-          </h3>
-          <p style={{ fontSize: "13px", color: "#6b7280", marginBottom: "8px" }}>
-            Clicking the button updates the <code>clicks</code> state and causes <code>useEffect</code> to update the browser tab's title:
-          </p>
-          <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-            <span style={{ fontSize: "16px", fontWeight: 600, color: "#111827" }}>
-              Total Clicks: <span id="hooksClickCount">{clicks}</span>
-            </span>
-            <button className="btn btn-primary" onClick={() => setClicks(clicks + 1)} id="increaseBtn">
-              + Increase Counter
-            </button>
-            <button className="btn btn-secondary" onClick={() => setClicks(0)}>
-              Reset
-            </button>
-          </div>
-          <p style={{ fontSize: "12px", color: "#059669", marginTop: "6px" }}>
-            Notice the browser tab title: "<em>Clicked {clicks} times — Hooks Demo</em>"
-          </p>
-        </div>
-
-        <hr style={{ border: "none", borderTop: "1px solid #e2e8f0", margin: "16px 0" }} />
-
-        {/* Hook 1 & 2: Text Input State + useRef Focus */}
-        <div>
-          <h3 style={{ fontSize: "15px", color: "#1f2937", marginBottom: "6px" }}>
-            Part B: <code>useState</code> &amp; <code>useRef</code> (DOM Node Focus)
-          </h3>
-          <p style={{ fontSize: "13px", color: "#6b7280" }}>
-            Clicking "Focus Input" calls <code>inputRef.current.focus()</code> to focus the text field directly:
-          </p>
-          <div className="hooks-input-group">
-            <input
-              type="text"
-              ref={inputRef}
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              className="text-input"
-              id="hooksTextInput"
-              placeholder="Type something here..."
-            />
-            <button className="btn btn-secondary" onClick={handleFocusClick} id="focusInputBtn">
-              🔍 Focus Input Box
-            </button>
-          </div>
-          <div className="live-text-preview">
-            <strong>useState Live Preview:</strong> {inputText || "(empty)"}
-          </div>
-        </div>
-      </div>
-
-      <div className="code-box">
-        {`// 1. useState:
+      <pre className="code-box">{`// 1. useState:
 const [clicks, setClicks] = useState(0);
 
 // 2. useRef (direct DOM focus):
@@ -136,9 +117,8 @@ inputRef.current.focus();
 // 3. useEffect (side-effect on title):
 useEffect(() => {
   document.title = \`Clicked \${clicks} times\`;
-}, [clicks]);`}
-      </div>
-    </div>
+}, [clicks]);`}</pre>
+    </section>
   );
 }
 

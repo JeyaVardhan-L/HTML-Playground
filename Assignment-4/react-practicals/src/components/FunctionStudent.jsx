@@ -21,50 +21,50 @@ function FunctionStudent() {
   };
 
   return (
-    <div className="practical-card">
-      <div className="practical-card-header">
-        <div className="card-title-group">
-          <h2>
-            <span className="practical-pill">Practical 6</span>
-            React Function Component
-          </h2>
-        </div>
+    <section className="practical-section">
+      <div className="practical-heading">
+        <span className="pnum">Practical 6</span>
+        <h2>React Function Component</h2>
       </div>
 
-      <div className="explanation-banner">
-        <strong>How Function Components Produce UI:</strong>
-        <p style={{ marginTop: "4px" }}>
-          In modern React, a <strong>Function Component</strong> is simply a JavaScript function that takes optional <code>props</code> as input and returns <strong>JSX</strong> (JavaScript XML). React executes the function and transforms the returned JSX into real browser DOM elements.
-        </p>
+      <p className="practical-desc">
+        In modern React, a <strong>Function Component</strong> is a plain JavaScript function
+        that takes optional <code>props</code> as input and returns <strong>JSX</strong>.
+        React calls the function and turns the returned JSX into real browser DOM elements.
+        Compare this layout with Practical 3 — the displayed data is similar, but the
+        implementation uses no class, no constructor, and no <code>this</code>.
+      </p>
+
+      <div className="demo-area">
+        <ul className="info-list">
+          <li>
+            <span className="il-label">Name</span>
+            <span className="il-value">{student.name}</span>
+          </li>
+          <li>
+            <span className="il-label">Roll Number</span>
+            <span className="il-value">{student.rollNo}</span>
+          </li>
+          <li>
+            <span className="il-label">Branch</span>
+            <span className="il-value">{student.branch}</span>
+          </li>
+          <li>
+            <span className="il-label">Year of Study</span>
+            <span className="il-value">{student.yearOfStudy}</span>
+          </li>
+          <li>
+            <span className="il-label">College</span>
+            <span className="il-value">{student.college}</span>
+          </li>
+          <li>
+            <span className="il-label">Specialization</span>
+            <span className="il-value">{student.specialization}</span>
+          </li>
+        </ul>
       </div>
 
-      <div className="demo-box">
-        <div className="student-badge-card" style={{ maxWidth: "480px", margin: "0 auto" }}>
-          <h3 style={{ color: "#065f46" }}>🧑‍💻 Student Record (Function Component)</h3>
-          <div className="student-prop-row">
-            <strong>Full Name:</strong> <span>{student.name}</span>
-          </div>
-          <div className="student-prop-row">
-            <strong>Roll Number:</strong> <span>{student.rollNo}</span>
-          </div>
-          <div className="student-prop-row">
-            <strong>Branch:</strong> <span>{student.branch}</span>
-          </div>
-          <div className="student-prop-row">
-            <strong>Year of Study:</strong> <span>{student.yearOfStudy}</span>
-          </div>
-          <div className="student-prop-row">
-            <strong>College:</strong> <span>{student.college}</span>
-          </div>
-          <div className="student-prop-row">
-            <strong>Specialization:</strong> <span>{student.specialization}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="code-box">
-        {`// Function Component Syntax:
-function FunctionStudent() {
+      <pre className="code-box">{`function FunctionStudent() {
   const name = "Jey";
   const branch = "CSE";
 
@@ -74,9 +74,8 @@ function FunctionStudent() {
       <p>Branch: {branch}</p>
     </div>
   );
-}`}
-      </div>
-    </div>
+}`}</pre>
+    </section>
   );
 }
 

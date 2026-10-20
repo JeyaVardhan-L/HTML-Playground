@@ -26,52 +26,41 @@ function StateCounter() {
   };
 
   return (
-    <div className="practical-card">
-      <div className="practical-card-header">
-        <div className="card-title-group">
-          <h2>
-            <span className="practical-pill">Practical 2</span>
-            React State: Increment &amp; Decrement Counter
-          </h2>
-        </div>
+    <section className="practical-section">
+      <div className="practical-heading">
+        <span className="pnum">Practical 2</span>
+        <h2>React State: Increment &amp; Decrement Counter</h2>
       </div>
 
-      <div className="explanation-banner">
-        <strong>What is State in React?</strong>
-        <p style={{ marginTop: "4px" }}>
-          <strong>State</strong> is a special JavaScript variable managed within a component. Unlike ordinary variables, when state changes using <code>setCount(...)</code>, React automatically re-renders the component so the updated value appears on the screen immediately.
-        </p>
-      </div>
+      <p className="practical-desc">
+        <strong>State</strong> is a special variable managed within a component. Unlike ordinary
+        variables, when state changes via <code>setCount(...)</code>, React automatically
+        re-renders the component so the updated value appears on screen immediately.
+      </p>
 
-      <div className="demo-box">
-        <div style={{ textAlign: "center", fontSize: "14px", color: "#6b7280" }}>
-          Current State Value:
-        </div>
-        <div className="counter-display" id="stateCounterValue">
-          {count}
-        </div>
+      <div className="demo-area">
+        <span className="counter-label">Current state value</span>
+        <div className="counter-value" id="stateCounterValue">{count}</div>
 
         <div className="counter-controls">
-          <button className="btn btn-secondary" onClick={handleDecrement} id="decrementBtn">
+          <button className="btn btn-danger" onClick={handleDecrement} id="decrementBtn">
             − Decrement
           </button>
-          <button className="btn btn-secondary" onClick={handleReset} id="resetCountBtn">
-            Reset (0)
+          <button className="btn" onClick={handleReset} id="resetCountBtn">
+            Reset
           </button>
-          <button className="btn btn-primary" onClick={handleIncrement} id="incrementBtn">
+          <button className="btn btn-accent" onClick={handleIncrement} id="incrementBtn">
             + Increment
           </button>
         </div>
       </div>
 
-      <div className="code-box">
-        {`// Core React useState Code:
-const [count, setCount] = useState(0);
+      <pre className="code-box">{`const [count, setCount] = useState(0);
 
 <button onClick={() => setCount(count + 1)}>+ Increment</button>
-<button onClick={() => setCount(count - 1)}>− Decrement</button>`}
-      </div>
-    </div>
+<button onClick={() => setCount(count - 1)}>− Decrement</button>
+<button onClick={() => setCount(0)}>Reset</button>`}</pre>
+    </section>
   );
 }
 
