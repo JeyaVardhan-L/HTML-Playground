@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practical 4: Dynamic Stacking of Elements (z-index)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #f7f9fa;
+      color: #333333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid #e1e4e8;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    header {
+      margin-bottom: 20px;
+      border-bottom: 2px solid #eaecef;
+      padding-bottom: 15px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: #fce7f3;
+      color: #be185d;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #1f2937;
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .instructions-card {
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    /* Stacking Playground Area */
+    .stack-stage {
+      position: relative;
+      width: 100%;
+      height: 360px;
+      background-color: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .stage-watermark {
+      position: absolute;
+      bottom: 12px;
+      right: 15px;
+      font-size: 12px;
+      color: #94a3b8;
+      pointer-events: none;
+    }
+
+    /* Overlapping Boxes Base Style */
+    .box {
+      position: absolute;
+      width: 220px;
+      height: 170px;
+      border-radius: 8px;
+      padding: 15px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    }
+
+    .box:active {
+      transform: scale(0.98);
+    }
+
+    .box-header {
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .box-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .box-desc {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .box-footer {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.85;
+    }
+
+    /* Colors and Initial Positions */
+    /* Box 1 (Coral Red) */
+    #box1 {
+      top: 30px;
+      left: 40px;
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border: 2px solid #ef4444;
+      color: #991b1b;
+      z-index: 1;
+    }
+
+    /* Box 2 (Royal Indigo) */
+    #box2 {
+      top: 85px;
+      left: 140px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+      border: 2px solid #6366f1;
+      color: #3730a3;
+      z-index: 2;
+    }
+
+    /* Box 3 (Emerald Green) */
+    #box3 {
+      top: 140px;
+      left: 240px;
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      border: 2px solid #10b981;
+      color: #065f46;
+      z-index: 3;
+    }
+
+    /* Real-Time Status Card */
+    .status-panel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .z-index-list {
+      display: flex;
+      gap: 15px;
+      font-size: 13px;
+    }
+
+    .z-pill {
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      background-color: #4f46e5;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #4338ca;
+    }
+
+    /* Educational Explanation Section */
+    .explanation-box {
+      background-color: #fafbfc;
+      border: 1px solid #e1e4e8;
+      border-radius: 6px;
+      padding: 16px;
+      font-size: 13px;
+    }
+
+    .explanation-box h3 {
+      font-size: 14px;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .explanation-box ul {
+      margin-left: 20px;
+      color: #4b5563;
+    }
+
+    .explanation-box li {
+      margin-bottom: 5px;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Assignment 3 — Practical 4</span>
+      <h1>Dynamic Stacking of Elements Using z-index</h1>
+      <p class="subtitle">Demonstrating JavaScript Event Handling, DOM Manipulation, and Dynamic CSS z-index Modification.</p>
+    </header>
+
+    <div class="instructions-card">
+      <strong>How to test:</strong> Click on any of the three overlapping boxes. Notice how the clicked box smoothly moves to the front of the stack! Check the live z-index values below.
+    </div>
+
+    <!-- Live Status Panel -->
+    <div class="status-panel">
+      <div>
+        <strong id="topBoxText">Top Box: Box 3</strong>
+      </div>
+      <div class="z-index-list">
+        <span class="z-pill" id="pill1">Box 1: z-index 1</span>
+        <span class="z-pill" id="pill2">Box 2: z-index 2</span>
+        <span class="z-pill" id="pill3">Box 3: z-index 3</span>
+      </div>
+      <button id="resetStackBtn">Reset Layers</button>
+    </div>
+
+    <!-- Overlapping Boxes Stage -->
+    <div class="stack-stage">
+      <div class="stage-watermark">Click any card to bring to front</div>
+
+      <!-- Box 1 -->
+      <div class="box" id="box1" data-name="Box 1 (Coral Red)">
+        <div class="box-header">
+          <span>Box 1</span>
+          <span class="box-badge" id="badge1">z: 1</span>
+        </div>
+        <p class="box-desc">Coral Card. Initially positioned at the bottom of the stack (z-index: 1).</p>
+        <div class="box-footer">Click to bring front ↗</div>
+      </div>
+
+      <!-- Box 2 -->
+      <div class="box" id="box2" data-name="Box 2 (Royal Indigo)">
+        <div class="box-header">
+          <span>Box 2</span>
+          <span class="box-badge" id="badge2">z: 2</span>
+        </div>
+        <p class="box-desc">Indigo Card. Initially positioned in the middle layer (z-index: 2).</p>
+        <div class="box-footer">Click to bring front ↗</div>
+      </div>
+
+      <!-- Box 3 -->
+      <div class="box" id="box3" data-name="Box 3 (Emerald Green)">
+        <div class="box-header">
+          <span>Box 3</span>
+          <span class="box-badge" id="badge3">z: 3</span>
+        </div>
+        <p class="box-desc">Emerald Card. Initially positioned at the top of the stack (z-index: 3).</p>
+        <div class="box-footer">Click to bring front ↗</div>
+      </div>
+    </div>
+
+    <!-- Educational Explanation -->
+    <div class="explanation-box">
+      <h3>How This Works (Core Concepts):</h3>
+      <ul>
+        <li><strong>The Z-Axis:</strong> On a computer screen, the X-axis is horizontal and the Y-axis is vertical. The Z-axis represents <em>depth</em> (coming towards the user's eyes).</li>
+        <li><strong>The <code>z-index</code> Property:</strong> Elements with higher numeric <code>z-index</code> values render on top of elements with lower values. Note: <code>z-index</code> only works on positioned elements (e.g. <code>position: absolute</code> or <code>relative</code>).</li>
+        <li><strong>JavaScript Counter:</strong> We maintain a counter variable <code>highestZIndex = 3</code>. Whenever a box is clicked, JavaScript executes <code>this.style.zIndex = ++highestZIndex;</code>, guaranteeing the clicked box receives a higher depth value than all others.</li>
+      </ul>
+    </div>
+
+    <footer>
+      Web Application Frameworks Lab · Assignment 3 · Practical 4
+    </footer>
+  </div>
+
+  <script>
+    // =========================================================================
+    // DYNAMIC STACKING JAVASCRIPT LOGIC
+    // =========================================================================
+
+    // 1. Initialize counter with the highest initial z-index on the page
+    let highestZIndex = 3;
+
+    // 2. Select DOM elements
+    const boxes = document.querySelectorAll(".box");
+    const topBoxText = document.getElementById("topBoxText");
+    const pill1 = document.getElementById("pill1");
+    const pill2 = document.getElementById("pill2");
+    const pill3 = document.getElementById("pill3");
+    const badge1 = document.getElementById("badge1");
+    const badge2 = document.getElementById("badge2");
+    const badge3 = document.getElementById("badge3");
+    const resetBtn = document.getElementById("resetStackBtn");
+
+    // 3. Helper function to update the live display badges
+    function updateDisplay(activeBoxName) {
+      const z1 = document.getElementById("box1").style.zIndex || 1;
+      const z2 = document.getElementById("box2").style.zIndex || 2;
+      const z3 = document.getElementById("box3").style.zIndex || 3;
+
+      pill1.textContent = `Box 1: z-index ${z1}`;
+      pill2.textContent = `Box 2: z-index ${z2}`;
+      pill3.textContent = `Box 3: z-index ${z3}`;
+
+      badge1.textContent = `z: ${z1}`;
+      badge2.textContent = `z: ${z2}`;
+      badge3.textContent = `z: ${z3}`;
+
+      if (activeBoxName) {
+        topBoxText.textContent = `Top Box: ${activeBoxName}`;
+      }
+    }
+
+    // 4. Attach click event listener to each box
+    boxes.forEach(function (box) {
+      box.addEventListener("click", function () {
+        // Increment the global z-index counter
+        highestZIndex++;
+
+        // DHTML: Dynamically apply the new z-index directly to the element's style
+        this.style.zIndex = highestZIndex;
+
+        // Retrieve box name for display
+        const boxName = this.getAttribute("data-name");
+        updateDisplay(boxName);
+      });
+    });
+
+    // 5. Reset button: restores initial stacking order
+    resetBtn.addEventListener("click", function () {
+      document.getElementById("box1").style.zIndex = 1;
+      document.getElementById("box2").style.zIndex = 2;
+      document.getElementById("box3").style.zIndex = 3;
+
+      highestZIndex = 3;
+      updateDisplay("Box 3 (Reset)");
+    });
+  </script>
+
+</body>
+</html>
