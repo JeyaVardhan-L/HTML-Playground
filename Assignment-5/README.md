@@ -5,7 +5,7 @@
 **Assignment:** Lab Assignment 5 — Fetching the data with a new connection using Express js  
 **Technologies:** Node.js, Express.js (v4), Vanilla JavaScript (Browser Fetch API), HTML5, CSS3  
 **Port:** `3001`  
-**Student:** Saketh · Department of Computer Science & Engineering (CSE), 3rd Year  
+**Student:** Student Name · Department of Computer Science & Engineering (CSE), 3rd Year  
 
 ---
 
@@ -104,7 +104,7 @@ Ready to receive client requests...
 | State | Browser UI | Terminal Output |
 | :--- | :--- | :--- |
 | **Before 1st Click** | Shows heading, explanation, and enabled **Fetch Data** button. The student details area is **hidden**. | Displays startup banner only. No request logs. |
-| **After 1st Click** | Briefly shows loading indicator. Table appears showing:<br>• **Student Name:** Saketh<br>• **Branch:** CSE<br>• **Year:** 3rd Year<br>• **Request Number:** `#1`<br>• **Fetch Timestamp:** *(current time)* | `GET /api/student: request 1` |
+| **After 1st Click** | Briefly shows loading indicator. Table appears showing:<br>• **Student Name:** Student Name<br>• **Branch:** CSE<br>• **Year:** 3rd Year<br>• **Request Number:** `#1`<br>• **Fetch Timestamp:** *(current time)* | `GET /api/student: request 1` |
 | **After 2nd Click** | Request number increments to **`#2`**. Timestamp updates to the exact new moment of the second request. | `GET /api/student: request 2` |
 | **Subsequent Clicks** | Request number increments continuously (`#3`, `#4`, etc.) with fresh timestamps on every click. | Logs `GET /api/student: request 3`, `request 4`, etc. |
 

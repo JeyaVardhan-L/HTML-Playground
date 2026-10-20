@@ -20,7 +20,7 @@ let requestCount = 0;
 
 // 2. Sample student data stored in a simple JavaScript object
 const studentData = {
-  name: "Saketh",
+  name: "Student Name",
   branch: "CSE",
   year: "3rd Year"
 };

@@ -38,7 +38,7 @@ let requestCount = 0;
 
 // 2. Sample student data stored in a simple JavaScript object
 const studentData = {
-  name: "Saketh",
+  name: "Student Name",
   branch: "CSE",
   year: "3rd Year"
 };
@@ -263,7 +263,7 @@ fetchBtn.addEventListener("click", fetchStudentData);
    - Server returns:
      ```json
      {
-       "name": "Saketh",
+       "name": "Student Name",
        "branch": "CSE",
        "year": "3rd Year",
        "requestNumber": 1,
@@ -303,7 +303,7 @@ What happens if the Express server is stopped while the webpage is open?
 Suppose in `server.js` you change:
 ```javascript
 const studentData = {
-  name: "Saketh Sharma",
+  name: "Alex Morgan",
   branch: "Artificial Intelligence & Data Science",
   year: "Final Year"
 };
