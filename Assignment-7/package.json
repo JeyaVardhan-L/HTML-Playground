@@ -1,0 +1,29 @@
+{
+  "name": "waf-assignment-7",
+  "version": "1.0.0",
+  "description": "WAF Lab Assignment 7 - MongoDB Queries, Cursors, Regex, Deletions and Library Management",
+  "main": "scripts/seed.js",
+  "scripts": {
+    "seed": "node scripts/seed.js",
+    "top-three": "node scripts/top-three.js",
+    "find-by-id": "node scripts/find-by-id.js",
+    "delete-below-40": "node scripts/delete-below-40.js",
+    "names-starting-m": "node scripts/names-starting-m.js",
+    "library": "node scripts/library-management.js"
+  },
+  "keywords": [
+    "mongodb",
+    "cursor",
+    "sort",
+    "limit",
+    "objectid",
+    "regex",
+    "atomic-updates",
+    "waf-lab"
+  ],
+  "author": "Student",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.14.2"
+  }
+}

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practical 2: JavaScript Core Basics & Foundations</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #f7f9fa;
+      color: #333333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid #e1e4e8;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    header {
+      margin-bottom: 25px;
+      border-bottom: 2px solid #eaecef;
+      padding-bottom: 15px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: #e0f2fe;
+      color: #0369a1;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #1f2937;
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .section-card {
+      background-color: #fafbfc;
+      border: 1px solid #e1e4e8;
+      border-radius: 6px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .section-card h2 {
+      font-size: 16px;
+      color: #111827;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-card h2 .num {
+      background-color: #4f46e5;
+      color: #ffffff;
+      font-size: 12px;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .code-box {
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      padding: 12px;
+      font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+      color: #1f2937;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .output-box {
+      background-color: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .interactive-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 7px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4f46e5;
+    }
+
+    button {
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      background-color: #4f46e5;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #4338ca;
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+      background-color: #ffffff;
+    }
+
+    table.data-table th,
+    table.data-table td {
+      border: 1px solid #e5e7eb;
+      padding: 8px 10px;
+      text-align: left;
+    }
+
+    table.data-table th {
+      background-color: #f3f4f6;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .error-out {
+      background-color: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Assignment 3 — Practical 2</span>
+      <h1>JavaScript Basics & Core Concepts</h1>
+      <p class="subtitle">Demonstrating Data Types, Expressions, Functions, Control Statements, Objects, Dates, String Methods, and Error Handling.</p>
+    </header>
+
+    <!-- 1. Primitive Data Types -->
+    <div class="section-card">
+      <h2><span class="num">1</span> Primitive Data Types</h2>
+      <p style="font-size: 13px; color: #4b5563;">JavaScript has 7 primitive types. Here are the 5 most fundamental ones demonstrated using the <code>typeof</code> operator:</p>
+      
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Sample Variable &amp; Value</th>
+            <th>Evaluated Output (typeof)</th>
+          </tr>
+        </thead>
+        <tbody id="typesTableBody">
+          <!-- Populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. Variables & Expressions -->
+    <div class="section-card">
+      <h2><span class="num">2</span> Variables &amp; Expressions</h2>
+      <p style="font-size: 13px; color: #4b5563;">An expression is any valid unit of code that resolves to a single value. Here we demonstrate arithmetic and comparison operators:</p>
+      
+      <div class="code-box" id="expressionsOutput">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- 3. Functions with Parameters & Return Value -->
+    <div class="section-card">
+      <h2><span class="num">3</span> Functions with Parameters &amp; Return Value</h2>
+      <p style="font-size: 13px; color: #4b5563;">A function takes inputs (parameters), computes a result, and sends it back with <code>return</code>:</p>
+      
+      <div class="interactive-row">
+        <label for="circleRadius" style="font-size: 13px; font-weight: 600;">Radius (r):</label>
+        <input type="number" id="circleRadius" value="5" min="1" max="100" style="width: 80px;">
+        <button id="calcAreaBtn">Calculate Circle Area</button>
+      </div>
+
+      <div class="output-box" id="funcOutput">
+        Click the button to execute function: calculateArea(r)
+      </div>
+    </div>
+
+    <!-- 4. Control Statements (if/else & loops) -->
+    <div class="section-card">
+      <h2><span class="num">4</span> Control Statements (Conditionals &amp; Loops)</h2>
+      <p style="font-size: 13px; color: #4b5563;">Demonstrating an <code>if/else</code> decision structure and a <code>for</code> loop to generate numbers:</p>
+      
+      <div class="interactive-row">
+        <label for="checkScore" style="font-size: 13px; font-weight: 600;">Enter Score (0-100):</label>
+        <input type="number" id="checkScore" value="85" style="width: 80px;">
+        <button id="checkGradeBtn">Evaluate Grade (if/else)</button>
+      </div>
+
+      <div class="output-box" id="gradeOutput">
+        Result will appear here.
+      </div>
+
+      <p style="font-size: 13px; font-weight: 600; margin-top: 15px; color: #374151;">Loop Demonstration: First 5 multiples of 3 (generated using a <code>for</code> loop):</p>
+      <div class="code-box" id="loopOutput">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- 5. Objects & Methods -->
+    <div class="section-card">
+      <h2><span class="num">5</span> JavaScript Object with Properties &amp; Method</h2>
+      <p style="font-size: 13px; color: #4b5563;">Objects group related state (properties) and behavior (methods) together:</p>
+      
+      <div class="code-box" id="objectCode">
+        <!-- Displayed object definition -->
+      </div>
+      <div class="output-box" id="objectOutput">
+        <!-- Output of method call -->
+      </div>
+    </div>
+
+    <!-- 6. Date Object -->
+    <div class="section-card">
+      <h2><span class="num">6</span> JavaScript Date Object (new Date())</h2>
+      <p style="font-size: 13px; color: #4b5563;">Demonstrating date creation and built-in Date methods:</p>
+      
+      <div class="output-box" id="dateOutput">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- 7. Common String Methods -->
+    <div class="section-card">
+      <h2><span class="num">7</span> Common String Methods</h2>
+      <p style="font-size: 13px; color: #4b5563;">Interactive playground demonstrating <code>toUpperCase()</code>, <code>toLowerCase()</code>, <code>trim()</code>, and <code>includes()</code>:</p>
+      
+      <div class="interactive-row">
+        <input type="text" id="stringInput" value="  Hello JavaScript World!  " style="width: 260px;">
+        <button id="runStringMethodsBtn">Run String Methods</button>
+      </div>
+
+      <div class="code-box" id="stringResults">
+        Click button above to inspect methods.
+      </div>
+    </div>
+
+    <!-- 8. Error Handling (try / throw / catch / finally) -->
+    <div class="section-card">
+      <h2><span class="num">8</span> Error Handling (try / throw / catch / finally)</h2>
+      <p style="font-size: 13px; color: #4b5563;">Safe division calculator. Dividing by zero explicitly throws an error that is caught gracefully without crashing:</p>
+      
+      <div class="interactive-row">
+        <label style="font-size: 13px; font-weight: 600;">Divide:</label>
+        <input type="number" id="numA" value="10" style="width: 70px;">
+        <span>/</span>
+        <input type="number" id="numB" value="0" style="width: 70px;">
+        <button id="divideBtn">Perform Division</button>
+      </div>
+
+      <div class="output-box" id="errorHandlingOutput">
+        Click button to test division.
+      </div>
+    </div>
+
+    <footer>
+      Web Application Frameworks Lab · Assignment 3 · Practical 2
+    </footer>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. PRIMITIVE DATA TYPES DEMONSTRATION
+    // =========================================================================
+    const sampleString = "Frontier AI";
+    const sampleNumber = 42;
+    const sampleBoolean = true;
+    const sampleUndefined = undefined;
+    const sampleNull = null; // Note: typeof null returns "object" due to historic JS quirk!
+
+    const typesData = [
+      { type: "String", val: `"${sampleString}"`, evaluated: typeof sampleString },
+      { type: "Number", val: `${sampleNumber}`, evaluated: typeof sampleNumber },
+      { type: "Boolean", val: `${sampleBoolean}`, evaluated: typeof sampleBoolean },
+      { type: "Undefined", val: "undefined", evaluated: typeof sampleUndefined },
+      { type: "Null", val: "null", evaluated: `${typeof sampleNull} (historic JS behavior)` }
+    ];
+
+    const typesTable = document.getElementById("typesTableBody");
+    typesTable.innerHTML = typesData.map(item => `
+      <tr>
+        <td><strong>${item.type}</strong></td>
+        <td><code>${item.val}</code></td>
+        <td><code>${item.evaluated}</code></td>
+      </tr>
+    `).join("");
+
+    // =========================================================================
+    // 2. VARIABLES & EXPRESSIONS DEMONSTRATION
+    // =========================================================================
+    let a = 15;
+    let b = 4;
+    let sum = a + b;           // Arithmetic Expression
+    let product = a * b;       // Arithmetic Expression
+    let modulus = a % b;       // Modulus (remainder)
+    let isGreater = a > b;     // Comparison Expression (boolean result)
+    let strictCheck = (a === 15); // Strict Equality
+
+    document.getElementById("expressionsOutput").textContent = 
+`let a = 15;
+let b = 4;
+
+// Arithmetic Expressions:
+a + b  => ${sum}
+a * b  => ${product}
+a % b  => ${modulus} (15 divided by 4 leaves remainder 3)
+
+// Comparison Expressions:
+a > b   => ${isGreater}
+a === 15 => ${strictCheck}`;
+
+    // =========================================================================
+    // 3. FUNCTION WITH PARAMETERS AND RETURN VALUE
+    // =========================================================================
+    function calculateCircleArea(radius) {
+      // Area formula: π * r^2
+      const area = Math.PI * radius * radius;
+      return area.toFixed(2); // return formatted to 2 decimal places
+    }
+
+    const calcAreaBtn = document.getElementById("calcAreaBtn");
+    const funcOutput = document.getElementById("funcOutput");
+
+    calcAreaBtn.addEventListener("click", function () {
+      const radius = parseFloat(document.getElementById("circleRadius").value);
+      if (isNaN(radius) || radius <= 0) {
+        funcOutput.textContent = "Please enter a valid positive radius.";
+        return;
+      }
+      const result = calculateCircleArea(radius);
+      funcOutput.innerHTML = `Function Call: <code>calculateCircleArea(${radius})</code> returned: <strong>${result} sq. units</strong>`;
+    });
+
+    // =========================================================================
+    // 4. CONTROL STATEMENTS: IF/ELSE & FOR LOOP
+    // =========================================================================
+    function getGrade(score) {
+      if (score >= 90) {
+        return "Grade A (Excellent)";
+      } else if (score >= 75) {
+        return "Grade B (Good)";
+      } else if (score >= 50) {
+        return "Grade C (Pass)";
+      } else {
+        return "Grade F (Needs Improvement)";
+      }
+    }
+
+    const checkGradeBtn = document.getElementById("checkGradeBtn");
+    const gradeOutput = document.getElementById("gradeOutput");
+
+    checkGradeBtn.addEventListener("click", function () {
+      const score = Number(document.getElementById("checkScore").value);
+      const gradeResult = getGrade(score);
+      gradeOutput.innerHTML = `Score: <strong>${score}</strong> → Decision: <strong>${gradeResult}</strong>`;
+    });
+
+    // For loop demonstration
+    const loopResults = [];
+    for (let i = 1; i <= 5; i++) {
+      loopResults.push(`Iteration ${i}: 3 * ${i} = ${3 * i}`);
+    }
+    document.getElementById("loopOutput").textContent = loopResults.join("\n");
+
+    // =========================================================================
+    // 5. JAVASCRIPT OBJECTS & METHODS
+    // =========================================================================
+    const student = {
+      name: "Jey",
+      rollNo: "9057",
+      course: "Computer Science",
+      marks: [85, 90, 88],
+      // Method using 'this' keyword
+      calculateAverage: function () {
+        let total = 0;
+        for (let i = 0; i < this.marks.length; i++) {
+          total += this.marks[i];
+        }
+        return (total / this.marks.length).toFixed(1);
+      }
+    };
+
+    document.getElementById("objectCode").textContent = 
+`const student = {
+  name: "${student.name}",
+  rollNo: "${student.rollNo}",
+  course: "${student.course}",
+  marks: [85, 90, 88],
+  calculateAverage: function () { ... }
+};`;
+
+    document.getElementById("objectOutput").innerHTML = 
+      `Invoking Object Method: <code>student.calculateAverage()</code> → Average Score: <strong>${student.calculateAverage()}</strong>`;
+
+    // =========================================================================
+    // 6. DATE OBJECT DEMONSTRATION
+    // =========================================================================
+    const now = new Date();
+    document.getElementById("dateOutput").innerHTML = `
+      <strong>Current Date &amp; Time from new Date():</strong><br>
+      • Full String: <code>${now.toString()}</code><br>
+      • Date String: <code>${now.toDateString()}</code><br>
+      • Time String: <code>${now.toLocaleTimeString()}</code><br>
+      • Year (getFullYear()): <code>${now.getFullYear()}</code>
+    `;
+
+    // =========================================================================
+    // 7. COMMON STRING METHODS
+    // =========================================================================
+    const stringBtn = document.getElementById("runStringMethodsBtn");
+    const stringResults = document.getElementById("stringResults");
+
+    function updateStringInspect() {
+      const original = document.getElementById("stringInput").value;
+      const upper = original.toUpperCase();
+      const lower = original.toLowerCase();
+      const trimmed = original.trim();
+      const hasScript = original.includes("JavaScript");
+
+      stringResults.textContent = 
+`Original: "${original}" (length: ${original.length})
+
+.toUpperCase(): "${upper}"
+.toLowerCase(): "${lower}"
+.trim():        "${trimmed}" (length: ${trimmed.length})
+.includes("JavaScript"): ${hasScript}`;
+    }
+
+    stringBtn.addEventListener("click", updateStringInspect);
+    updateStringInspect(); // run once on load
+
+    // =========================================================================
+    // 8. ERROR HANDLING (try / throw / catch / finally)
+    // =========================================================================
+    function divideNumbers(x, y) {
+      if (y === 0) {
+        // Explicitly throw an Error object
+        throw new Error("ZeroDivisionError: Cannot divide a number by zero!");
+      }
+      return x / y;
+    }
+
+    const divideBtn = document.getElementById("divideBtn");
+    const errorOutput = document.getElementById("errorHandlingOutput");
+
+    divideBtn.addEventListener("click", function () {
+      const valA = parseFloat(document.getElementById("numA").value);
+      const valB = parseFloat(document.getElementById("numB").value);
+
+      try {
+        errorOutput.className = "output-box"; // reset to success styling
+        const quotient = divideNumbers(valA, valB);
+        errorOutput.innerHTML = `✓ Success: <strong>${valA} ÷ ${valB} = ${quotient}</strong>`;
+      } catch (err) {
+        // Catches the thrown error gracefully without stopping page execution
+        errorOutput.className = "output-box error-out";
+        errorOutput.innerHTML = `⚠ Caught Error: <strong>${err.message}</strong>`;
+      } finally {
+        // Finally block always executes regardless of error
+        errorOutput.innerHTML += `<br><small style="color:inherit;">(finally block executed: validation completed)</small>`;
+      }
+    });
+  </script>
+
+</body>
+</html>
