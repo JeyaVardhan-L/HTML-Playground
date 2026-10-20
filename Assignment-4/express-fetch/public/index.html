@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practical 1: Express Server & Browser Fetch</title>
+  <style>
+    /* Clean, beginner-friendly college practical styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #f7f9fa;
+      color: #333333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 30px auto;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid #e1e4e8;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    header {
+      margin-bottom: 25px;
+      border-bottom: 2px solid #eaecef;
+      padding-bottom: 15px;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: #e0f2fe;
+      color: #0369a1;
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #1f2937;
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .info-callout {
+      background-color: #f8fafc;
+      border-left: 4px solid #4f46e5;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #475569;
+      border-radius: 0 6px 6px 0;
+      margin-bottom: 20px;
+    }
+
+    .action-panel {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      background-color: #4f46e5;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #4338ca;
+    }
+
+    button:disabled {
+      background-color: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .btn-clear {
+      background-color: #f3f4f6;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+    .btn-clear:hover:not(:disabled) {
+      background-color: #e5e7eb;
+    }
+
+    /* Loading Message */
+    .loading-msg {
+      display: none;
+      font-size: 14px;
+      color: #4f46e5;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    /* Error Message */
+    .error-msg {
+      display: none;
+      padding: 12px 16px;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 6px;
+      color: #b91c1c;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    /* Data Display Area */
+    .student-card {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+    }
+
+    .student-card h2 {
+      font-size: 17px;
+      color: #166534;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #dcfce7;
+      padding-bottom: 8px;
+    }
+
+    .student-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 12px;
+      font-size: 14px;
+    }
+
+    .grid-label {
+      font-weight: 600;
+      color: #15803d;
+    }
+
+    .grid-value {
+      color: #1f2937;
+    }
+
+    .endpoint-hint {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #6b7280;
+      background-color: #f3f4f6;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Assignment 4 — Practical 1</span>
+      <h1>Student Information</h1>
+      <p class="subtitle">Demonstrating Express.js Server, HTTP GET Request, and Browser Fetch API with async/await.</p>
+    </header>
+
+    <div class="info-callout">
+      <strong>How this works:</strong> Initially, no student data is shown. When you click <strong>Fetch Data</strong>, browser JavaScript sends an asynchronous <code>GET</code> request to the Express server at <code>/api/student</code>. The server logs the request in its terminal and returns the student information as JSON.
+    </div>
+
+    <!-- Interactive Buttons -->
+    <div class="action-panel">
+      <button id="fetchBtn">Fetch Data</button>
+      <button id="clearBtn" class="btn-clear">Clear Display</button>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-msg">
+      ⏳ Requesting student data from Express server (GET /api/student)...
+    </div>
+
+    <!-- Error Display Box -->
+    <div id="errorBox" class="error-msg"></div>
+
+    <!-- Student Data Result Area -->
+    <div id="studentContainer" class="student-card">
+      <h2>✓ Student Record Received from Express API</h2>
+      <div class="student-grid">
+        <div class="grid-label">Student Name:</div>
+        <div class="grid-value" id="studentName">—</div>
+
+        <div class="grid-label">Roll Number:</div>
+        <div class="grid-value" id="studentRoll">—</div>
+
+        <div class="grid-label">Branch:</div>
+        <div class="grid-value" id="studentBranch">—</div>
+
+        <div class="grid-label">Year / Semester:</div>
+        <div class="grid-value" id="studentYear">—</div>
+
+        <div class="grid-label">University:</div>
+        <div class="grid-value" id="studentUniversity">—</div>
+
+        <div class="grid-label">Current Status:</div>
+        <div class="grid-value" id="studentStatus">—</div>
+      </div>
+      <div class="endpoint-hint">
+        Response source: HTTP GET http://localhost:3000/api/student
+      </div>
+    </div>
+
+    <footer>
+      Web Application Frameworks Lab · Assignment 4 · Practical 1 (Express &amp; Fetch)
+    </footer>
+  </div>
+
+  <script>
+    // =========================================================================
+    // BROWSER JAVASCRIPT: ASYNCHRONOUS FETCH LOGIC
+    // =========================================================================
+
+    const fetchBtn = document.getElementById("fetchBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const loadingIndicator = document.getElementById("loadingIndicator");
+    const errorBox = document.getElementById("errorBox");
+    const studentContainer = document.getElementById("studentContainer");
+
+    // Elements inside studentContainer
+    const studentName = document.getElementById("studentName");
+    const studentRoll = document.getElementById("studentRoll");
+    const studentBranch = document.getElementById("studentBranch");
+    const studentYear = document.getElementById("studentYear");
+    const studentUniversity = document.getElementById("studentUniversity");
+    const studentStatus = document.getElementById("studentStatus");
+
+    // Async function to fetch student data from the Express server
+    async function fetchStudentData() {
+      // 1. Reset previous states and show loading message
+      errorBox.style.display = "none";
+      errorBox.textContent = "";
+      studentContainer.style.display = "none";
+      loadingIndicator.style.display = "block";
+      fetchBtn.disabled = true;
+
+      try {
+        // 2. Send GET request to the Express API endpoint
+        const response = await fetch("/api/student");
+
+        // Check if the HTTP response status is OK (status in range 200-299)
+        if (!response.ok) {
+          throw new Error(`Server returned HTTP status ${response.status}: ${response.statusText}`);
+        }
+
+        // 3. Parse JSON response body
+        const data = await response.json();
+
+        // 4. Update the DOM with the received student data
+        studentName.textContent = data.name;
+        studentRoll.textContent = data.rollNo;
+        studentBranch.textContent = data.branch;
+        studentYear.textContent = data.year;
+        studentUniversity.textContent = data.university;
+        studentStatus.textContent = data.status;
+
+        // 5. Display the student card
+        studentContainer.style.display = "block";
+      } catch (error) {
+        // 6. Handle network errors or server failures gracefully
+        console.error("[FETCH ERROR]", error);
+        errorBox.textContent = `⚠ Failed to fetch student data: ${error.message}. Is the Express server running on port 3000?`;
+        errorBox.style.display = "block";
+      } finally {
+        // 7. Hide loading indicator and re-enable button
+        loadingIndicator.style.display = "none";
+        fetchBtn.disabled = false;
+      }
+    }
+
+    // Attach click event listeners
+    fetchBtn.addEventListener("click", fetchStudentData);
+
+    clearBtn.addEventListener("click", function () {
+      studentContainer.style.display = "none";
+      errorBox.style.display = "none";
+      loadingIndicator.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>
