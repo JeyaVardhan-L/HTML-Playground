@@ -72,7 +72,7 @@ When you visit this URL directly in your browser or through JavaScript `fetch()`
 On the server, student information is stored as a native JavaScript object:
 ```javascript
 const studentData = {
-  name: "Student Name",
+  name: "Alex Kumar",
   branch: "CSE",
   year: "3rd Year"
 };
@@ -81,7 +81,7 @@ const studentData = {
 When `res.json(...)` is called, Express serializes this object into a JSON string sent across the network:
 ```json
 {
-  "name": "Student Name",
+  "name": "Alex Kumar",
   "branch": "CSE",
   "year": "3rd Year",
   "requestNumber": 1,

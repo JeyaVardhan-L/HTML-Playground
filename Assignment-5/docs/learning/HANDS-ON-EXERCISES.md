@@ -7,11 +7,11 @@ These six hands-on exercises will help reinforce your understanding of how the c
 ## Exercise 1: Customize the Student Name and Details
 
 - **File to Edit:** `Assignment-5/server.js`
-- **Intended Change:** Change the default student values from "Student Name" to your own name, branch, and year.
+- **Intended Change:** Change the default student values from "Alex Kumar" to your own name, branch, and year.
 - **Hint:** Locate the `studentData` object near line 20:
   ```javascript
   const studentData = {
-    name: "Student Name",
+    name: "Alex Kumar",
     branch: "CSE",
     year: "3rd Year"
   };
@@ -71,7 +71,7 @@ These six hands-on exercises will help reinforce your understanding of how the c
 
 - **File to Edit:** `Assignment-5/public/index.html`
 - **Intended Change:** Change the green success status message to show the response round-trip note:  
-  `"Connection active: Received record for Student Name (Request #1)"`.
+  `"Connection active: Received record for Alex Kumar (Request #1)"`.
 - **Hint:** Inside `fetchStudentData()` in `index.html`, locate the line setting `statusMessage.textContent`:
   ```javascript
   statusMessage.textContent = `Connection active: Received record for ${data.name} (Request #${data.requestNumber})`;

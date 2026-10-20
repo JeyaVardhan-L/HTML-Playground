@@ -74,7 +74,7 @@ Here is what happens across the network when you use this application:
 |                                 WEB BROWSER                                 |
 |  - Receives JSON payload                                                    |
 |  - JavaScript parses: const data = await response.json()                    |
-|  - Updates DOM table: Name: Student Name, Branch: CSE, Req: #1             |
+|  - Updates DOM table: Name: Alex Kumar, Branch: CSE, Req: #1                |
 |  - Shows the student details table                                          |
 +-----------------------------------------------------------------------------+
 
@@ -106,7 +106,7 @@ node server.js
 2. Notice that the page loads cleanly, but **no student data is visible**.
 3. Click the **Fetch Data** button.
    - The button disables briefly and shows a loading message.
-   - The student information appears showing **Student Name**, **CSE**, **3rd Year**, **Request Number #1**, and a timestamp.
+   - The student information appears showing **Alex Kumar**, **CSE**, **3rd Year**, **Request Number #1**, and a timestamp.
    - Look at your PowerShell terminal: you will see `GET /api/student: request 1`.
 4. Click **Fetch Data** again.
    - The Request Number changes to **#2**, and the timestamp updates to the current second.
