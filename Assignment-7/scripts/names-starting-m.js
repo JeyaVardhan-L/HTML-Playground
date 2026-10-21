@@ -15,8 +15,8 @@
 
 const { MongoClient } = require("mongodb");
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_lab";
-const DB_NAME = "waf_lab";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_assignment_7";
+const DB_NAME = "waf_assignment_7";
 
 async function runNamesStartingM() {
   const client = new MongoClient(MONGODB_URI, { serverSelectionTimeoutMS: 3000 });
@@ -66,7 +66,7 @@ async function runNamesStartingM() {
     console.error("\n[NAMES-STARTING-M ERROR]", err.message);
     if (err.message.includes("ECONNREFUSED") || err.name === "MongoServerSelectionError") {
       console.error("\nCould not connect to MongoDB. Please ensure your MongoDB Community Server is running.");
-      console.error("Default connection URI: mongodb://127.0.0.1:27017/waf_lab");
+      console.error("Default connection URI: mongodb://127.0.0.1:27017/waf_assignment_7");
       console.error("To start MongoDB on Windows: net start MongoDB (or run mongod.exe)");
     }
     process.exitCode = 1;

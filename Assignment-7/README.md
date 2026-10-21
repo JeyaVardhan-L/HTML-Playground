@@ -4,7 +4,7 @@
 **Subject:** Web Application Frameworks (WAF) Lab  
 **Assignment:** Lab Assignment 7 — MongoDB Queries, Cursor Chaining, Regex & Atomic Updates  
 **Technologies:** Node.js, MongoDB Native Driver (`mongodb` v6), JavaScript (ES2022)  
-**Database Name:** `waf_lab`  
+**Database Name:** `waf_assignment_7`  
 **Student:** Student Name · Department of Computer Science & Engineering (CSE), 3rd Year  
 
 ---
@@ -205,7 +205,7 @@ Requirement 8: MongoDB Destructive Delete — deleteMany({ marks: { $lt: 40 } })
 ================================================================================
 
 -------------------------------- WARNING ---------------------------------------
-Target Database    : waf_lab
+Target Database    : waf_assignment_7
 Target Collection  : students
 Filter Condition   : { marks: { $lt: 40 } }
 Matching Documents : 2 record(s) found eligible for deletion.

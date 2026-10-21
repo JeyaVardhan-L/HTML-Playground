@@ -1,5 +1,5 @@
 /**
- * Assignment 7: Seed Script for MongoDB Database (waf_lab)
+ * Assignment 7: Seed Script for MongoDB Database (waf_assignment_7)
  *
  * Idempotently seeds:
  * 1. "departments" collection with 3 distinct departments (CSE, ECE, EEE)
@@ -14,8 +14,8 @@
 
 const { MongoClient, ObjectId } = require("mongodb");
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_lab";
-const DB_NAME = "waf_lab";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_assignment_7";
+const DB_NAME = "waf_assignment_7";
 
 // Stable Department ObjectIds
 const DEPT_IDS = {
@@ -237,7 +237,7 @@ async function seedDatabase() {
     console.error("\n[SEED ERROR]", err.message);
     if (err.message.includes("ECONNREFUSED") || err.name === "MongoServerSelectionError") {
       console.error("\nCould not connect to MongoDB. Please ensure your MongoDB Community Server is running.");
-      console.error("Default connection URI: mongodb://127.0.0.1:27017/waf_lab");
+      console.error("Default connection URI: mongodb://127.0.0.1:27017/waf_assignment_7");
       console.error("To start MongoDB on Windows: net start MongoDB (or run mongod.exe)");
     }
     process.exitCode = 1;
