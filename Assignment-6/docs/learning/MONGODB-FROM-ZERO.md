@@ -12,7 +12,7 @@ This document provides a thorough, beginner-friendly introduction to MongoDB and
 
 | Relational (SQL) Concept | MongoDB Equivalent | Assignment 6 Example |
 | :--- | :--- | :--- |
-| Database | Database | `waf_lab` |
+| Database | Database | `waf_assignment_6` |
 | Table | Collection | `students`, `departments` |
 | Row / Record | Document | `{ rollNo: "101", name: "Aarav", ... }` |
 | Column | Field | `branch`, `marks`, `name` |
@@ -93,13 +93,13 @@ The native driver uses `MongoClient` to manage connection pooling:
 ```javascript
 const { MongoClient } = require("mongodb");
 
-const uri = "mongodb://127.0.0.1:27017/waf_lab";
+const uri = "mongodb://127.0.0.1:27017/waf_assignment_6";
 const client = new MongoClient(uri, { serverSelectionTimeoutMS: 3000 });
 
 async function run() {
   try {
     await client.connect();
-    const db = client.db("waf_lab");
+    const db = client.db("waf_assignment_6");
     const students = db.collection("students");
     // perform queries...
   } finally {

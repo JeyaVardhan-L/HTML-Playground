@@ -45,7 +45,7 @@ Welcome to **Lab Assignment 6** of Web Application Frameworks (WAF). This practi
                                   v
 +-----------------------------------------------------------------------------------+
 |                             DATABASE LAYER (MongoDB)                              |
-|                                Database: waf_lab                                  |
+|                          Database: waf_assignment_6                               |
 |                                                                                   |
 |   +--------------------------+             +----------------------------------+   |
 |   |   Collection: students   |             |     Collection: departments      |   |

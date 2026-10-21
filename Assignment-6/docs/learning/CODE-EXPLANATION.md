@@ -15,8 +15,8 @@ Connects to MongoDB, ensures a unique index on student roll numbers, and inserts
 ```javascript
 const { MongoClient, ObjectId } = require("mongodb");
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_lab";
-const DB_NAME = "waf_lab";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_assignment_6";
+const DB_NAME = "waf_assignment_6";
 ```
 - `MongoClient`: The official driver class that creates database connections.
 - `ObjectId`: Class to generate or parse 12-byte BSON identifiers.

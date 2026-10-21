@@ -4,7 +4,7 @@
 **Subject:** Web Application Frameworks (WAF) Lab  
 **Assignment:** Lab Assignment 6 — MongoDB, Aggregation Pipelines & Express REST API  
 **Technologies:** Node.js, Express.js (v4), MongoDB Native Driver (`mongodb` v6), JavaScript (ES2022)  
-**Database Name:** `waf_lab`  
+**Database Name:** `waf_assignment_6`  
 **API Port:** `3002` (prevents conflict with Assignment 4 port 3000 & Assignment 5 port 3001)  
 **Student:** Student Name · Department of Computer Science & Engineering (CSE), 3rd Year  
 
@@ -235,7 +235,7 @@ Terminal display:
 ```text
 ==================================================
 Express REST API running on http://localhost:3002
-Connected to MongoDB Database: "waf_lab"
+Connected to MongoDB Database: "waf_assignment_6"
 Collection: "students" (unique index on rollNo enforced)
 Ready to accept API requests.
 ==================================================

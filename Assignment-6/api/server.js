@@ -11,8 +11,8 @@
  *
  * Configuration:
  * - PORT: 3002 (prevents conflict with Assignment 4 & 5 ports)
- * - MONGODB_URI: defaults to mongodb://127.0.0.1:27017/waf_lab
- * - DB_NAME: waf_lab
+ * - MONGODB_URI: defaults to mongodb://127.0.0.1:27017/waf_assignment_6
+ * - DB_NAME: waf_assignment_6
  */
 
 const express = require("express");
@@ -20,8 +20,8 @@ const { MongoClient, ObjectId } = require("mongodb");
 
 const app = express();
 const PORT = process.env.PORT || 3002;
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_lab";
-const DB_NAME = "waf_lab";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/waf_assignment_6";
+const DB_NAME = "waf_assignment_6";
 
 // Middleware to parse incoming JSON request bodies
 app.use(express.json());

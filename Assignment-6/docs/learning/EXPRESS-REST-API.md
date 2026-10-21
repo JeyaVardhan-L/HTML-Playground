@@ -47,7 +47,7 @@ This guide walks through the architectural patterns, HTTP mechanics, and databas
 +-------------------------------------------------------------+
                |
                v Wire Protocol (TCP)
-[ MongoDB Community Server: Database "waf_lab", Collection "students" ]
+[ MongoDB Community Server: Database "waf_assignment_6", Collection "students" ]
 ```
 
 ---
