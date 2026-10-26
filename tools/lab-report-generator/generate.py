@@ -10,6 +10,7 @@ Usage:
 """
 
 import argparse
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -118,7 +119,17 @@ def main():
     screenshots_dir = output_dir / "screenshots"
     screenshots_dir.mkdir(parents=True, exist_ok=True)
     report_filename = f"WAF_Assignment_{config.assignment_id}.docx"
-    docx_output_path = output_dir / report_filename
+    pdf_filename = f"WAF_Assignment_{config.assignment_id}.pdf"
+    final_docx_path = output_dir / report_filename
+    final_pdf_path = output_dir / pdf_filename
+
+    # Staging directory for atomic generation
+    stage_dir = output_dir / ".stage"
+    stage_dir.mkdir(parents=True, exist_ok=True)
+    stage_docx = stage_dir / report_filename
+    stage_pdf = stage_dir / pdf_filename
+    stage_preview = stage_dir / "preview_pages"
+    stage_preview.mkdir(parents=True, exist_ok=True)
 
     port = args.port or config.default_port
     start_time = time.time()
@@ -139,35 +150,78 @@ def main():
         runner = BrowserRunner(base_url=base_url, output_dir=screenshots_dir)
         evidence_list = runner.run_scenes(config)
 
-    # Step 3: Document Generation
+    # Step 3: Document Generation to Staged Output
+    print(f"\n[*] Generating report into staging area: {stage_docx}...")
     builder = LabReportDocBuilder(
         config=config,
         workspace_root=workspace_root,
         student_name=args.student_name,
         roll_no=args.roll_no
     )
-    builder.build_report(evidence_list=evidence_list, output_path=docx_output_path)
+    builder.build_report(evidence_list=evidence_list, output_path=stage_docx)
 
-    # Step 4: Visual QA & PDF Rendering
+    # Step 4: Native Microsoft Word PDF Conversion & Visual Rendering
     rendered_pages = []
     if not args.skip_render:
+        from render_docx import render_and_inspect
         try:
-            from render_docx import render_and_inspect
-            preview_dir = output_dir / "preview_pages"
-            pdf_path, rendered_pages = render_and_inspect(str(docx_output_path), str(preview_dir))
+            print(f"[*] Rendering staged DOCX to PDF and page previews...")
+            pdf_path, rendered_pages = render_and_inspect(
+                docx_path=str(stage_docx),
+                output_dir=str(stage_preview),
+                pdf_path=str(stage_pdf)
+            )
         except Exception as ren_err:
-            print(f"[!] Optional visual QA rendering skipped: {ren_err}")
+            print(f"[!] FATAL: Microsoft Word PDF conversion failed: {ren_err}")
+            shutil.rmtree(stage_dir, ignore_errors=True)
+            sys.exit(1)
+
+    # Step 5: Automated Quality Assurance (QA) Audit
+    print(f"[*] Running automated quality assurance audit...")
+    from qa_checker import LabReportQAChecker
+    qa = LabReportQAChecker(
+        docx_path=stage_docx,
+        pdf_path=stage_pdf,
+        preview_dir=stage_preview,
+        config=config,
+        evidence_list=evidence_list,
+        workspace_root=workspace_root
+    )
+    all_passed, qa_results = qa.run_all_checks()
+
+    if not all_passed:
+        print("[!] ERROR: Automated quality audit failed. Pre-existing report will NOT be replaced.")
+        shutil.rmtree(stage_dir, ignore_errors=True)
+        sys.exit(1)
+
+    # Step 6: Atomic Replacement of Final Artifacts
+    print(f"[*] QA audit passed. Performing atomic replacement of final report files...")
+    shutil.copy2(stage_docx, final_docx_path)
+    if stage_pdf.exists():
+        shutil.copy2(stage_pdf, final_pdf_path)
+
+    final_preview_dir = output_dir / "preview_pages"
+    if stage_preview.exists() and list(stage_preview.glob("*.png")):
+        if final_preview_dir.exists():
+            shutil.rmtree(final_preview_dir, ignore_errors=True)
+        shutil.copytree(stage_preview, final_preview_dir)
+
+    # Clean up staging area
+    shutil.rmtree(stage_dir, ignore_errors=True)
 
     elapsed = time.time() - start_time
     print("\n" + "=" * 70)
-    print("               GENERATION COMPLETE")
+    print("               GENERATION & QA AUDIT COMPLETE")
     print("=" * 70)
-    print(f"[+] Final Word Document: {docx_output_path}")
-    print(f"[+] Total File Size:     {docx_output_path.stat().st_size / 1024:.1f} KB")
+    print(f"[+] Final Word Document:  {final_docx_path}")
+    print(f"[+] Total Word Size:      {final_docx_path.stat().st_size / 1024:.1f} KB")
+    if final_pdf_path.exists():
+        print(f"[+] Final PDF Document:   {final_pdf_path}")
+        print(f"[+] Total PDF Size:       {final_pdf_path.stat().st_size / 1024:.1f} KB")
     print(f"[+] Screenshots Captured: {len(evidence_list)} images in {screenshots_dir}")
     if rendered_pages:
-        print(f"[+] Visual QA Preview:   {len(rendered_pages)} pages rendered to {output_dir / 'preview_pages'}")
-    print(f"[+] Total Elapsed Time:  {elapsed:.1f} seconds")
+        print(f"[+] Visual QA Preview:    {len(rendered_pages)} pages rendered to {final_preview_dir}")
+    print(f"[+] Total Elapsed Time:   {elapsed:.1f} seconds")
     print("=" * 70)
 
 

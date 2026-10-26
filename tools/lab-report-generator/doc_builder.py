@@ -16,6 +16,7 @@ Key Layout Systems:
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any, Optional
+import re
 
 import docx
 from docx import Document
@@ -320,7 +321,8 @@ class LabReportDocBuilder:
             self._add_section_header("7. LAB VIVA-VOCE STUDY GUIDE & TECHNICAL CONCEPTS", level=1)
             self._add_viva_section()
 
-        # 9. Complete Source Code Appendix
+        # 9. Complete Source Code Appendix (Begins cleanly on a fresh page)
+        self.doc.add_page_break()
         self._add_section_header("8. APPENDIX: COMPLETE APPLICATION SOURCE CODE", level=1)
         self._add_source_code_appendix()
 
@@ -344,7 +346,7 @@ class LabReportDocBuilder:
         """
         # Top margin spacer
         p_top = self.doc.add_paragraph()
-        p_top.paragraph_format.space_before = Pt(36)
+        p_top.paragraph_format.space_before = Pt(28)
         p_top.paragraph_format.space_after = Pt(0)
 
         # Institution
@@ -360,7 +362,7 @@ class LabReportDocBuilder:
         # Department
         p_dept = self.doc.add_paragraph()
         p_dept.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_dept.paragraph_format.space_after = Pt(6)
+        p_dept.paragraph_format.space_after = Pt(4)
         r_dept = p_dept.add_run(self.config.department.upper())
         r_dept.font.name = "Calibri"
         r_dept.font.size = Pt(11)
@@ -370,37 +372,39 @@ class LabReportDocBuilder:
         # Subject Title
         p_sub = self.doc.add_paragraph()
         p_sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_sub.paragraph_format.space_after = Pt(60)
+        p_sub.paragraph_format.space_after = Pt(36)
         r_sub = p_sub.add_run(self.config.subject.upper())
         r_sub.font.name = "Calibri"
         r_sub.font.size = Pt(13)
         r_sub.font.bold = True
         r_sub.font.color.rgb = RGB_PRIMARY
 
-        # Assignment Box Table (Width: 6.2 inches = 8928 dxa)
+        # Assignment Box Table (Width: 6.5 inches = 9360 dxa)
         box_table = self.doc.add_table(rows=1, cols=1)
         box_table.alignment = WD_TABLE_ALIGNMENT.CENTER
         box_table.autofit = False
 
         box_cell = box_table.cell(0, 0)
-        box_cell.width = Inches(6.2)
-        set_cell_width(box_cell, 8928)
+        box_cell.width = Inches(6.5)
+        set_cell_width(box_cell, 9360)
         set_cell_shading(box_cell, COLOR_LIGHT_BG_HEX)
-        set_cell_margins(box_cell, top=200, bottom=200, left=240, right=240)
+        set_cell_margins(box_cell, top=180, bottom=180, left=240, right=240)
 
         p_box_num = box_cell.paragraphs[0]
         p_box_num.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_box_num.paragraph_format.space_after = Pt(4)
+        p_box_num.paragraph_format.space_after = Pt(3)
         r_box_num = p_box_num.add_run(f"ASSIGNMENT {self.config.assignment_id}")
         r_box_num.font.name = "Calibri"
         r_box_num.font.size = Pt(12)
         r_box_num.font.bold = True
         r_box_num.font.color.rgb = RGB_SECONDARY
 
+        # Clean title: strip redundant "Lab Assignment X:" or "Assignment X:" prefix if present
+        clean_title = re.sub(r'^(Lab\s+)?Assignment\s+\d+:\s*', '', self.config.title, flags=re.IGNORECASE).strip()
         p_box_title = box_cell.add_paragraph()
         p_box_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_box_title.paragraph_format.space_after = Pt(4)
-        r_box_title = p_box_title.add_run(self.config.title)
+        p_box_title.paragraph_format.space_after = Pt(3)
+        r_box_title = p_box_title.add_run(clean_title)
         r_box_title.font.name = "Georgia"
         r_box_title.font.size = Pt(13.5)
         r_box_title.font.bold = True
@@ -416,13 +420,13 @@ class LabReportDocBuilder:
             r_box_sub.font.italic = True
             r_box_sub.font.color.rgb = RGB_MUTED
 
-        set_table_borders(box_table, color=COLOR_PRIMARY_HEX, sz="8")
+        set_table_borders(box_table, color=COLOR_PRIMARY_HEX, sz="6")
 
         # Whitespace before student table
         p_sp = self.doc.add_paragraph()
-        p_sp.paragraph_format.space_after = Pt(60)
+        p_sp.paragraph_format.space_after = Pt(36)
 
-        # Compact Student Details Table (Clean 4-row layout, no empty rows)
+        # Compact Student Details Table (Matching 6.5" width: 2.3" + 4.2" = 9360 dxa)
         student_fields = [
             ("Student Name", self.student_name),
             ("Roll Number / Reg. No.", self.roll_no),
@@ -435,8 +439,8 @@ class LabReportDocBuilder:
         tbl_student.alignment = WD_TABLE_ALIGNMENT.CENTER
         tbl_student.autofit = False
 
-        w_col1 = 3168  # 2.2 inches in dxa
-        w_col2 = 5760  # 4.0 inches in dxa
+        w_col1 = 3312  # 2.3 inches in dxa
+        w_col2 = 6048  # 4.2 inches in dxa
 
         for i, (label, val) in enumerate(student_fields):
             row = tbl_student.rows[i]
@@ -445,15 +449,15 @@ class LabReportDocBuilder:
             c_label = row.cells[0]
             c_val = row.cells[1]
 
-            c_label.width = Inches(2.2)
-            c_val.width = Inches(4.0)
+            c_label.width = Inches(2.3)
+            c_val.width = Inches(4.2)
             set_cell_width(c_label, w_col1)
             set_cell_width(c_val, w_col2)
 
             set_cell_shading(c_label, COLOR_LIGHT_BG_HEX)
             set_cell_shading(c_val, "FFFFFF")
-            set_cell_margins(c_label, top=90, bottom=90, left=140, right=140)
-            set_cell_margins(c_val, top=90, bottom=90, left=140, right=140)
+            set_cell_margins(c_label, top=80, bottom=80, left=140, right=140)
+            set_cell_margins(c_val, top=80, bottom=80, left=140, right=140)
 
             p_l = c_label.paragraphs[0]
             p_l.paragraph_format.space_after = Pt(0)
@@ -473,6 +477,17 @@ class LabReportDocBuilder:
             r_v.font.color.rgb = RGB_DARK_TEXT
 
         set_table_borders(tbl_student, color=COLOR_BORDER_HEX, sz="4")
+
+        # Bottom Academic Hallmark Anchor
+        p_anchor = self.doc.add_paragraph()
+        p_anchor.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_anchor.paragraph_format.space_before = Pt(48)
+        p_anchor.paragraph_format.space_after = Pt(0)
+        r_anchor = p_anchor.add_run("ACADEMIC LAB RECORD · DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING")
+        r_anchor.font.name = "Calibri"
+        r_anchor.font.size = Pt(8.5)
+        r_anchor.font.bold = True
+        r_anchor.font.color.rgb = RGB_MUTED
 
         # Intentional Page Break after cover page
         self.doc.add_page_break()
@@ -650,8 +665,8 @@ class LabReportDocBuilder:
 
             # 1. Demonstration Subsection Heading
             p_head = self.doc.add_paragraph(style="Heading 2")
-            p_head.paragraph_format.space_before = Pt(12)
-            p_head.paragraph_format.space_after = Pt(3)
+            p_head.paragraph_format.space_before = Pt(10)
+            p_head.paragraph_format.space_after = Pt(2)
             p_head.paragraph_format.keep_with_next = True
 
             r_h = p_head.add_run(f"Demonstration 5.{i}: {title}")
@@ -660,21 +675,21 @@ class LabReportDocBuilder:
             r_h.font.bold = True
             r_h.font.color.rgb = RGB_SECONDARY
 
-            # 2. Metadata Pill Table (Width: 6.2 inches = 8928 dxa)
+            # 2. Metadata Pill Table (Width: 6.5 inches = 9360 dxa)
             meta_tbl = self.doc.add_table(rows=1, cols=2)
             meta_tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
             meta_tbl.autofit = False
             prevent_row_split(meta_tbl.rows[0])
 
             c1, c2 = meta_tbl.rows[0].cells
-            c1.width = Inches(4.5)
-            c2.width = Inches(1.7)
-            set_cell_width(c1, 6480)
-            set_cell_width(c2, 2448)
+            c1.width = Inches(4.7)
+            c2.width = Inches(1.8)
+            set_cell_width(c1, 6768)
+            set_cell_width(c2, 2592)
             set_cell_shading(c1, COLOR_LIGHT_BG_HEX)
             set_cell_shading(c2, COLOR_LIGHT_BG_HEX)
-            set_cell_margins(c1, top=50, bottom=50, left=120, right=120)
-            set_cell_margins(c2, top=50, bottom=50, left=120, right=120)
+            set_cell_margins(c1, top=40, bottom=40, left=120, right=120)
+            set_cell_margins(c2, top=40, bottom=40, left=120, right=120)
 
             p1 = c1.paragraphs[0]
             p1.paragraph_format.space_before = Pt(0)
@@ -705,40 +720,49 @@ class LabReportDocBuilder:
             if image_path and Path(image_path).exists():
                 p_img = self.doc.add_paragraph()
                 p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
-                p_img.paragraph_format.space_before = Pt(6)
+                p_img.paragraph_format.space_before = Pt(4)
                 p_img.paragraph_format.space_after = Pt(2)
                 p_img.paragraph_format.keep_with_next = True
-
-                # Bound image dimensions so it never exceeds printable height or width
-                # Max width: 6.0 inches, Max height: 4.2 inches
-                MAX_W_INCHES = 6.0
-                MAX_H_INCHES = 4.2
 
                 try:
                     with Image.open(image_path) as img:
                         w_px, h_px = img.size
                         aspect = w_px / h_px
 
-                    # Calculate target dimensions preserving exact aspect ratio
-                    if MAX_W_INCHES / aspect <= MAX_H_INCHES:
-                        target_w = Inches(MAX_W_INCHES)
-                        target_h = Inches(MAX_W_INCHES / aspect)
+                    # Calculate target dimensions:
+                    # Landscape desktop: max width 5.9", max height 3.35"
+                    # Portrait mobile: max width 3.2", max height 4.2"
+                    if aspect >= 1.0:
+                        max_w = 5.9
+                        max_h = 3.35
+                        if max_w / aspect <= max_h:
+                            target_w = Inches(max_w)
+                            target_h = Inches(max_w / aspect)
+                        else:
+                            target_h = Inches(max_h)
+                            target_w = Inches(max_h * aspect)
                     else:
-                        target_h = Inches(MAX_H_INCHES)
-                        target_w = Inches(MAX_H_INCHES * aspect)
+                        max_h = 4.2
+                        max_w = 3.2
+                        if max_h * aspect <= max_w:
+                            target_h = Inches(max_h)
+                            target_w = Inches(max_h * aspect)
+                        else:
+                            target_w = Inches(max_w)
+                            target_h = Inches(max_w / aspect)
 
                     run_pic = p_img.add_run()
                     run_pic.add_picture(str(image_path), width=target_w, height=target_h)
                 except Exception as img_err:
                     print(f"[!] Warning: Image bounding box calculation fallback for {image_path}: {img_err}")
                     run_pic = p_img.add_run()
-                    run_pic.add_picture(str(image_path), width=Inches(5.8))
+                    run_pic.add_picture(str(image_path), width=Inches(5.6))
 
                 # 4. Caption
                 p_cap = self.doc.add_paragraph()
                 p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 p_cap.paragraph_format.space_before = Pt(2)
-                p_cap.paragraph_format.space_after = Pt(6)
+                p_cap.paragraph_format.space_after = Pt(4)
                 p_cap.paragraph_format.keep_with_next = True
 
                 r_cap_num = p_cap.add_run(f"Figure 5.{i}: ")
@@ -765,8 +789,9 @@ class LabReportDocBuilder:
             # 5. Technical Explanation
             p_desc = self.doc.add_paragraph()
             p_desc.paragraph_format.space_before = Pt(2)
-            p_desc.paragraph_format.space_after = Pt(12)
+            p_desc.paragraph_format.space_after = Pt(10)
             p_desc.paragraph_format.line_spacing = 1.15
+            p_desc.paragraph_format.keep_with_next = False
 
             r_desc_label = p_desc.add_run("Technical Explanation & Demonstrated Behavior: ")
             r_desc_label.font.name = "Calibri"
@@ -920,7 +945,12 @@ class LabReportDocBuilder:
             code_cell.width = Inches(6.7)
             set_cell_width(code_cell, 9648)
             set_cell_shading(code_cell, COLOR_CODE_BG_HEX)
-            set_cell_margins(code_cell, top=80, bottom=80, left=100, right=100)
+            set_cell_margins(code_cell, top=70, bottom=70, left=80, right=80)
+
+            # Hanging indent configuration: 0.40 inches (576 dxa)
+            # Line number occupies 0 to 0.40", wrapped code lines indent cleanly to 0.40"
+            INDENT_INCHES = 0.40
+            INDENT_DXA = 576
 
             # Insert code lines with line numbers as individual paragraphs
             p_first = code_cell.paragraphs[0]
@@ -931,8 +961,21 @@ class LabReportDocBuilder:
                 p_line.paragraph_format.line_spacing = 1.0
                 p_line.paragraph_format.widow_control = False
 
-                # Line number in muted gray
-                r_num = p_line.add_run(f"{line_no:4d}  ")
+                # Apply hanging indent and tab stop so wrapped code doesn't pollute line number column
+                p_line.paragraph_format.left_indent = Inches(INDENT_INCHES)
+                p_line.paragraph_format.first_line_indent = Inches(-INDENT_INCHES)
+                pPr = p_line._p.get_or_add_pPr()
+                for t in pPr.findall(qn("w:tabs")):
+                    pPr.remove(t)
+                tabs = parse_xml(f'<w:tabs {nsdecls("w")}><w:tab w:val="left" w:pos="{INDENT_DXA}"/></w:tabs>')
+                pPr.append(tabs)
+
+                if line_no == 1:
+                    # Keep first line with banner table to avoid orphaned header banner
+                    p_line.paragraph_format.keep_with_next = True
+
+                # Line number in muted gray with tab character
+                r_num = p_line.add_run(f"{line_no:4d}\t")
                 r_num.font.name = "Consolas"
                 r_num.font.size = Pt(7.5)
                 r_num.font.color.rgb = RGBColor(0x8C, 0x95, 0x9F)
