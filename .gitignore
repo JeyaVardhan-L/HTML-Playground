@@ -1,0 +1,23 @@
+# Python Virtual Environment & Cache
+tools/lab-report-generator/.venv/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary Screenshots & Generated Reports
+temp_screenshots/
+tools/lab-report-generator/temp_screenshots/
+reports/
+
+# Dependencies & Build Artefacts
+node_modules/
+dist/
+build/
+.cache/
+
+# OS and Environment
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.local

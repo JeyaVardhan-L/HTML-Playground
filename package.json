@@ -1,0 +1,11 @@
+{
+  "name": "html-playground",
+  "version": "1.0.0",
+  "description": "Web Application Frameworks (WAF) Lab Playgrounds & Practical Repository",
+  "scripts": {
+    "lab-report": "python tools/lab-report-generator/run.py",
+    "report:2": "python tools/lab-report-generator/run.py --assignment 2"
+  },
+  "author": "Jey",
+  "license": "ISC"
+}
