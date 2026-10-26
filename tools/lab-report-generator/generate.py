@@ -81,6 +81,11 @@ def main():
         default=None,
         help="Preferred port for the application server"
     )
+    parser.add_argument(
+        "--skip-render",
+        action="store_true",
+        help="Skip automatic PDF and visual QA rendering"
+    )
 
     args = parser.parse_args()
 
@@ -143,6 +148,16 @@ def main():
     )
     builder.build_report(evidence_list=evidence_list, output_path=docx_output_path)
 
+    # Step 4: Visual QA & PDF Rendering
+    rendered_pages = []
+    if not args.skip_render:
+        try:
+            from render_docx import render_and_inspect
+            preview_dir = output_dir / "preview_pages"
+            pdf_path, rendered_pages = render_and_inspect(str(docx_output_path), str(preview_dir))
+        except Exception as ren_err:
+            print(f"[!] Optional visual QA rendering skipped: {ren_err}")
+
     elapsed = time.time() - start_time
     print("\n" + "=" * 70)
     print("               GENERATION COMPLETE")
@@ -150,6 +165,8 @@ def main():
     print(f"[+] Final Word Document: {docx_output_path}")
     print(f"[+] Total File Size:     {docx_output_path.stat().st_size / 1024:.1f} KB")
     print(f"[+] Screenshots Captured: {len(evidence_list)} images in {screenshots_dir}")
+    if rendered_pages:
+        print(f"[+] Visual QA Preview:   {len(rendered_pages)} pages rendered to {output_dir / 'preview_pages'}")
     print(f"[+] Total Elapsed Time:  {elapsed:.1f} seconds")
     print("=" * 70)
 
