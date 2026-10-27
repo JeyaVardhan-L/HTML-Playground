@@ -167,13 +167,13 @@ class LabReportQAChecker:
         # Verify images embedded in DOCX package
         if doc:
             try:
-                part_count = len([p for p in doc.part.related_parts.values() if "image" in str(p.content_type)])
+                blip_count = len(doc._element.xpath(".//a:blip"))
                 expected_min = len(self.evidence_list)
-                embedded_ok = part_count >= expected_min
+                embedded_ok = blip_count >= expected_min
                 self.log_result(
                     "Screenshots", "Embedded DOCX Media Parts",
                     embedded_ok,
-                    f"{part_count} image parts embedded in DOCX package (>= {expected_min} expected)." if embedded_ok else f"Only {part_count} images embedded; expected at least {expected_min}."
+                    f"{blip_count} image drawings embedded in DOCX body (>= {expected_min} expected)." if embedded_ok else f"Only {blip_count} images embedded; expected at least {expected_min}."
                 )
             except Exception as e:
                 self.log_result("Screenshots", "Embedded DOCX Media Parts", False, f"Error checking DOCX media: {e}")
@@ -183,12 +183,17 @@ class LabReportQAChecker:
         expected_sections = [
             "1. AIM & OBJECTIVES",
             "2. SOFTWARE & HARDWARE REQUIREMENTS",
-            "3. FACULTY REQUIREMENTS COMPLIANCE MAPPING",
             "4. ARCHITECTURAL PROCEDURE & IMPLEMENTATION STEPS",
             "5. EXPERIMENTAL VERIFICATION & DEMONSTRATION OUTPUTS",
             "6. RESULT & CONCLUSION",
             "8. APPENDIX: COMPLETE APPLICATION SOURCE CODE"
         ]
+
+        if self.config.faculty_requirements:
+            expected_sections.insert(2, "3. FACULTY REQUIREMENTS COMPLIANCE MAPPING")
+
+        if self.config.viva_questions:
+            expected_sections.insert(-1, "7. LAB VIVA-VOCE STUDY GUIDE & TECHNICAL CONCEPTS")
 
         doc_headings = []
         keep_with_next_ok = True
@@ -308,12 +313,12 @@ class LabReportQAChecker:
         preview_images = sorted(list(self.preview_dir.glob("page_*.png")))
         page_count = len(preview_images)
 
-        min_expected_pages = 15
+        min_expected_pages = getattr(self.config, "min_expected_pages", 4)
         count_ok = page_count >= min_expected_pages
         self.log_result(
             "Visual QA", "Total Document Page Count",
             count_ok,
-            f"Document contains {page_count} pages (minimum expected: {min_expected_pages})." if count_ok else f"Page count suspiciously low: {page_count} pages."
+            f"Document contains {page_count} pages (minimum expected: {min_expected_pages})." if count_ok else f"Page count suspiciously low: {page_count} pages (minimum expected: {min_expected_pages})."
         )
 
         blank_pages = []
@@ -328,7 +333,8 @@ class LabReportQAChecker:
                     w, h = im_gray.size
                     total_pixels = w * h
                     # Count pure white pixels (brightness >= 252)
-                    white_count = sum(1 for p in im_gray.getdata() if p >= 252)
+                    pixels = im_gray.get_flattened_data() if hasattr(im_gray, "get_flattened_data") else im_gray.getdata()
+                    white_count = sum(1 for p in pixels if p >= 252)
                     white_ratio = white_count / total_pixels
 
                     # Content page with > 98% pure white is considered an accidental blank page

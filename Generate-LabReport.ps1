@@ -4,10 +4,10 @@
 
 .DESCRIPTION
     Runs browser automation, tests interactions, captures evidence screenshots,
-    and produces an academic Word (.docx) lab record for any specified assignment.
+    and produces an academic Word (.docx) and PDF lab record for any specified assignment.
 
 .PARAMETER Assignment
-    The assignment number to generate a report for (e.g. 2, 3, 4, 5, 6, 7). Default is 2.
+    The assignment number to generate a report for (e.g. 1, 2, 3, 4, 5, 6, 7). Default is 2.
 
 .PARAMETER StudentName
     Optional student name to display on the cover page and header.
@@ -15,10 +15,28 @@
 .PARAMETER RollNo
     Optional roll/registration number to display on the cover page.
 
+.PARAMETER Port
+    Optional preferred port to run the application server on.
+
+.PARAMETER List
+    Switch to list all supported assignments and exit.
+
+.PARAMETER ValidateOnly
+    Switch to validate assignment configuration and source files without generating documents.
+
+.PARAMETER EvidenceOnly
+    Switch to capture output screenshots and CLI logs without generating Word or PDF documents.
+
+.PARAMETER SkipRender
+    Switch to skip Word-to-PDF conversion and visual QA preview rendering.
+
 .EXAMPLE
     .\Generate-LabReport.ps1 -Assignment 2
-    .\Generate-LabReport.ps1 2
-    .\Generate-LabReport.ps1 -Assignment 2 -StudentName "Jey" -RollNo "9057"
+    .\Generate-LabReport.ps1 3
+    .\Generate-LabReport.ps1 -Assignment 6 -StudentName "Jey" -RollNo "9057"
+    .\Generate-LabReport.ps1 -List
+    .\Generate-LabReport.ps1 -ValidateOnly
+    .\Generate-LabReport.ps1 -Assignment 7 -EvidenceOnly
 #>
 
 [CmdletBinding()]
@@ -30,7 +48,22 @@ param(
     [string]$StudentName = "",
 
     [Parameter()]
-    [string]$RollNo = ""
+    [string]$RollNo = "",
+
+    [Parameter()]
+    [int]$Port = 0,
+
+    [Parameter()]
+    [switch]$List,
+
+    [Parameter()]
+    [switch]$ValidateOnly,
+
+    [Parameter()]
+    [switch]$EvidenceOnly,
+
+    [Parameter()]
+    [switch]$SkipRender
 )
 
 $ErrorActionPreference = "Stop"
@@ -49,7 +82,24 @@ if (Test-Path $VenvPython) {
     exit 1
 }
 
-$Arguments = @($GenerateScript, "--assignment", $Assignment)
+$Arguments = @($GenerateScript)
+
+if ($List) {
+    $Arguments += @("--list")
+    & $PythonExe $Arguments
+    exit $LASTEXITCODE
+}
+
+if ($ValidateOnly) {
+    $Arguments += @("--validate-only")
+    if ($PSBoundParameters.ContainsKey('Assignment')) {
+        $Arguments += @("--assignment", $Assignment)
+    }
+    & $PythonExe $Arguments
+    exit $LASTEXITCODE
+}
+
+$Arguments += @("--assignment", $Assignment)
 
 if ($StudentName -ne "") {
     $Arguments += @("--student-name", $StudentName)
@@ -59,5 +109,18 @@ if ($RollNo -ne "") {
     $Arguments += @("--roll-no", $RollNo)
 }
 
+if ($Port -gt 0) {
+    $Arguments += @("--port", $Port)
+}
+
+if ($EvidenceOnly) {
+    $Arguments += @("--evidence-only")
+}
+
+if ($SkipRender) {
+    $Arguments += @("--skip-render")
+}
+
 Write-Host ">>> Invoking WAF Lab Report Generator for Assignment $Assignment..." -ForegroundColor Cyan
 & $PythonExe $Arguments
+exit $LASTEXITCODE

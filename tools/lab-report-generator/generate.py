@@ -7,6 +7,8 @@ evidence capture, and Word document generation.
 Usage:
     python tools/lab-report-generator/generate.py --assignment 2
     python tools/lab-report-generator/generate.py --assignment 2 --student-name "Jey" --roll-no "9057"
+    python tools/lab-report-generator/generate.py --list
+    python tools/lab-report-generator/generate.py --validate-only
 """
 
 import argparse
@@ -26,9 +28,15 @@ CURRENT_DIR = Path(__file__).resolve().parent
 if str(CURRENT_DIR) not in sys.path:
     sys.path.insert(0, str(CURRENT_DIR))
 
-from config import get_assignment_config, ASSIGNMENT_REGISTRY
+from config import (
+    get_assignment_config,
+    ASSIGNMENT_REGISTRY,
+    list_supported_assignments,
+    validate_assignment_config,
+)
 from server_manager import ServerManager
 from browser_runner import BrowserRunner
+from cli_runner import CliRunner
 from doc_builder import LabReportDocBuilder
 
 
@@ -55,8 +63,23 @@ def main():
     parser.add_argument(
         "-a", "--assignment",
         type=int,
-        required=True,
-        help="Assignment number to generate report for (e.g. 2, 3, 4, 5, 6, 7)"
+        default=None,
+        help="Assignment number to generate report for (e.g. 1, 2, 3, 4, 5, 6, 7)"
+    )
+    parser.add_argument(
+        "-l", "--list",
+        action="store_true",
+        help="List all supported assignments in the repository and exit"
+    )
+    parser.add_argument(
+        "--validate-only",
+        action="store_true",
+        help="Validate assignment configuration and verify source files without generating reports"
+    )
+    parser.add_argument(
+        "--evidence-only",
+        action="store_true",
+        help="Execute application, run scenarios, and capture screenshots without compiling document"
     )
     parser.add_argument(
         "-o", "--output-dir",
@@ -89,8 +112,57 @@ def main():
     )
 
     args = parser.parse_args()
-
     workspace_root = resolve_workspace_root()
+
+    # Mode 1: List supported assignments
+    if args.list:
+        print("=" * 80)
+        print("         SUPPORTED WAF LAB ASSIGNMENTS IN HTML-PLAYGROUND")
+        print("=" * 80)
+        print(f"{'ID':<4} {'Folder':<18} {'Server Type':<14} {'Title'}")
+        print("-" * 80)
+        for item in list_supported_assignments():
+            print(f"{item['assignment_id']:<4} {item['folder_name']:<18} {item['server_type']:<14} {item['title']}")
+        print("=" * 80)
+        sys.exit(0)
+
+    # Mode 2: Validate configuration only
+    if args.validate_only:
+        print("=" * 80)
+        print("      WAF LAB REPORT GENERATOR — CONFIGURATION AUDIT")
+        print("=" * 80)
+        print(f"[*] Workspace Root: {workspace_root}")
+
+        targets = [args.assignment] if args.assignment is not None else sorted(ASSIGNMENT_REGISTRY.keys())
+        all_valid = True
+
+        for aid in targets:
+            try:
+                cfg = get_assignment_config(aid)
+                is_valid, issues = validate_assignment_config(cfg, workspace_root)
+                if not is_valid:
+                    print(f"[-] Assignment {aid} ({cfg.title}): INVALID")
+                    for iss in issues:
+                        print(f"    - {iss}")
+                    all_valid = False
+                else:
+                    print(f"[+] Assignment {aid} ({cfg.title}): VALID ({len(cfg.source_files)} source files, {len(cfg.scenes)} scenes, {len(cfg.cli_commands)} CLI commands)")
+            except Exception as e:
+                print(f"[!] Assignment {aid}: FAILED TO LOAD CONFIG — {e}")
+                all_valid = False
+
+        print("=" * 80)
+        if all_valid:
+            print("[+] All target assignment configurations and source files are valid.")
+            sys.exit(0)
+        else:
+            print("[!] Validation found errors in one or more assignment configurations.")
+            sys.exit(1)
+
+    # Report Generation Mode requires --assignment
+    if args.assignment is None:
+        parser.error("The -a / --assignment argument is required for report generation. Use --list to see available assignments.")
+
     print("=" * 70)
     print("      WAF AUTOMATED LAB REPORT GENERATOR")
     print("=" * 70)
@@ -102,6 +174,14 @@ def main():
         config = get_assignment_config(args.assignment)
     except Exception as e:
         print(f"[!] Configuration error: {e}")
+        sys.exit(1)
+
+    # Pre-flight validation
+    is_valid, config_issues = validate_assignment_config(config, workspace_root)
+    if not is_valid:
+        print(f"[!] Pre-flight validation failed for Assignment {args.assignment}:")
+        for iss in config_issues:
+            print(f"    - {iss}")
         sys.exit(1)
 
     assignment_dir = workspace_root / config.folder_name
@@ -133,22 +213,56 @@ def main():
 
     port = args.port or config.default_port
     start_time = time.time()
+    evidence_list = []
 
-    # Step 1: Start Server
-    with ServerManager(
-        workspace_root=workspace_root,
-        assignment_dir=assignment_dir,
-        server_type=config.server_type,
-        default_port=port
-    ) as srv:
-        base_url = srv.start(
-            custom_command=config.server_command,
-            entry_url=config.entry_url
-        )
+    # Step 1: Execute CLI command scenarios if configured
+    if getattr(config, "cli_commands", None):
+        print(f"\n[*] Executing {len(config.cli_commands)} CLI command scenario(s)...")
+        cli_runner = CliRunner(workspace_root=workspace_root, output_dir=screenshots_dir)
+        cli_evidence = cli_runner.run_commands(config.cli_commands, assignment_dir=assignment_dir)
+        evidence_list.extend(cli_evidence)
 
-        # Step 2: Browser Automation & Screenshots
-        runner = BrowserRunner(base_url=base_url, output_dir=screenshots_dir)
-        evidence_list = runner.run_scenes(config)
+    # Step 2: Start server and execute browser scenes if configured
+    if config.scenes:
+        print(f"\n[*] Executing {len(config.scenes)} browser automation scene(s)...")
+        resolved_server_dir = assignment_dir
+        if getattr(config, "server_dir", None):
+            c1 = workspace_root / config.server_dir
+            c2 = assignment_dir / config.server_dir
+            if c1.is_dir():
+                resolved_server_dir = c1
+            elif c2.is_dir():
+                resolved_server_dir = c2
+        with ServerManager(
+            workspace_root=workspace_root,
+            assignment_dir=assignment_dir,
+            server_type=config.server_type,
+            server_dir=resolved_server_dir,
+            default_port=port
+        ) as srv:
+            base_url = srv.start(
+                custom_command=config.server_command,
+                entry_url=config.entry_url
+            )
+            runner = BrowserRunner(base_url=base_url, output_dir=screenshots_dir)
+            browser_evidence = runner.run_scenes(config)
+            evidence_list.extend(browser_evidence)
+
+    if not evidence_list:
+        print("[!] Error: No evidence was captured from either CLI commands or browser scenes.")
+        shutil.rmtree(stage_dir, ignore_errors=True)
+        sys.exit(1)
+
+    # Evidence-only mode early exit
+    if args.evidence_only:
+        print("\n" + "=" * 70)
+        print("               EVIDENCE CAPTURE COMPLETE (--evidence-only)")
+        print("=" * 70)
+        print(f"[+] Captured {len(evidence_list)} evidence item(s) in {screenshots_dir}")
+        for i, ev in enumerate(evidence_list, 1):
+            print(f"    {i}. [{ev.get('status', 'OK')}] {ev.get('title', ev['name'])} -> {ev.get('image_path')}")
+        shutil.rmtree(stage_dir, ignore_errors=True)
+        sys.exit(0)
 
     # Step 3: Document Generation to Staged Output
     print(f"\n[*] Generating report into staging area: {stage_docx}...")
@@ -191,6 +305,13 @@ def main():
 
     if not all_passed:
         print("[!] ERROR: Automated quality audit failed. Pre-existing report will NOT be replaced.")
+        failed_debug_dir = output_dir / ".failed_stage"
+        if failed_debug_dir.exists():
+            shutil.rmtree(failed_debug_dir, ignore_errors=True)
+        try:
+            shutil.copytree(stage_dir, failed_debug_dir)
+        except Exception:
+            pass
         shutil.rmtree(stage_dir, ignore_errors=True)
         sys.exit(1)
 
@@ -206,6 +327,14 @@ def main():
             shutil.rmtree(final_preview_dir, ignore_errors=True)
         shutil.copytree(stage_preview, final_preview_dir)
 
+    # Step 7: Verify Final Destination Artifacts
+    if not final_docx_path.exists() or final_docx_path.stat().st_size != stage_docx.stat().st_size:
+        print("[!] FATAL: Failed to verify final DOCX output after atomic replacement.")
+        sys.exit(1)
+    if stage_pdf.exists() and (not final_pdf_path.exists() or final_pdf_path.stat().st_size != stage_pdf.stat().st_size):
+        print("[!] FATAL: Failed to verify final PDF output after atomic replacement.")
+        sys.exit(1)
+
     # Clean up staging area
     shutil.rmtree(stage_dir, ignore_errors=True)
 
@@ -218,7 +347,7 @@ def main():
     if final_pdf_path.exists():
         print(f"[+] Final PDF Document:   {final_pdf_path}")
         print(f"[+] Total PDF Size:       {final_pdf_path.stat().st_size / 1024:.1f} KB")
-    print(f"[+] Screenshots Captured: {len(evidence_list)} images in {screenshots_dir}")
+    print(f"[+] Evidence Captured:    {len(evidence_list)} images in {screenshots_dir}")
     if rendered_pages:
         print(f"[+] Visual QA Preview:    {len(rendered_pages)} pages rendered to {final_preview_dir}")
     print(f"[+] Total Elapsed Time:   {elapsed:.1f} seconds")

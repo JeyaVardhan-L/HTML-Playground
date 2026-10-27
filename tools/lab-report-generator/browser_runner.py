@@ -104,15 +104,78 @@ class BrowserRunner:
             if action_type == "wait_time":
                 page.wait_for_timeout(action.get("ms", 500))
 
+            elif action_type == "wait_selector":
+                page.wait_for_selector(action["selector"], timeout=action.get("timeout", 5000))
+
             elif action_type == "click":
                 selector = action["selector"]
                 page.wait_for_selector(selector, timeout=5000)
-                page.click(selector)
+                try:
+                    page.click(selector, force=action.get("force", False), timeout=action.get("timeout", 5000))
+                except Exception:
+                    # In stacked/overlapping elements (e.g. z-index tests), force click to bypass overlap checks
+                    page.click(selector, force=True, timeout=5000)
 
             elif action_type == "fill":
                 selector = action["selector"]
                 page.wait_for_selector(selector, timeout=5000)
-                page.fill(selector, action["value"])
+                page.fill(selector, str(action["value"]))
+
+            elif action_type == "select":
+                selector = action["selector"]
+                page.wait_for_selector(selector, timeout=5000)
+                if "label" in action:
+                    page.select_option(selector, label=action["label"])
+                elif "value" in action:
+                    page.select_option(selector, value=action["value"])
+
+            elif action_type == "check":
+                selector = action["selector"]
+                page.wait_for_selector(selector, timeout=5000)
+                page.check(selector)
+
+            elif action_type == "uncheck":
+                selector = action["selector"]
+                page.wait_for_selector(selector, timeout=5000)
+                page.uncheck(selector)
+
+            elif action_type == "scroll_into_view":
+                selector = action["selector"]
+                page.wait_for_selector(selector, timeout=5000)
+                page.locator(selector).scroll_into_view_if_needed()
+
+            elif action_type == "hover":
+                selector = action["selector"]
+                page.wait_for_selector(selector, timeout=5000)
+                page.hover(selector)
+
+            elif action_type == "drag_and_drop":
+                source = action["source"]
+                target = action["target"]
+                page.wait_for_selector(source, timeout=5000)
+                page.wait_for_selector(target, timeout=5000)
+                try:
+                    page.drag_and_drop(source, target)
+                except Exception:
+                    # Fallback for complex HTML5 drag and drop
+                    page.evaluate(
+                        """([src, dst]) => {
+                            const source = document.querySelector(src);
+                            const target = document.querySelector(dst);
+                            if (source && target) {
+                                const dt = new DataTransfer();
+                                source.dispatchEvent(new DragEvent('dragstart', { dataTransfer: dt, bubbles: true }));
+                                target.dispatchEvent(new DragEvent('dragover', { dataTransfer: dt, bubbles: true }));
+                                target.dispatchEvent(new DragEvent('drop', { dataTransfer: dt, bubbles: true }));
+                                source.dispatchEvent(new DragEvent('dragend', { dataTransfer: dt, bubbles: true }));
+                            }
+                        }""",
+                        [source, target]
+                    )
+
+            elif action_type == "evaluate":
+                script = action["script"]
+                page.evaluate(script)
 
             elif action_type == "iframe_action":
                 frame_selector = action["frame_selector"]
@@ -122,14 +185,29 @@ class BrowserRunner:
 
                 if sub_type == "fill":
                     target_sel = sub["selector"]
-                    frame.locator(target_sel).fill(sub["value"])
+                    frame.locator(target_sel).fill(str(sub["value"]))
 
                 elif sub_type == "click":
                     target_sel = sub["selector"]
                     frame.locator(target_sel).click()
 
+                elif sub_type == "select":
+                    target_sel = sub["selector"]
+                    if "label" in sub:
+                        frame.locator(target_sel).select_option(label=sub["label"])
+                    elif "value" in sub:
+                        frame.locator(target_sel).select_option(value=sub["value"])
+
+                elif sub_type == "check":
+                    target_sel = sub["selector"]
+                    frame.locator(target_sel).check()
+
+                elif sub_type == "scroll_into_view":
+                    target_sel = sub["selector"]
+                    frame.locator(target_sel).scroll_into_view_if_needed()
+
                 elif sub_type == "fill_survey":
-                    # Specialized non-destructive survey form filling
+                    # Specialized non-destructive survey form filling for Assignment 2
                     name_input = frame.locator("#studentName")
                     if name_input.count() > 0:
                         name_input.fill(sub.get("name", "Jey"))

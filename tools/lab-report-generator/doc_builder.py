@@ -301,8 +301,9 @@ class LabReportDocBuilder:
         self._add_requirements_section()
 
         # 4. Faculty Requirements Mapping Table
-        self._add_section_header("3. FACULTY REQUIREMENTS COMPLIANCE MAPPING", level=1)
-        self._add_compliance_table()
+        if self.config.faculty_requirements:
+            self._add_section_header("3. FACULTY REQUIREMENTS COMPLIANCE MAPPING", level=1)
+            self._add_compliance_table()
 
         # 5. Procedure / Implementation Steps
         self._add_section_header("4. ARCHITECTURAL PROCEDURE & IMPLEMENTATION STEPS", level=1)
@@ -322,8 +323,7 @@ class LabReportDocBuilder:
             self._add_viva_section()
 
         # 9. Complete Source Code Appendix (Begins cleanly on a fresh page)
-        self.doc.add_page_break()
-        self._add_section_header("8. APPENDIX: COMPLETE APPLICATION SOURCE CODE", level=1)
+        self._add_section_header("8. APPENDIX: COMPLETE APPLICATION SOURCE CODE", level=1, page_break_before=True)
         self._add_source_code_appendix()
 
         # Save document
@@ -492,11 +492,13 @@ class LabReportDocBuilder:
         # Intentional Page Break after cover page
         self.doc.add_page_break()
 
-    def _add_section_header(self, title: str, level: int = 1):
+    def _add_section_header(self, title: str, level: int = 1, page_break_before: bool = False):
         """Add styled section header with real Word heading style and decorative bottom rule for H1."""
         style_name = "Heading 1" if level == 1 else "Heading 2"
         p = self.doc.add_paragraph(style=style_name)
         p.paragraph_format.keep_with_next = True
+        if page_break_before:
+            p.paragraph_format.page_break_before = True
 
         run = p.add_run(title)
         run.font.bold = True
@@ -989,7 +991,4 @@ class LabReportDocBuilder:
 
             set_table_borders(tbl_code, color=COLOR_BORDER_HEX, sz="4")
 
-            # Spacing between files
-            p_sep = self.doc.add_paragraph()
-            p_sep.paragraph_format.space_before = Pt(6)
-            p_sep.paragraph_format.space_after = Pt(6)
+

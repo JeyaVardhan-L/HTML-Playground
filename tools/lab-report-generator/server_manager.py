@@ -35,11 +35,19 @@ def find_free_port(preferred_port: int = 8000) -> int:
 class ServerManager:
     """Manages the lifecycle of an application server subprocess."""
 
-    def __init__(self, workspace_root: Path, assignment_dir: Path, server_type: str = "static_http", default_port: int = 8000):
+    def __init__(
+        self,
+        workspace_root: Path,
+        assignment_dir: Path,
+        server_type: str = "static_http",
+        server_dir: Optional[Path] = None,
+        default_port: int = 8000
+    ):
         self.workspace_root = workspace_root
         self.assignment_dir = assignment_dir
+        self.server_dir = server_dir or assignment_dir
         self.server_type = server_type
-        self.port = find_free_port(default_port)
+        self.port = find_free_port(default_port) if server_type != "none" else default_port
         self.process: Optional[subprocess.Popen] = None
         self._is_stopped = False
 
@@ -48,14 +56,21 @@ class ServerManager:
 
     def start(self, custom_command: Optional[List[str]] = None, entry_url: str = "/index.html", timeout_secs: float = 15.0) -> str:
         """Start the server and wait for the entry point to become responsive."""
+        if self.server_type == "none":
+            print(f"[*] Server type is 'none'. No background server required.")
+            return ""
+
         if self.process is not None:
             return f"http://localhost:{self.port}"
 
-        print(f"[*] Starting {self.server_type} server for '{self.assignment_dir.name}' on port {self.port}...")
+        print(f"[*] Starting {self.server_type} server for '{self.server_dir.name}' on port {self.port}...")
+
+        cwd = self.server_dir
+        env = os.environ.copy()
+        env["PORT"] = str(self.port)
 
         if custom_command:
             cmd = [arg.replace("{port}", str(self.port)) for arg in custom_command]
-            cwd = self.assignment_dir
         elif self.server_type == "static_http":
             # Use current Python interpreter to run http.server
             cmd = [
@@ -64,14 +79,18 @@ class ServerManager:
                 "http.server",
                 str(self.port),
                 "--directory",
-                str(self.assignment_dir)
+                str(self.server_dir)
             ]
-            cwd = self.assignment_dir
-        elif self.server_type == "express":
-            # For Express or Node applications
-            cmd = ["node", "server.js"]
-            cwd = self.assignment_dir
-            os.environ["PORT"] = str(self.port)
+        elif self.server_type in ("express", "node_express"):
+            # For Express or Node applications, dynamically locate entry file
+            if (cwd / "server.js").exists():
+                cmd = ["node", "server.js"]
+            elif (cwd / "app.js").exists():
+                cmd = ["node", "app.js"]
+            elif (cwd / "api" / "server.js").exists():
+                cmd = ["node", "api/server.js"]
+            else:
+                cmd = ["node", "server.js"]
         else:
             raise ValueError(f"Unsupported server type: {self.server_type}")
 
@@ -79,6 +98,7 @@ class ServerManager:
         self.process = subprocess.Popen(
             cmd,
             cwd=str(cwd),
+            env=env,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0

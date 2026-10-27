@@ -4,7 +4,15 @@
   "description": "Web Application Frameworks (WAF) Lab Playgrounds & Practical Repository",
   "scripts": {
     "lab-report": "python tools/lab-report-generator/run.py",
-    "report:2": "python tools/lab-report-generator/run.py --assignment 2"
+    "report:list": "python tools/lab-report-generator/run.py --list",
+    "report:validate": "python tools/lab-report-generator/run.py --validate-only",
+    "report:1": "python tools/lab-report-generator/run.py --assignment 1",
+    "report:2": "python tools/lab-report-generator/run.py --assignment 2",
+    "report:3": "python tools/lab-report-generator/run.py --assignment 3",
+    "report:4": "python tools/lab-report-generator/run.py --assignment 4",
+    "report:5": "python tools/lab-report-generator/run.py --assignment 5",
+    "report:6": "python tools/lab-report-generator/run.py --assignment 6",
+    "report:7": "python tools/lab-report-generator/run.py --assignment 7"
   },
   "author": "Jey",
   "license": "ISC"
