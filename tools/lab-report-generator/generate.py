@@ -6,7 +6,7 @@ evidence capture, and Word document generation.
 
 Usage:
     python tools/lab-report-generator/generate.py --assignment 2
-    python tools/lab-report-generator/generate.py --assignment 2 --student-name "Jey" --roll-no "9057"
+    python tools/lab-report-generator/generate.py --assignment 2 --student-name "Jeyavardhan Lekkala" --roll-no "2024009057"
     python tools/lab-report-generator/generate.py --list
     python tools/lab-report-generator/generate.py --validate-only
 """

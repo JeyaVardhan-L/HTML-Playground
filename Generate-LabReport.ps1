@@ -33,7 +33,7 @@
 .EXAMPLE
     .\Generate-LabReport.ps1 -Assignment 2
     .\Generate-LabReport.ps1 3
-    .\Generate-LabReport.ps1 -Assignment 6 -StudentName "Jey" -RollNo "9057"
+    .\Generate-LabReport.ps1 -Assignment 6 -StudentName "Jeyavardhan Lekkala" -RollNo "2024009057"
     .\Generate-LabReport.ps1 -List
     .\Generate-LabReport.ps1 -ValidateOnly
     .\Generate-LabReport.ps1 -Assignment 7 -EvidenceOnly
