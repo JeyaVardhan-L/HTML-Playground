@@ -4,6 +4,10 @@ tools/lab-report-generator/.venv/
 *.py[cod]
 *$py.class
 
+# Database Runtime Files
+*.sqlite3
+*.db
+
 # Temporary Screenshots & Generated Reports
 temp_screenshots/
 tools/lab-report-generator/temp_screenshots/
